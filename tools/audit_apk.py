@@ -29,7 +29,7 @@ assert f"package: name='com.weinaoa.easybilitool' versionCode='{code}' versionNa
 assert "application-label:'简单bili小工具'" in badging
 manifest = subprocess.check_output([str(aapt), "dump", "xmltree", str(apk), "AndroidManifest.xml"]).decode("utf-8")
 assert "E: uses-permission" not in manifest and "E: provider" not in manifest
-sources = sorted(path.stem for path in (ROOT / "app/src/main/java/com/weinaoa/easybilitool").glob("*.java"))
+sources = sorted(path.stem for path in (ROOT / "app/src/main/kotlin/com/weinaoa/easybilitool").glob("*.kt"))
 strings, classes = [], []
 with ZipFile(apk) as archive:
     entry = archive.read("META-INF/xposed/java_init.list").decode().strip()

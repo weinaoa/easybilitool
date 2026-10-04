@@ -27,7 +27,7 @@
 
 - JVM：69 项通过。
 - `assembleDebug` 和 `lintDebug` 成功，0 errors、19 warnings；新增提示为本次资源 ID 查询，原有内部 API/兼容提示仍保留。
-- APK v2 签名通过。ed11f8b9d7c9322e4c4d42984dde043c65d57ce0c2ee274bf55dcf8fb71b1780-256：`ed11f8b9d7c9322e4c4d42984dde043c65d57ce0c2ee274bf55dcf8fb71b1780`。
+- APK v2 签名通过。SHA-256：`ed11f8b9d7c9322e4c4d42984dde043c65d57ce0c2ee274bf55dcf8fb71b1780`。
 - 已增加仓库内 `AGENTS.md`，明确公开/私有仓库边界及底栏实机滑动、背景和安全区检查要求。
 
 验证仅覆盖上述设备、宿主版本和手势导航环境。三键导航、其他设备/宿主版本、画中画及分屏未实测。

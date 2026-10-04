@@ -15,3 +15,5 @@ Apache-2.0.txt -text
 .gitattributes text eol=lf
 *.jar binary
 *.png binary
+
+*.kt text eol=lf

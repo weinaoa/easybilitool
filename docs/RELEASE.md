@@ -20,7 +20,7 @@ projects/
 
 ## 独立构建与检查
 
-需要 JDK 17+、Android SDK Platform 36、Build Tools 36.0.0、Python 3.10+。SDK 用环境变量 `ANDROID_SDK_ROOT` / `ANDROID_HOME` 或本地 `local.properties` 配置。Python 检查工具通过 PATH 调用 `java` 和 `javac`。
+需要 JDK 17+、Android SDK Platform 36、Build Tools 36.0.0、Python 3.10+。SDK 用环境变量 `ANDROID_SDK_ROOT` / `ANDROID_HOME` 或本地 `local.properties` 配置。模块与测试均使用 Kotlin；Python 测试入口调用 Gradle wrapper，由 AGP 管理 Kotlin 编译器与运行库。APK 审查工具通过 PATH 调用 `java`。
 
 Windows：
 

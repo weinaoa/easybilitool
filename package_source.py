@@ -35,7 +35,7 @@ for directory in ["app/src/main", "app/libs", "gradle/wrapper", "tools", "docs",
     files.extend(path for path in (root / directory).rglob("*")
                  if path.is_file() and "__pycache__" not in path.parts)
 files.extend(path for path in (root / "qa").iterdir() if path.suffix in {".md", ".json", ".png"})
-files.extend(sorted((root / "tests").glob("*Test.java")))
+files.extend(sorted((root / "tests").glob("*Test.kt")))
 with ZipFile(source, "w", ZIP_DEFLATED) as archive:
     for path in sorted(files):
         name = "easybilitool/" + path.relative_to(root).as_posix()

@@ -19,12 +19,33 @@ android {
         applicationId 'com.weinaoa.easybilitool'
         minSdk 26
         targetSdk 35
-        versionCode 5
-        versionName '1.0.4'
+        versionCode 6
+        versionName '1.1.0'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
 }
-dependencies { compileOnly files('libs/libxposed-api-102.0.0.jar') }
+dependencies {
+    compileOnly files('libs/libxposed-api-102.0.0.jar')
+    testImplementation files('libs/libxposed-api-102.0.0.jar')
+}
+
+android.sourceSets.test.kotlin.directories.add(file("../tests").absolutePath)
+
+def checkClasses = ['com.weinaoa.easybilitool.NavigationTransitionTest', 'com.weinaoa.easybilitool.ConfigDraftTest', 'com.weinaoa.easybilitool.MainTabBarScrollTest', 'com.weinaoa.easybilitool.DetailBarScrollTest', 'com.weinaoa.easybilitool.ModernHookTest']
+def checks = checkClasses.collect { entry ->
+    tasks.register("check${entry.tokenize('.').last()}", JavaExec) {
+        dependsOn "compileDebugUnitTestKotlin"
+        mainClass.set(entry)
+        classpath = files(
+            layout.buildDirectory.dir("intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes"),
+            layout.buildDirectory.dir("intermediates/built_in_kotlinc/debugUnitTest/compileDebugUnitTestKotlin/classes"),
+            layout.buildDirectory.dir("intermediates/javac/debug/compileDebugJavaWithJavac/classes"),
+            "src/main/resources", "libs/libxposed-api-102.0.0.jar",
+            configurations.debugUnitTestRuntimeClasspath, androidComponents.sdkComponents.bootClasspath.get()
+        )
+    }
+}
+tasks.register("jvmChecks") { dependsOn checks }

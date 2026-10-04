@@ -1,27 +1,28 @@
 # 源码来源清单
 
-整理日期：2026-10-04。对象：简单bili小工具 1.0.4，包名 `com.weinaoa.easybilitool`。
+整理日期：2026-10-04。对象：简单bili小工具 1.1.0，包名 `com.weinaoa.easybilitool`。
 
 **主许可证：Mulan PubL v2。** 维护者于 2026-10-04 明确选择以该协议公开简单版的自有实现、文档和图标，Copyright (c) 2026 weinaoa，完整文本见 [LICENSE](../LICENSE)。第三方依赖保留各自许可。本清单记录“参考”“移植”“改写”和“原创”的不同来源范围；重新授权依据版权人的选择，不依据包名或文件头是否改变。
 
-## 26 个 Java 文件
+## 29 个 Kotlin 文件
 
-简单版从自用 BiliTool 中提取并裁剪三个原生界面功能，同时重建简单设置与配置。以下是本次保留文件及现存记录能支持的来源范围。
+简单版从自用 BiliTool 中提取并裁剪三个原生界面功能，同时重建简单设置与配置。1.1.0 将原有 26 个 Java 文件迁移至 Kotlin，并新增窗口可见状态、安全区基线及数值兼容辅助文件。以下是本次保留文件及现存记录能支持的来源范围。
 
 | 文件 | 来源与修改范围 |
 | --- | --- |
-| `ImmersiveStatusBarHook.java` | 原模块透明状态栏逻辑裁剪；原 0.8.3 记录为参考 BBZQ APK 的透明状态栏机制，独立适配哔哩哔哩 8.95 的 inset 与图标覆盖；保留视频顶部菜单间距和直播安全区处理 |
-| `HomeBottomBarHook.java`、`MainTabBarScroll.java` | 原模块首页原生底栏收起与滚动状态逻辑；去掉玻璃和其他底栏功能分支 |
-| `DetailBottomBarHook.java`、`DetailBarScroll.java` | 原模块动态详情、视频评论的原生底栏收起逻辑；去掉悬浮底栏配置分支 |
-| `DetailScrollViewport.java` | 本项目自有的原生列表范围修复；从既有详情安全区处理机制抽取约束与末项间距，独立实现可恢复的原生底栏收起适配，不包含悬浮材质或控件 |
-| `DetailBarLocator.java` | 从原模块详情底栏定位器中提取原生固定底栏定位；没有保留悬浮控件、材质和动画实现 |
-| `NavigationBarHook.java`、`MainNavigationInsets.java`、`DetailNavigationInsets.java`、`PageNavigationInsets.java`、`SettingsNavigationInsets.java` | 原模块系统导航栏与安全区适配裁剪；移除玻璃、悬浮及强制开启相关分支；使用 Android WindowInsets API |
-| `BiliSettingsHook.java`、`SettingsRoute.java`、`HostActions.java` | 原模块宿主设置入口、路由与重启适配；原记录致谢 BBZQ / 哔哩漫游的设置入口分析，重启代码也保留过哔哩漫游参考注释；简单版修改入口名、动作与路由标识 |
-| `MethodHook.java`、`HookRuntime.java`、`Reflector.java` | 原模块现代 libxposed API 封装及宿主反射辅助代码；不是内置的 libxposed API 实现 |
-| `Config.java`、`SettingsDraft.java`、`HomeBarSync.java`、`HostSettings.java`、`EasyBiliToolModule.java` | 原模块基础结构提取或简单版重写；配置仅三个布尔值，宿主配置上下文统一，模块入口只安装这三个功能 |
-| `InAppSettings.java`、`SettingsActivity.java`、`About.java` | 简单版 Java/View 设置页、桌面介绍页和共享关于页；BBZQ 仅作为设置界面参考，关于页列出五个来源 |
+| `ImmersiveStatusBarHook.kt` | 原模块透明状态栏逻辑裁剪；原 0.8.3 记录为参考 BBZQ APK 的透明状态栏机制，独立适配哔哩哔哩 8.95 的 inset 与图标覆盖；保留视频顶部菜单间距和直播安全区处理 |
+| `HomeBottomBarHook.kt`、`MainTabBarScroll.kt` | 原模块首页原生底栏收起与滚动状态逻辑；去掉玻璃和其他底栏功能分支 |
+| `DetailBottomBarHook.kt`、`DetailBarScroll.kt` | 原模块动态详情、视频评论的原生底栏收起逻辑；去掉悬浮底栏配置分支 |
+| `DetailScrollViewport.kt` | 本项目自有的原生列表范围修复；从既有详情安全区处理机制抽取约束与末项间距，独立实现可恢复的原生底栏收起适配，不包含悬浮材质或控件 |
+| `DetailBarLocator.kt` | 从原模块详情底栏定位器中提取原生固定底栏定位；没有保留悬浮控件、材质和动画实现 |
+| `NavigationBarHook.kt`、`MainNavigationInsets.kt`、`DetailNavigationInsets.kt`、`PageNavigationInsets.kt`、`SettingsNavigationInsets.kt` | 原模块系统导航栏与安全区适配裁剪；移除玻璃、悬浮及强制开启相关分支；使用 Android WindowInsets API |
+| `BiliSettingsHook.kt`、`SettingsRoute.kt`、`HostActions.kt` | 原模块宿主设置入口、路由与重启适配；原记录致谢 BBZQ / 哔哩漫游的设置入口分析，重启代码也保留过哔哩漫游参考注释；简单版修改入口名、动作与路由标识 |
+| `MethodHook.kt`、`HookRuntime.kt`、`Reflector.kt` | 原模块现代 libxposed API 封装及宿主反射辅助代码；不是内置的 libxposed API 实现 |
+| `Config.kt`、`SettingsDraft.kt`、`HomeBarSync.kt`、`HostSettings.kt`、`EasyBiliToolModule.kt` | 原模块基础结构提取或简单版重写；配置仅三个布尔值，宿主配置上下文统一，模块入口只安装这三个功能 |
+| `InAppSettings.kt`、`SettingsActivity.kt`、`About.kt` | 简单版 Kotlin/View 设置页、桌面介绍页和共享关于页；BBZQ 仅作为设置界面参考，关于页列出五个来源 |
+| `NavigationVisibility.kt`、`InsetBaseline.kt`、`JvmNumbers.kt` | 本项目自有的窗口生命周期状态、安全区基线及 Kotlin 迁移数值兼容辅助实现 |
 
-文件位置均为 `app/src/main/java/com/weinaoa/easybilitool/`。四个 JVM 测试文件在 `tests/`，验证配置草稿、首页及详情滚动状态、现代 hook 辅助行为。
+文件位置均为 `app/src/main/kotlin/com/weinaoa/easybilitool/`。五个 Kotlin JVM 测试文件在 `tests/`，验证配置草稿、首页及详情滚动状态、现代 hook 辅助行为。
 
 ## 原记录与目前证据的边界
 
@@ -30,7 +31,7 @@
 - `qa/VALIDATION-v050.md`：只读分析 BBZQ 与哔哩漫游 APK 的宿主 Preference 结构；未复制、重新分发其实现或 APK。
 - `qa/VALIDATION-v081.md`：参考 BBZQ SettingsActivity 的操作栏与 WindowInsets；独立实现相似布局，没有复制代码、资源或整个 Activity。
 - `qa/VALIDATION-v083.md`：核对 BBZQ 的透明状态栏开关，参考机制，未复制代码。
-- 原 `InAppSettings.java` 关于页及 `HostActions.java` 注释：设置入口与重启流程致谢哔哩漫游。
+- 迁移前的 `InAppSettings.java` 关于页及 `HostActions.java` 注释：设置入口与重启流程致谢哔哩漫游。
 
 这些是开发过程中的来源记录，当前没有发现简单版直接包含上游 Kotlin 源文件、上游 APK 或上游设置资源。早期宿主路由、重启与公共辅助代码的判断依据是上述独立实现记录，不把字符串或文件名检查视为完整版权审计。后续若发现遗漏的第三方改写来源，应补充记录并保留相应授权义务。
 
@@ -61,3 +62,5 @@
 1. 保留本清单及原有来源记录，发现新来源时及时补充，不能用主协议覆盖第三方限制。
 2. 根目录及 APK 附完整 `LICENSE`，自有源文件附 Mulan PubL v2 声明，第三方声明独立保留。
 3. 每个 APK 发布时同时提供对应源码、版本标签和校验值；关于页链接到该版本的发布页和完整许可证。
+
+1.1.0 将本仓库的模块源码与测试完整迁移到 Kotlin，保留原来源和许可证。`NavigationVisibility.kt` 与窗口转场修复只处理导航栏显示时机；`JvmNumbers.kt` 保留 Java 数值提升与文本拼接的既有语义。

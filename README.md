@@ -1,16 +1,18 @@
 # 简单bili小工具
 
-包名：`com.weinaoa.easybilitool`。版本：1.0.4。
+包名：`com.weinaoa.easybilitool`。版本：1.1.0。
 
 源码仓库：[weinaoa/easybilitool](https://github.com/weinaoa/easybilitool)。本项目自有代码、文档和图标以 **Mulan PubL v2（木兰公共许可证，第2版）** 发布，Copyright (c) 2026 weinaoa。完整文本见 [LICENSE](LICENSE)。
 
 代码来源见 [docs/SOURCES.md](docs/SOURCES.md)，第三方材料见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)，独立仓库与发布事项见 [docs/RELEASE.md](docs/RELEASE.md)。第三方依赖保留各自许可。
 
-当前版本的 APK、对应完整源码和校验值见 [v1.0.4 发布页](https://github.com/weinaoa/easybilitool/releases/tag/v1.0.4)。源码也可从 [v1.0.4 标签](https://github.com/weinaoa/easybilitool/tree/v1.0.4) 获取。模块“关于”中提供同一版本的源码与完整许可证链接，APK 内亦附许可证副本。
+当前版本的 APK、对应完整源码和校验值见 [v1.1.0 发布页](https://github.com/weinaoa/easybilitool/releases/tag/v1.1.0)。源码也可从 [v1.1.0 标签](https://github.com/weinaoa/easybilitool/tree/v1.1.0) 获取。模块“关于”中提供同一版本的源码与完整许可证链接，APK 内亦附许可证副本。
 
 本轮来源整理与独立构建验证见 [qa/PREPARATION.md](qa/PREPARATION.md)。
 
 1.0.3 的许可、APK 与实机检查见 [qa/VALIDATION-v103.md](qa/VALIDATION-v103.md)。
+
+1.1.0 将模块源码和全部测试迁移至 Kotlin，并修复首页进入视频时沉浸导航栏短暂恢复的问题。构建使用 AGP 自带 Kotlin；检查与实机结果见 [qa/VALIDATION-v110.md](qa/VALIDATION-v110.md)。
 
 1.0.4 修复动态详情和视频评论底栏收起后留下背景条的问题，列表延伸到页面底部，并保留末项安全距离。实机滑动与背景检查见 [qa/VALIDATION-v104.md](qa/VALIDATION-v104.md)。
 
@@ -22,7 +24,7 @@
 
 ## 使用
 
-1. 从发布页下载并安装 `easy-bili-tool-1.0.4.apk`。
+1. 从发布页下载并安装 `easy-bili-tool-1.1.0.apk`。
 2. 在支持 libxposed API 102 的 LSPosed 框架中启用“简单bili小工具”，作用域选择 **哔哩哔哩 / tv.danmaku.bili**。
 3. 重新启动哔哩哔哩，进入 **我的 → 设置 → 简单bili小工具**，或从模块桌面入口点击“打开功能设置”。
 4. 修改开关后点击 **保存并重启**。三个开关首次安装均关闭；退出未保存时可继续编辑或放弃修改。
@@ -35,7 +37,7 @@
 
 ## 构建
 
-需要 JDK 17+、Android SDK Platform 36、Build Tools 36.0.0 和 Python 3.10+。设置 `ANDROID_SDK_ROOT` / `ANDROID_HOME`，或在本地 `local.properties` 配置 `sdk.dir`。Python 工具通过 PATH 调用 Java。
+需要 JDK 17+、Android SDK Platform 36、Build Tools 36.0.0 和 Python 3.10+。设置 `ANDROID_SDK_ROOT` / `ANDROID_HOME`，或在本地 `local.properties` 配置 `sdk.dir`。Python 检查工具调用项目 Gradle wrapper，Kotlin 编译和运行库由构建管理。
 
 ```powershell
 .\gradlew.bat :app:assembleDebug :app:lintDebug

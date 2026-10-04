@@ -1,0 +1,164 @@
+{
+  "date": "2026-10-04",
+  "version": "1.1.0",
+  "versionCode": 6,
+  "artifact": {
+    "module": "easybilitool",
+    "bytes": 1322611,
+    "sha256": "07c2634259d91993a4672e7290121b2750bd70c356e2b6e001af72abf975fe83",
+    "installedBytesMatch": true
+  },
+  "local": {
+    "authoredMainKotlinFiles": 29,
+    "authoredTestKotlinFiles": 5,
+    "authoredJavaFiles": 0,
+    "jvmChecks": 87,
+    "assembleDebug": "passed",
+    "lintErrors": 0,
+    "lintWarnings": 21,
+    "apkV2Signature": "verified",
+    "compileOnlyXposedApiExcluded": true
+  },
+  "physicalDevice": {
+    "model": "Xiaomi 10 (umi)",
+    "androidApi": 37,
+    "hostVersion": "8.95.0 (8950600)",
+    "resolutionPx": [
+      1080,
+      2340
+    ],
+    "gestureInsetPx": 55,
+    "testedModuleOnlyInHost": true,
+    "homeVideoTransitionsFinalArtifact": [
+      {
+        "navigationImmersive": true,
+        "cycles": 2,
+        "samples": 72,
+        "contentBottomPx": 2340,
+        "homeBarBoundsUnchangedAfterReturn": true
+      },
+      {
+        "navigationImmersive": false,
+        "cycles": 1,
+        "samples": 36,
+        "contentBottomPx": 2285,
+        "homeBarBoundsUnchangedAfterReturn": true
+      }
+    ],
+    "transitionSampling": "18 screenshot and content-bound samples per direction; not an every-frame capture",
+    "detailMatrixOnFinalArtifact": true,
+    "detailCases": [
+      "dynamic body and comments",
+      "video comments",
+      "up/down",
+      "inertial scroll",
+      "intro/comment tab changes",
+      "exit/reentry",
+      "keyboard open/close"
+    ],
+    "hiddenViewportChecks": [
+      {
+        "navigationImmersive": true,
+        "page": "cmt3_recycler",
+        "expectedBottom": 2340,
+        "actualBottom": 2340
+      },
+      {
+        "navigationImmersive": true,
+        "page": "cmt3_recycler",
+        "expectedBottom": 2340,
+        "actualBottom": 2340
+      },
+      {
+        "navigationImmersive": true,
+        "page": "cmt3_recycler",
+        "expectedBottom": 2340,
+        "actualBottom": 2340
+      },
+      {
+        "navigationImmersive": false,
+        "page": "cmt3_recycler",
+        "expectedBottom": 2285,
+        "actualBottom": 2285
+      },
+      {
+        "navigationImmersive": false,
+        "page": "cmt3_recycler",
+        "expectedBottom": 2285,
+        "actualBottom": 2285
+      },
+      {
+        "navigationImmersive": false,
+        "page": "cmt3_recycler",
+        "expectedBottom": 2285,
+        "actualBottom": 2285
+      }
+    ],
+    "dynamicEndPadding": [
+      {
+        "module": "easy",
+        "navigation": true,
+        "floating": false,
+        "originalInputTop": 2141,
+        "endMarkerBottom": 2100,
+        "gap": 41
+      },
+      {
+        "module": "easy",
+        "navigation": false,
+        "floating": false,
+        "originalInputTop": 2141,
+        "endMarkerBottom": 2100,
+        "gap": 41
+      }
+    ],
+    "liveStatusBarOnOff": [
+      {
+        "immersive": true,
+        "rootBounds": [
+          0,
+          0,
+          1080,
+          2340
+        ],
+        "headerBounds": [
+          0,
+          90,
+          1080,
+          338
+        ],
+        "noCrash": true
+      },
+      {
+        "immersive": false,
+        "rootBounds": [
+          0,
+          90,
+          1080,
+          2340
+        ],
+        "headerBounds": [
+          0,
+          90,
+          1080,
+          338
+        ],
+        "noCrash": true
+      }
+    ]
+  },
+  "restoration": {
+    "preferencesRestored": true,
+    "moduleEnableStatesRestored": true,
+    "unrelatedScopesPreserved": true,
+    "qaHelperRemoved": true,
+    "screenAwake": true
+  },
+  "notPhysicallyValidated": [
+    "other Android versions and devices",
+    "three-button navigation",
+    "picture-in-picture",
+    "split-screen",
+    "every display frame during transition"
+  ]
+}
