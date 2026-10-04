@@ -1,11 +1,11 @@
 {
-  "apk": "easy-bili-tool-1.0.3.apk",
-  "sha256": "43cc717d077f9687ecbc4dfffa6efe8f0f15630d66df6e66335c760d5e1ffea6",
-  "bytes": 1221382,
+  "apk": "easy-bili-tool-1.0.4.apk",
+  "sha256": "ed11f8b9d7c9322e4c4d42984dde043c65d57ce0c2ee274bf55dcf8fb71b1780",
+  "bytes": 1223486,
   "package": "com.weinaoa.easybilitool",
   "label": "简单bili小工具",
-  "version": "1.0.3",
-  "versionCode": 4,
+  "version": "1.0.4",
+  "versionCode": 5,
   "sourceClasses": [
     "About",
     "BiliSettingsHook",
@@ -14,6 +14,7 @@
     "DetailBarScroll",
     "DetailBottomBarHook",
     "DetailNavigationInsets",
+    "DetailScrollViewport",
     "EasyBiliToolModule",
     "HomeBarSync",
     "HomeBottomBarHook",
@@ -43,6 +44,7 @@
     "DetailBarScroll",
     "DetailBottomBarHook",
     "DetailNavigationInsets",
+    "DetailScrollViewport",
     "EasyBiliToolModule",
     "HomeBarSync",
     "HomeBottomBarHook",
@@ -72,7 +74,7 @@
     "tv.danmaku.bili"
   ],
   "lintErrors": 0,
-  "lintWarnings": 18,
+  "lintWarnings": 19,
   "mainLicense": "Mulan PubL v2",
   "licenseBundled": true,
   "generatedOrRuntimeNamespaces": [

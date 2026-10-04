@@ -1,10 +1,10 @@
 # 源码来源清单
 
-整理日期：2026-10-04。对象：简单bili小工具 1.0.3，包名 `com.weinaoa.easybilitool`。
+整理日期：2026-10-04。对象：简单bili小工具 1.0.4，包名 `com.weinaoa.easybilitool`。
 
 **主许可证：Mulan PubL v2。** 维护者于 2026-10-04 明确选择以该协议公开简单版的自有实现、文档和图标，Copyright (c) 2026 weinaoa，完整文本见 [LICENSE](../LICENSE)。第三方依赖保留各自许可。本清单记录“参考”“移植”“改写”和“原创”的不同来源范围；重新授权依据版权人的选择，不依据包名或文件头是否改变。
 
-## 25 个 Java 文件
+## 26 个 Java 文件
 
 简单版从自用 BiliTool 中提取并裁剪三个原生界面功能，同时重建简单设置与配置。以下是本次保留文件及现存记录能支持的来源范围。
 
@@ -13,6 +13,7 @@
 | `ImmersiveStatusBarHook.java` | 原模块透明状态栏逻辑裁剪；原 0.8.3 记录为参考 BBZQ APK 的透明状态栏机制，独立适配哔哩哔哩 8.95 的 inset 与图标覆盖；保留视频顶部菜单间距和直播安全区处理 |
 | `HomeBottomBarHook.java`、`MainTabBarScroll.java` | 原模块首页原生底栏收起与滚动状态逻辑；去掉玻璃和其他底栏功能分支 |
 | `DetailBottomBarHook.java`、`DetailBarScroll.java` | 原模块动态详情、视频评论的原生底栏收起逻辑；去掉悬浮底栏配置分支 |
+| `DetailScrollViewport.java` | 本项目自有的原生列表范围修复；从既有详情安全区处理机制抽取约束与末项间距，独立实现可恢复的原生底栏收起适配，不包含悬浮材质或控件 |
 | `DetailBarLocator.java` | 从原模块详情底栏定位器中提取原生固定底栏定位；没有保留悬浮控件、材质和动画实现 |
 | `NavigationBarHook.java`、`MainNavigationInsets.java`、`DetailNavigationInsets.java`、`PageNavigationInsets.java`、`SettingsNavigationInsets.java` | 原模块系统导航栏与安全区适配裁剪；移除玻璃、悬浮及强制开启相关分支；使用 Android WindowInsets API |
 | `BiliSettingsHook.java`、`SettingsRoute.java`、`HostActions.java` | 原模块宿主设置入口、路由与重启适配；原记录致谢 BBZQ / 哔哩漫游的设置入口分析，重启代码也保留过哔哩漫游参考注释；简单版修改入口名、动作与路由标识 |

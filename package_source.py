@@ -26,7 +26,7 @@ if metadata["elements"][0]["versionName"] != version:
 apk = dist / f"easy-bili-tool-{version}.apk"
 shutil.copy2(root / "app/build/outputs/apk/debug/app-debug.apk", apk)
 source = dist / f"easy-bili-tool-{version}-source.zip"
-fixed = [".gitignore", ".gitattributes", "README.md", "THIRD_PARTY_NOTICES.md", "build.gradle", "settings.gradle", "gradle.properties",
+fixed = ["AGENTS.md", ".gitignore", ".gitattributes", "README.md", "THIRD_PARTY_NOTICES.md", "build.gradle", "settings.gradle", "gradle.properties",
          "gradlew", "gradlew.bat", "test.ps1", "package_source.py", "app/build.gradle", "app/lint.xml"]
 files = [root / name for name in fixed]
 if (root / "LICENSE").is_file():

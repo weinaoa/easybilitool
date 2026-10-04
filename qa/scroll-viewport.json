@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-04",
+  "device": "Mi 10 / umi",
+  "androidApi": 37,
+  "hostVersion": "8.95.0",
+  "screen": [
+    1080,
+    2340
+  ],
+  "nativeScrollConfigurations": [
+    {
+      "navigationEdgeToEdge": true,
+      "checks": [
+        {
+          "page": "cmt3_recycler",
+          "expectedBottom": 2340,
+          "actualBottom": 2340
+        },
+        {
+          "page": "cmt3_recycler",
+          "expectedBottom": 2340,
+          "actualBottom": 2340
+        },
+        {
+          "page": "cmt3_recycler",
+          "expectedBottom": 2340,
+          "actualBottom": 2340
+        }
+      ]
+    },
+    {
+      "navigationEdgeToEdge": false,
+      "checks": [
+        {
+          "page": "cmt3_recycler",
+          "expectedBottom": 2285,
+          "actualBottom": 2285
+        },
+        {
+          "page": "cmt3_recycler",
+          "expectedBottom": 2285,
+          "actualBottom": 2285
+        },
+        {
+          "page": "cmt3_recycler",
+          "expectedBottom": 2285,
+          "actualBottom": 2285
+        }
+      ]
+    }
+  ]
+}

@@ -66,7 +66,7 @@ final class DetailBottomBarHook {
         final int opusId,commentsId;
         final ViewTreeObserver.OnPreDrawListener draw=()->{update(false);return true;};
         final Runnable tick=new Runnable(){public void run(){update(true);if(resumed)handler.postDelayed(this,100);}};
-        ViewGroup bar;View surface;
+        ViewGroup bar;View surface;DetailScrollViewport viewport;
         boolean resumed,changing,applied;long checked;
         float originalTranslation,lastTranslation,originalAlpha,lastAlpha;int originalAccessibility;
         State(Activity activity){this.activity=activity;decor=activity.getWindow().getDecorView();opusId=id("opus_nested_scroll");commentsId=id("cmt3_recycler");}
@@ -129,9 +129,13 @@ final class DetailBottomBarHook {
                 int accessibility=fraction>=.999f?View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS:originalAccessibility;
                 if(bar.getImportantForAccessibility()!=accessibility)bar.setImportantForAccessibility(accessibility);
             }
+            if(viewport==null)viewport=new DetailScrollViewport(activity,bar,decor);
+            viewport.apply();
             fractions.put(bar,fraction);
         }
+        void restoreViewport(){if(viewport!=null){viewport.restore();viewport=null;}}
         void restoreNative(){
+            restoreViewport();
             if(bar!=null)translations.remove(bar);
             if(!applied||bar==null)return;
             if(Math.abs(bar.getTranslationY()-lastTranslation)<.5f)bar.setTranslationY(originalTranslation);
