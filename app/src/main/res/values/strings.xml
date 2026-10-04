@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">简单bili小工具</string>
+    <string name="module_description">哔哩哔哩沉浸状态栏、滑动时收起底栏与沉浸导航栏</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!-- This opaque PNG is the adaptive icon's background; the launcher supplies its mask. -->
+    <issue id="IconLauncherShape">
+        <ignore path="src/main/res/drawable-nodpi/ic_launcher_artwork.png" />
+    </issue>
+</lint>
