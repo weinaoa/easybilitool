@@ -1,3 +1,13 @@
+# Copyright (c) 2026 weinaoa
+# EasyBiliTool is licensed under Mulan PubL v2.
+# You can use this software according to the terms and conditions of the Mulan PubL v2.
+# You may obtain a copy of Mulan PubL v2 at:
+#     http://license.coscl.org.cn/MulanPubL-2.0
+# THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+# EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+# MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+# See the Mulan PubL v2 for more details.
+
 """Check the built APK's identity, scope, feature boundary and lint result."""
 import collections
 import hashlib
@@ -26,6 +36,9 @@ with ZipFile(apk) as archive:
     scope = archive.read("META-INF/xposed/scope.list").decode().splitlines()
     assert entry == "com.weinaoa.easybilitool.EasyBiliToolModule"
     assert scope == ["tv.danmaku.bili"]
+    assert archive.read("assets/LICENSE") == (ROOT / "LICENSE").read_bytes()
+    assert archive.read("assets/THIRD_PARTY_NOTICES.md") == (ROOT / "THIRD_PARTY_NOTICES.md").read_bytes()
+    assert archive.read("assets/licenses/Apache-2.0.txt") == (ROOT / "licenses/Apache-2.0.txt").read_bytes()
     assert not any("pinyin" in path.lower() for path in archive.namelist())
     for path in archive.namelist():
         if not re.fullmatch(r"classes\d*\.dex", path):
@@ -67,6 +80,7 @@ audit = {
     "version": name, "versionCode": code, "sourceClasses": sources, "dexTopLevelClasses": top,
     "permissions": [], "providers": [], "excludedFeatureAudit": "passed", "compileOnlyApiExcluded": True,
     "xposedEntry": entry, "scope": scope, "lintErrors": 0, "lintWarnings": lint.get("Warning", 0),
+    "mainLicense": "Mulan PubL v2", "licenseBundled": True,
     "generatedOrRuntimeNamespaces": ["kotlin", "org.intellij.lang.annotations", "org.jetbrains.annotations", "com.android.tools.r8"],
 }
 (ROOT / "qa/apk-audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

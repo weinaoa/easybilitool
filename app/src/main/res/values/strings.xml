@@ -1,3 +1,14 @@
+<!--
+Copyright (c) 2026 weinaoa
+EasyBiliTool is licensed under Mulan PubL v2.
+You can use this software according to the terms and conditions of the Mulan PubL v2.
+You may obtain a copy of Mulan PubL v2 at:
+    http://license.coscl.org.cn/MulanPubL-2.0
+THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+See the Mulan PubL v2 for more details.
+-->
 <resources>
     <string name="app_name">简单bili小工具</string>
     <string name="module_description">哔哩哔哩沉浸状态栏、滑动时收起底栏与沉浸导航栏</string>

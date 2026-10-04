@@ -1,3 +1,15 @@
+/*
+Copyright (c) 2026 weinaoa
+EasyBiliTool is licensed under Mulan PubL v2.
+You can use this software according to the terms and conditions of the Mulan PubL v2.
+You may obtain a copy of Mulan PubL v2 at:
+    http://license.coscl.org.cn/MulanPubL-2.0
+THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+See the Mulan PubL v2 for more details.
+*/
+
 package com.weinaoa.easybilitool;
 
 import android.app.AlertDialog;
@@ -28,6 +40,12 @@ final class About {
         new Reference("AndroidX · RecyclerView", "主界面与详情列表的纵向滚动接口",
                 "https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.OnScrollListener")
     };
+    private static final Reference[] OPEN_SOURCE = {
+        new Reference("源码与下载", "当前版本对应源码、APK 与校验值",
+                "https://github.com/weinaoa/easybilitool/releases/tag/v" + BuildConfig.VERSION_NAME),
+        new Reference("Mulan PubL v2 · 木兰公共许可证", "Copyright (c) 2026 weinaoa · 完整许可证",
+                "https://github.com/weinaoa/easybilitool/blob/v" + BuildConfig.VERSION_NAME + "/LICENSE")
+    };
 
     static void show(Context context) {
         boolean dark = (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
@@ -41,6 +59,7 @@ final class About {
         body.addView(text(context, "沉浸状态栏 · 滑动时收起底栏 · 沉浸导航栏", 13, muted, false));
         group(context, body, "参考项目", PROJECTS, ink, muted, accent);
         group(context, body, "参考文档", DOCUMENTS, ink, muted, accent);
+        group(context, body, "开源", OPEN_SOURCE, ink, muted, accent);
         ScrollView scroll = new ScrollView(context); scroll.addView(body);
         new AlertDialog.Builder(context).setTitle("关于").setView(scroll)
                 .setPositiveButton("关闭", null).show();

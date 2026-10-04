@@ -1,11 +1,11 @@
 {
-  "apk": "easy-bili-tool-1.0.2.apk",
-  "sha256": "eeb2459d2811e89d6aea31852069cb7582e01e7ffee04fda4dc68aee218977de",
-  "bytes": 1262582,
+  "apk": "easy-bili-tool-1.0.3.apk",
+  "sha256": "43cc717d077f9687ecbc4dfffa6efe8f0f15630d66df6e66335c760d5e1ffea6",
+  "bytes": 1221382,
   "package": "com.weinaoa.easybilitool",
   "label": "简单bili小工具",
-  "version": "1.0.2",
-  "versionCode": 3,
+  "version": "1.0.3",
+  "versionCode": 4,
   "sourceClasses": [
     "About",
     "BiliSettingsHook",
@@ -73,6 +73,8 @@
   ],
   "lintErrors": 0,
   "lintWarnings": 18,
+  "mainLicense": "Mulan PubL v2",
+  "licenseBundled": true,
   "generatedOrRuntimeNamespaces": [
     "kotlin",
     "org.intellij.lang.annotations",

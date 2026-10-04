@@ -9,6 +9,8 @@ gradlew.bat text eol=crlf
 *.md text eol=lf
 *.xml text eol=lf
 *.txt text eol=lf
+LICENSE -text
+Apache-2.0.txt -text
 .gitignore text eol=lf
 .gitattributes text eol=lf
 *.jar binary

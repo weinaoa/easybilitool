@@ -2,6 +2,8 @@
 
 日期：2026-10-04。简单bili小工具 1.0.2，包名 `com.weinaoa.easybilitool`。
 
+本文保留协议确定前的阶段记录。后续已选择 Mulan PubL v2 并整理为独立仓库，当前发布验证见 [VALIDATION-v103.md](VALIDATION-v103.md)。
+
 本轮仅整理来源、第三方许可、开发工具和公开文件边界，没有修改模块 Java 源码或资源。项目主许可证待定，没有推送 GitHub。
 
 ## 完成内容
