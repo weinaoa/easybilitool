@@ -1,6 +1,8 @@
 # 简单bili小工具
 
-包名：`com.weinaoa.easybilitool`。版本：1.1.1。
+包名：`com.weinaoa.easybilitool`。版本：1.1.2。
+
+1.1.2 修复“我的页”滑到底时末项进入底栏背景的问题：按系统实际导航安全区补齐有限列表的末尾留白，切页和应用返回时保留原始基线。153 项 JVM 检查、构建及 Lint 通过；实机验证范围见 [qa/VALIDATION-v112.md](qa/VALIDATION-v112.md)。
 
 1.1.1 修复视频评论底栏切换应用后高度累加，以及评论详情底栏未保留导航安全距离、收起后留下白色遮挡的问题。保留原始尺寸基线，选择当前评论层的底栏，并适配评论详情的 RelativeLayout 列表约束。136 项 JVM 检查、构建、Lint 和 USB umi 的沉浸导航开/关实测通过，详情见 [qa/VALIDATION-v111.md](qa/VALIDATION-v111.md)。
 
@@ -8,7 +10,7 @@
 
 代码来源见 [docs/SOURCES.md](docs/SOURCES.md)，第三方材料见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)，独立仓库与发布事项见 [docs/RELEASE.md](docs/RELEASE.md)。第三方依赖保留各自许可。
 
-当前 1.1.1 的 APK、对应完整源码与校验值见 [v1.1.1 发布页](https://github.com/weinaoa/easybilitool/releases/tag/v1.1.1)。源码也可从 [v1.1.1 标签](https://github.com/weinaoa/easybilitool/tree/v1.1.1) 获取。模块“关于”引用同一版本的源码和许可证，APK 内附完整许可证副本。
+当前 1.1.2 的 APK、对应完整源码与校验值见 [v1.1.2 发布页](https://github.com/weinaoa/easybilitool/releases/tag/v1.1.2)。源码也可从 [v1.1.2 标签](https://github.com/weinaoa/easybilitool/tree/v1.1.2) 获取。模块“关于”引用同一版本的源码和许可证，APK 内附完整许可证副本。
 
 本轮来源整理与独立构建验证见 [qa/PREPARATION.md](qa/PREPARATION.md)。
 
@@ -26,7 +28,7 @@
 
 ## 使用
 
-1. 从发布页下载并安装 `easy-bili-tool-1.1.0.apk`。
+1. 从发布页下载并安装 `easy-bili-tool-1.1.2.apk`。
 2. 在支持 libxposed API 102 的 LSPosed 框架中启用“简单bili小工具”，作用域选择 **哔哩哔哩 / tv.danmaku.bili**。
 3. 重新启动哔哩哔哩，进入 **我的 → 设置 → 简单bili小工具**，或从模块桌面入口点击“打开功能设置”。
 4. 修改开关后点击 **保存并重启**。三个开关首次安装均关闭；退出未保存时可继续编辑或放弃修改。

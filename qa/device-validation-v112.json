@@ -1,0 +1,464 @@
+{
+  "date": "2026-10-07",
+  "module": "easy",
+  "device": "Xiaomi 10 / umi (USB)",
+  "androidApi": 37,
+  "resolution": [
+    1080,
+    2340
+  ],
+  "hostVersion": "8.95.0 (8950600)",
+  "installedApk": {
+    "package": "com.weinaoa.easybilitool",
+    "version": "1.1.2",
+    "versionCode": 8,
+    "sha256": "08cc98e341d3edee10c894662b1b2f7ba17a6917f7184738820e10a7e03f4660",
+    "bytes": 1248038,
+    "sourceCount": 31,
+    "xposedEntry": "com.weinaoa.easybilitool.EasyBiliToolModule",
+    "scope": [
+      "tv.danmaku.bili"
+    ],
+    "compileOnlyApiExcluded": true,
+    "lintErrors": 0,
+    "lintWarnings": 22,
+    "v2SignatureVerified": true,
+    "installedBytesMatch": true
+  },
+  "localChecks": {
+    "jvmChecks": 153,
+    "newFiniteInsetChecks": 17,
+    "assembleDebugPassed": true,
+    "lintErrors": 0,
+    "lintWarnings": 22
+  },
+  "testedWithOnlyCurrentModuleEnabledForHost": true,
+  "myNativeResults": [
+    {
+      "navigation": false,
+      "hideEnabled": false,
+      "lastRow": [
+        0,
+        1980,
+        1080,
+        2112
+      ],
+      "listBounds": [
+        [
+          0,
+          817,
+          1080,
+          2285
+        ]
+      ],
+      "barBounds": [
+        [
+          0,
+          2102,
+          1080,
+          2285
+        ]
+      ],
+      "floatingButtons": [],
+      "tabLabelBounds": [
+        [
+          "首页",
+          "[80,2234][136,2272]"
+        ],
+        [
+          "关注",
+          "[296,2234][352,2272]"
+        ],
+        [
+          "会员购",
+          "[714,2234][798,2272]"
+        ],
+        [
+          "我的",
+          "[944,2234][1000,2272]"
+        ]
+      ],
+      "applicationResumeEndRows": [
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ],
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ],
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ]
+      ],
+      "downSwipeRestoresBar": true,
+      "tabReturnEndRow": [
+        0,
+        1980,
+        1080,
+        2112
+      ],
+      "exitReentry": true
+    },
+    {
+      "navigation": false,
+      "hideEnabled": true,
+      "lastRow": [
+        0,
+        1980,
+        1080,
+        2112
+      ],
+      "listBounds": [
+        [
+          0,
+          817,
+          1080,
+          2285
+        ]
+      ],
+      "barBounds": [],
+      "floatingButtons": [],
+      "tabLabelBounds": [],
+      "applicationResumeEndRows": [
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ],
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ],
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ]
+      ],
+      "downSwipeRestoresBar": true,
+      "tabReturnEndRow": [
+        0,
+        1980,
+        1080,
+        2112
+      ],
+      "exitReentry": true
+    },
+    {
+      "navigation": true,
+      "hideEnabled": false,
+      "lastRow": [
+        0,
+        1980,
+        1080,
+        2112
+      ],
+      "listBounds": [
+        [
+          0,
+          817,
+          1080,
+          2340
+        ]
+      ],
+      "barBounds": [
+        [
+          0,
+          2102,
+          1080,
+          2340
+        ]
+      ],
+      "floatingButtons": [],
+      "tabLabelBounds": [
+        [
+          "首页",
+          "[80,2234][136,2272]"
+        ],
+        [
+          "关注",
+          "[296,2234][352,2272]"
+        ],
+        [
+          "会员购",
+          "[714,2234][798,2272]"
+        ],
+        [
+          "我的",
+          "[944,2234][1000,2272]"
+        ]
+      ],
+      "applicationResumeEndRows": [
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ],
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ],
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ]
+      ],
+      "downSwipeRestoresBar": true,
+      "tabReturnEndRow": [
+        0,
+        1980,
+        1080,
+        2112
+      ],
+      "exitReentry": true
+    },
+    {
+      "navigation": true,
+      "hideEnabled": true,
+      "lastRow": [
+        0,
+        1980,
+        1080,
+        2112
+      ],
+      "listBounds": [
+        [
+          0,
+          817,
+          1080,
+          2340
+        ]
+      ],
+      "barBounds": [],
+      "floatingButtons": [],
+      "tabLabelBounds": [],
+      "applicationResumeEndRows": [
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ],
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ],
+        [
+          0,
+          1980,
+          1080,
+          2112
+        ]
+      ],
+      "downSwipeRestoresBar": true,
+      "tabReturnEndRow": [
+        0,
+        1980,
+        1080,
+        2112
+      ],
+      "exitReentry": true
+    }
+  ],
+  "nativeResults": [
+    {
+      "module": "easy",
+      "navigation": false,
+      "nativeMainBounds": [
+        0,
+        2164,
+        1080,
+        2285
+      ],
+      "mainApplicationResumes": [
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ]
+      ],
+      "nativeReplyBounds": [
+        0,
+        2164,
+        1080,
+        2285
+      ],
+      "replyApplicationResumes": [
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ]
+      ],
+      "replyCollapsedListBottom": 2285,
+      "replyFling": true,
+      "replyKeyboardReturn": true,
+      "replyReentered": true,
+      "replyEndMarkerBottom": 2123,
+      "replyEndGap": 41,
+      "endMarkerSettlementChecked": true,
+      "initialScriptStoppedBeforeScrollLimit": true
+    },
+    {
+      "module": "easy",
+      "navigation": true,
+      "nativeMainBounds": [
+        0,
+        2164,
+        1080,
+        2340
+      ],
+      "mainApplicationResumes": [
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ]
+      ],
+      "nativeReplyBounds": [
+        0,
+        2164,
+        1080,
+        2340
+      ],
+      "replyApplicationResumes": [
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ]
+      ],
+      "replyCollapsedListBottom": 2340,
+      "replyFling": true,
+      "replyKeyboardReturn": true,
+      "replyReentered": true,
+      "replyEndMarkerBottom": 2123,
+      "replyEndGap": 41
+    }
+  ],
+  "dynamicActualEndResults": [
+    {
+      "module": "easy",
+      "navigation": false,
+      "floating": false,
+      "originalInputTop": 2141,
+      "endMarkerBottom": 2100,
+      "gap": 41
+    },
+    {
+      "module": "easy",
+      "navigation": true,
+      "floating": false,
+      "originalInputTop": 2141,
+      "endMarkerBottom": 2100,
+      "gap": 41
+    }
+  ],
+  "restoration": {
+    "moduleStatesMatchBaseline": true,
+    "moduleScopesMatchBaseline": true,
+    "temporaryQaHelperRemoved": true,
+    "screenAwake": true,
+    "preferenceValuesMatchAfterRestart": true,
+    "preferenceBytesMatchAfterRestart": true
+  },
+  "limits": [
+    "USB umi only; older Android devices and three-button navigation were not physically tested.",
+    "Main video comment list was not traversed to its final item; actual end checks use the finite reply thread and dynamic comments."
+  ],
+  "myFlingResults": [
+    {
+      "navigation": false,
+      "lastRowAtFlingLimit": [
+        0,
+        1980,
+        1080,
+        2112
+      ],
+      "hidden": true,
+      "restored": true
+    },
+    {
+      "navigation": true,
+      "lastRowAtFlingLimit": [
+        0,
+        1980,
+        1080,
+        2112
+      ],
+      "hidden": true,
+      "restored": true
+    }
+  ]
+}

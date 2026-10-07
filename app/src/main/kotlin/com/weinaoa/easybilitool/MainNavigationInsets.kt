@@ -15,9 +15,10 @@ package com.weinaoa.easybilitool
 import android.app.Activity
 import android.view.*
 import android.widget.ImageView
+import java.util.WeakHashMap
 
 /**
- * Let the main feed draw behind navigation; inset only the fixed tab controls.
+ * Keep tab controls safe and preserve the finite My page end position.
  */
 class MainNavigationInsets {
     private lateinit var activity: Activity
@@ -45,12 +46,17 @@ class MainNavigationInsets {
     private var lastControlsHeight: Int = 0
 
     private var backgroundScale: ImageView.ScaleType? = null
+    private var content: View? = null
+    private var mine: ViewGroup? = null
+    private var mineClip = true
+    private val mineBaselines = WeakHashMap<View, DetailInsetState>()
 
     constructor(activity: Activity) {
         this.activity = activity
     }
 
     fun bind(content: View): Boolean {
+        this.content = content
         if (!activity.javaClass.getName().equals("tv.danmaku.bili.MainActivityV2")) {
             return false
         }
@@ -142,10 +148,58 @@ class MainNavigationInsets {
         if ((image != null && ((image)!!.getScaleType() != ImageView.ScaleType.FIT_XY))) {
             (image)!!.setScaleType(ImageView.ScaleType.FIT_XY)
         }
+        return applyMine(inset) || changed
+    }
+
+    private fun visibleMine(view: View, id: Int): ViewGroup? {
+        if (!view.isShown) return null
+        if (view is ViewGroup) {
+            if (view.id == id) return view
+            for (index in view.childCount - 1 downTo 0) {
+                visibleMine(view.getChildAt(index), id)?.let { return it }
+            }
+        }
+        return null
+    }
+
+    private fun applyMine(inset: Int): Boolean {
+        val id = activity.resources.getIdentifier("mine_recycle", "id", activity.packageName)
+        val next = if (id == 0) null else content?.let { visibleMine(it, id) }
+        if (mine !== next) {
+            restoreMine()
+            mine = next
+            mineClip = next?.clipToPadding ?: true
+        }
+        val view = mine ?: return false
+        val location = IntArray(2)
+        view.getLocationInWindow(location)
+        val extra = MainContentSafeArea.extra(location[1] + view.height, activity.window.decorView.height, inset)
+        val metrics = mineBaselines.getOrPut(view) { DetailInsetState() }
+        metrics.apply(view.paddingBottom, view.layoutParams.height, view.height, extra, false)
+        var changed = false
+        if (view.paddingBottom != metrics.lastPadding) {
+            view.setPadding(view.paddingLeft, view.paddingTop, view.paddingRight, metrics.lastPadding)
+            changed = true
+        }
+        if (view.clipToPadding) { view.clipToPadding = false; changed = true }
         return changed
     }
 
+    private fun restoreMine() {
+        mine?.let { view ->
+            mineBaselines[view]?.let { metrics ->
+                if (metrics.applied && view.paddingBottom == metrics.lastPadding) {
+                    view.setPadding(view.paddingLeft, view.paddingTop, view.paddingRight, metrics.padding)
+                }
+                metrics.restored()
+            }
+            if (mineClip && !view.clipToPadding) view.clipToPadding = true
+        }
+        mine = null
+    }
+
     fun restore() {
+        restoreMine()
         if (!applied) {
             return
         }
