@@ -1,0 +1,234 @@
+{
+  "date": "2026-10-07",
+  "module": "easy",
+  "device": "Xiaomi 10 / umi (USB)",
+  "androidApi": 37,
+  "hostVersion": "8.95.0 (8950600)",
+  "installedApk": {
+    "package": "com.weinaoa.easybilitool",
+    "version": "1.1.1",
+    "versionCode": 7,
+    "sha256": "45eac8d064095f8a84a845305a5d148cf6017f8ae9ace0bb260b300f693b1ed3",
+    "bytes": 1246494,
+    "sourceCount": 30,
+    "xposedEntry": "com.weinaoa.easybilitool.EasyBiliToolModule",
+    "scope": [
+      "tv.danmaku.bili"
+    ],
+    "compileOnlyApiExcluded": true,
+    "lintErrors": 0,
+    "lintWarnings": 21,
+    "v2SignatureVerified": true,
+    "installedBytesMatch": true
+  },
+  "localChecks": {
+    "jvmChecks": 136,
+    "newDetailInsetChecks": 49,
+    "assembleDebugPassed": true,
+    "lintErrors": 0,
+    "lintWarnings": 21
+  },
+  "testedWithOnlyCurrentModuleEnabledForHost": true,
+  "nativeResults": [
+    {
+      "module": "easy",
+      "navigation": false,
+      "nativeMainBounds": [
+        0,
+        2164,
+        1080,
+        2285
+      ],
+      "mainApplicationResumes": [
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ]
+      ],
+      "nativeReplyBounds": [
+        0,
+        2164,
+        1080,
+        2285
+      ],
+      "replyApplicationResumes": [
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2285
+        ]
+      ],
+      "replyCollapsedListBottom": 2285,
+      "replyFling": true,
+      "replyKeyboardReturn": true,
+      "replyReentered": true,
+      "replyEndMarkerBottom": 2123,
+      "replyEndGap": 41
+    },
+    {
+      "module": "easy",
+      "navigation": true,
+      "nativeMainBounds": [
+        0,
+        2164,
+        1080,
+        2340
+      ],
+      "mainApplicationResumes": [
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ]
+      ],
+      "nativeReplyBounds": [
+        0,
+        2164,
+        1080,
+        2340
+      ],
+      "replyApplicationResumes": [
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        [
+          0,
+          2164,
+          1080,
+          2340
+        ]
+      ],
+      "replyCollapsedListBottom": 2340,
+      "replyFling": true,
+      "replyKeyboardReturn": true,
+      "replyReentered": true,
+      "replyEndMarkerBottom": 2123,
+      "replyEndGap": 41
+    }
+  ],
+  "dynamicEndClearance": [
+    {
+      "module": "easy",
+      "navigation": false,
+      "floating": false,
+      "originalInputTop": 2141,
+      "endMarkerBottom": 2100,
+      "gap": 41
+    },
+    {
+      "module": "easy",
+      "navigation": true,
+      "floating": false,
+      "originalInputTop": 2141,
+      "endMarkerBottom": 2100,
+      "gap": 41
+    }
+  ],
+  "restoration": {
+    "preferencesByteIdenticalAfterHostRestart": true,
+    "allModuleStatesAndScopesMatchBaseline": true,
+    "temporaryQaHelperRemoved": true,
+    "screenAwake": true
+  },
+  "githubSyncAtValidationCompletion": {
+    "pushed": false,
+    "cliAuthenticated": false
+  }
+}

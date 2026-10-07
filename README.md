@@ -1,12 +1,14 @@
 # 简单bili小工具
 
-包名：`com.weinaoa.easybilitool`。版本：1.1.0。
+包名：`com.weinaoa.easybilitool`。版本：1.1.1。
+
+1.1.1 修复视频评论底栏切换应用后高度累加，以及评论详情底栏未保留导航安全距离、收起后留下白色遮挡的问题。保留原始尺寸基线，选择当前评论层的底栏，并适配评论详情的 RelativeLayout 列表约束。136 项 JVM 检查、构建、Lint 和 USB umi 的沉浸导航开/关实测通过，详情见 [qa/VALIDATION-v111.md](qa/VALIDATION-v111.md)。
 
 源码仓库：[weinaoa/easybilitool](https://github.com/weinaoa/easybilitool)。本项目自有代码、文档和图标以 **Mulan PubL v2（木兰公共许可证，第2版）** 发布，Copyright (c) 2026 weinaoa。完整文本见 [LICENSE](LICENSE)。
 
 代码来源见 [docs/SOURCES.md](docs/SOURCES.md)，第三方材料见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)，独立仓库与发布事项见 [docs/RELEASE.md](docs/RELEASE.md)。第三方依赖保留各自许可。
 
-当前版本的 APK、对应完整源码和校验值见 [v1.1.0 发布页](https://github.com/weinaoa/easybilitool/releases/tag/v1.1.0)。源码也可从 [v1.1.0 标签](https://github.com/weinaoa/easybilitool/tree/v1.1.0) 获取。模块“关于”中提供同一版本的源码与完整许可证链接，APK 内亦附许可证副本。
+当前 1.1.1 的 APK、对应完整源码与校验值见 [v1.1.1 发布页](https://github.com/weinaoa/easybilitool/releases/tag/v1.1.1)。源码也可从 [v1.1.1 标签](https://github.com/weinaoa/easybilitool/tree/v1.1.1) 获取。模块“关于”引用同一版本的源码和许可证，APK 内附完整许可证副本。
 
 本轮来源整理与独立构建验证见 [qa/PREPARATION.md](qa/PREPARATION.md)。
 

@@ -14,6 +14,7 @@ package com.weinaoa.easybilitool
 
 import android.app.Activity
 import android.view.*
+import android.widget.RelativeLayout
 import java.lang.reflect.Field
 import java.util.*
 
@@ -40,21 +41,20 @@ class DetailScrollViewport {
     }
 
     fun apply() {
-        for (name in arrayOf("opus_nested_scroll", "comment_main")) {
-
-            var id: Int = id(name)
-            var content: View? = (if ((id == 0)) null else decor.findViewById(id))
-            if (((content != null) && ((content)!!.getParent() == bar.getParent()))) {
-                var anchor: Anchor? = anchors[content] ?: Anchor.read(content, bar.id)?.also { anchors[content] = it }
-                if ((anchor != null)) {
-                    (anchor)!!.apply()
-                }
+        val parent = bar.parent as? ViewGroup
+        val contentIds = setOf(id("opus_nested_scroll"), id("comment_main"), id("cmt3_swipe_refresh"))
+        if (parent != null) {
+            for (index in 0 until parent.childCount) {
+                val content = parent.getChildAt(index)
+                if (content.id == 0 || content.id !in contentIds) continue
+                val anchor = anchors[content] ?: Anchor.read(content, bar.id)?.also { anchors[content] = it }
+                anchor?.apply()
             }
         }
         var at: IntArray = IntArray(2)
         bar.getLocationOnScreen(at)
         var nativeTop: Int = (at[1] - Math.round(DetailBottomBarHook.translation(bar)))
-        reserve(decor, id("cmt3_recycler"), nativeTop)
+        reserve(parent ?: decor, id("cmt3_recycler"), nativeTop)
     }
 
     private fun id(name: String): Int {
@@ -104,6 +104,7 @@ class DetailScrollViewport {
 
         lateinit var top: Field
         lateinit var bottom: Field
+        private var relative: RelativeLayout.LayoutParams? = null
 
         @JvmField var originalTop: Int = 0
         @JvmField var originalBottom: Int = 0
@@ -117,8 +118,25 @@ class DetailScrollViewport {
             this.originalBottom = originalBottom
         }
 
+        constructor(view: View, params: RelativeLayout.LayoutParams, originalTop: Int, originalBottom: Int) {
+            this.view = view
+            this.params = params
+            this.relative = params
+            this.originalTop = originalTop
+            this.originalBottom = originalBottom
+        }
+
         fun apply() {
             if ((view.getLayoutParams() != params)) {
+                return
+            }
+            relative?.let { layout ->
+                if (layout.getRule(RelativeLayout.ABOVE) == originalTop &&
+                    layout.getRule(RelativeLayout.ALIGN_PARENT_BOTTOM) == originalBottom) {
+                    layout.removeRule(RelativeLayout.ABOVE)
+                    layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
+                    view.layoutParams = layout
+                }
                 return
             }
             try {
@@ -136,6 +154,16 @@ class DetailScrollViewport {
             if ((view.getLayoutParams() != params)) {
                 return
             }
+            relative?.let { layout ->
+                if (layout.getRule(RelativeLayout.ABOVE) == 0 &&
+                    layout.getRule(RelativeLayout.ALIGN_PARENT_BOTTOM) == RelativeLayout.TRUE) {
+                    layout.addRule(RelativeLayout.ABOVE, originalTop)
+                    if (originalBottom == 0) layout.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                    else layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, originalBottom)
+                    view.layoutParams = layout
+                }
+                return
+            }
             try {
                 if (((top.getInt(params) == -1) && (bottom.getInt(params) == 0))) {
                     top.setInt(params, originalTop)
@@ -151,6 +179,11 @@ class DetailScrollViewport {
             @JvmStatic fun read(view: View, barId: Int): Anchor? {
                 try {
                     var params: Any? = view.getLayoutParams()
+                    if (params is RelativeLayout.LayoutParams) {
+                        val above = params.getRule(RelativeLayout.ABOVE)
+                        return if (above == barId) Anchor(view, params, above,
+                            params.getRule(RelativeLayout.ALIGN_PARENT_BOTTOM)) else null
+                    }
                     var top: Field = Reflector.findField((params)!!.javaClass, "bottomToTop")
                     var bottom: Field = Reflector.findField((params)!!.javaClass, "bottomToBottom")
                     var t: Int = top.getInt(params)

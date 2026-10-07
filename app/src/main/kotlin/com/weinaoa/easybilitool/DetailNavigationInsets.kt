@@ -33,6 +33,7 @@ class DetailNavigationInsets {
     private var bannersId: Int = 0
 
     private val adjustments: MutableMap<View, Adjustment> = IdentityHashMap()
+    private val baselines = WeakHashMap<View, DetailInsetState>()
 
     constructor(activity: Activity) {
         this.activity = activity
@@ -82,7 +83,7 @@ class DetailNavigationInsets {
             var bar: ViewGroup? = DetailBarLocator.findBar(activity, content)
             if ((bar != null)) {
                 present.add(bar)
-                changed = (adjustments.computeIfAbsent(bar, lambda@ { v -> Adjustment(bar, true, false) }).apply(inset) || changed)
+                changed = (adjustments.computeIfAbsent(bar, lambda@ { v -> Adjustment(bar, true, false, baselines.getOrPut(bar) { DetailInsetState() }) }).apply(inset) || changed)
             }
         }
         run {
@@ -99,8 +100,18 @@ class DetailNavigationInsets {
         return changed
     }
 
+    private fun visibleContent(view: View, id: Int): View? {
+        if (!view.isShown) return null
+        if (view is ViewGroup) {
+            for (index in view.childCount - 1 downTo 0) {
+                visibleContent(view.getChildAt(index), id)?.let { return it }
+            }
+        }
+        return if (view.id == id) view else null
+    }
+
     private fun adjust(content: View, id: Int, fixed: Boolean, inset: Int, present: MutableSet<View>): Boolean {
-        var view: View? = (if ((id == 0)) null else (content)!!.findViewById(id))
+        val view = if (id == 0) null else visibleContent(content, id)
         if (((!(view is ViewGroup) || ((view)!!.getLayoutParams() == null)) || !(view)!!.isLaidOut())) {
             return false
         }
@@ -108,17 +119,17 @@ class DetailNavigationInsets {
             return false
         }
         present.add(view)
-        var adjustment: Adjustment = adjustments.computeIfAbsent(view, lambda@ { v -> Adjustment((v as ViewGroup), fixed, !fixed) })
+        var adjustment: Adjustment = adjustments.computeIfAbsent(view, lambda@ { v -> Adjustment((v as ViewGroup), fixed, !fixed, baselines.getOrPut(v) { DetailInsetState() }) })
         return adjustment.apply(inset)
     }
 
     private fun adjustSafeArea(content: View, id: Int, inset: Int, present: MutableSet<View>): Boolean {
-        var view: View? = (if ((id == 0)) null else (content)!!.findViewById(id))
+        val view = if (id == 0) null else visibleContent(content, id)
         if (((!(view is ViewGroup) || ((view)!!.getLayoutParams() == null)) || !(view)!!.isLaidOut())) {
             return false
         }
         present.add(view)
-        return adjustments.computeIfAbsent(view, lambda@ { v -> Adjustment((v as ViewGroup), false, false) }).apply(inset)
+        return adjustments.computeIfAbsent(view, lambda@ { v -> Adjustment((v as ViewGroup), false, false, baselines.getOrPut(v) { DetailInsetState() }) }).apply(inset)
     }
 
     private fun isRecycler(view: View): Boolean {
@@ -140,6 +151,7 @@ class DetailNavigationInsets {
             adjustment.restore()
         }
         adjustments.clear()
+        // Baselines contain only numbers; keep them while a stopped or cached view is alive.
     }
 
     private class Adjustment {
@@ -150,40 +162,23 @@ class DetailNavigationInsets {
 
         @JvmField var clip: Boolean = false
 
-        @JvmField var padding: Int = 0
-        @JvmField var height: Int = 0
-        @JvmField var measuredHeight: Int = 0
-        @JvmField var lastPadding: Int = 0
-        @JvmField var lastHeight: Int = 0
-
-        @JvmField var applied: Boolean = false
+        private lateinit var metrics: DetailInsetState
 
         @JvmField var originalBackground: Drawable? = null
         @JvmField var extendedBackground: Drawable? = null
 
-        constructor(view: ViewGroup, fixed: Boolean, scroll: Boolean) {
+        constructor(view: ViewGroup, fixed: Boolean, scroll: Boolean, metrics: DetailInsetState) {
             this.view = view
             this.fixed = fixed
             this.scroll = scroll
+            this.metrics = metrics
             clip = (view)!!.getClipToPadding()
         }
 
         fun apply(inset: Int): Boolean {
             var params: ViewGroup.LayoutParams = (view)!!.getLayoutParams()
-            if (!applied) {
-                padding = (view)!!.getPaddingBottom()
-                height = params.height
-                measuredHeight = (view)!!.getHeight()
-                applied = true
-                originalBackground = (view)!!.getBackground()
-            } else {
-                if (((view)!!.getPaddingBottom() != lastPadding)) {
-                    padding = (view)!!.getPaddingBottom()
-                }
-                if ((params.height != lastHeight)) {
-                    height = params.height
-                }
-            }
+            if (!metrics.applied) originalBackground = view.background
+            metrics.apply(view.paddingBottom, params.height, view.height, inset, fixed)
             if ((fixed && ((view)!!.getBackground() == null))) {
                 var fill: Drawable? = childBackground(view)
                 if ((fill != null)) {
@@ -192,15 +187,13 @@ class DetailNavigationInsets {
                     (view)!!.setBackground(extendedBackground)
                 }
             }
-            lastPadding = (padding + inset)
-            lastHeight = (if (fixed) (((if ((height > 0)) height else measuredHeight)) + inset) else height)
             var changed: Boolean = false
-            if (((view)!!.getPaddingBottom() != lastPadding)) {
-                (view)!!.setPadding((view)!!.getPaddingLeft(), (view)!!.getPaddingTop(), (view)!!.getPaddingRight(), lastPadding)
+            if (((view)!!.getPaddingBottom() != metrics.lastPadding)) {
+                (view)!!.setPadding((view)!!.getPaddingLeft(), (view)!!.getPaddingTop(), (view)!!.getPaddingRight(), metrics.lastPadding)
                 changed = true
             }
-            if ((params.height != lastHeight)) {
-                params.height = lastHeight
+            if ((params.height != metrics.lastHeight)) {
+                params.height = metrics.lastHeight
                 (view)!!.setLayoutParams(params)
                 changed = true
             }
@@ -233,23 +226,23 @@ class DetailNavigationInsets {
         }
 
         fun restore(): Boolean {
-            if (!applied) {
+            if (!metrics.applied) {
                 return false
             }
-            applied = false
+            metrics.restored()
             var changed: Boolean = false
             if (((extendedBackground != null) && ((view)!!.getBackground() == extendedBackground))) {
                 (view)!!.setBackground(originalBackground)
                 extendedBackground = null
                 changed = true
             }
-            if (((view)!!.getPaddingBottom() == lastPadding)) {
-                (view)!!.setPadding((view)!!.getPaddingLeft(), (view)!!.getPaddingTop(), (view)!!.getPaddingRight(), padding)
+            if (((view)!!.getPaddingBottom() == metrics.lastPadding)) {
+                (view)!!.setPadding((view)!!.getPaddingLeft(), (view)!!.getPaddingTop(), (view)!!.getPaddingRight(), metrics.padding)
                 changed = true
             }
             var params: ViewGroup.LayoutParams = (view)!!.getLayoutParams()
-            if ((((params != null) && (params.height == lastHeight)) && (lastHeight != height))) {
-                params.height = height
+            if ((((params != null) && (params.height == metrics.lastHeight)) && (metrics.lastHeight != metrics.height))) {
+                params.height = metrics.height
                 (view)!!.setLayoutParams(params)
                 changed = true
             }
