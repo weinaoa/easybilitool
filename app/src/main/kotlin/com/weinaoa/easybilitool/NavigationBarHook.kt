@@ -13,6 +13,8 @@ See the Mulan PubL v2 for more details.
 package com.weinaoa.easybilitool
 
 import android.app.*
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Insets
@@ -24,12 +26,15 @@ import java.util.*
 import java.util.function.Supplier
 
 /**
+
  * Navigation-only edge-to-edge. Preserve host status-bar and keyboard ownership.
+
  */
 class NavigationBarHook {
     private lateinit var settings: Supplier<Config>
 
     private val activities: MutableMap<Activity, State> = WeakHashMap()
+    private val dialogs: MutableMap<Dialog, State> = WeakHashMap()
 
     private val decors: MutableMap<View, State> = WeakHashMap()
 
@@ -43,6 +48,38 @@ class NavigationBarHook {
 
     @Throws(Exception::class)
     fun install(application: Application) {
+        Reflector.findAndHookMethod(Dialog::class.java, "show", object : MethodHook() {
+            override fun afterHookedMethod(p: MethodHookParam) {
+                val dialog = p.thisObject as Dialog
+                val window = dialog.window ?: return
+                val owner = dialog.ownerActivity ?: ownerActivity(dialog.context) ?:
+                    activities.entries.filter { it.value.resumed }.singleOrNull()?.key ?: return
+                val id = owner.resources.getIdentifier("design_bottom_sheet", "id", owner.packageName)
+                var sheet = if (id == 0) null else window.decorView.findViewById<View>(id) as? ViewGroup
+                val nativeSheet = sheet != null
+                if (sheet == null) {
+                    val content = window.decorView.findViewById<ViewGroup>(android.R.id.content)
+                    sheet = content
+                }
+                if (sheet == null || dialogs.containsKey(dialog)) return
+                val state = State(owner, window, sheet, !nativeSheet)
+                dialogs[dialog] = state
+                decors[state.decor] = state
+                windows[state.window] = state
+                state.decor.viewTreeObserver.addOnPreDrawListener(state.preDraw)
+                state.visibility.started()
+                state.resumed = true
+                state.update()
+                state.handler.post(state.tick)
+            }
+        })
+        Reflector.findAndHookMethod(Dialog::class.java, "dismiss", object : MethodHook() {
+            override fun afterHookedMethod(p: MethodHookParam) {
+                val dialog = p.thisObject as Dialog
+                if (Looper.myLooper() == Looper.getMainLooper()) removeDialog(dialog)
+                else Handler(Looper.getMainLooper()).post { removeDialog(dialog) }
+            }
+        })
         Reflector.findAndHookMethod(View::class.java, "dispatchApplyWindowInsets", WindowInsets::class.java, object : MethodHook() {
             override fun beforeHookedMethod(p: MethodHookParam) {
                 var s: State? = decors.get(p.thisObject)
@@ -148,6 +185,7 @@ class NavigationBarHook {
                 }
             }
             override fun onActivityDestroyed(a: Activity) {
+                dialogs.entries.filter { it.value.activity === a }.map { it.key }.forEach(::removeDialog)
                 var s: State? = activities.remove(a)
                 if ((s != null)) {
                     (s)!!.visibility.stopped()
@@ -164,8 +202,16 @@ class NavigationBarHook {
             }
             override fun onActivityStarted(a: Activity) {
                 activities[a]?.let { it.visibility.started(); it.update() }
+                dialogs.filter { it.value.activity === a && it.key.isShowing }.values.forEach {
+                    it.visibility.started(); it.resumed = true; it.update()
+                    it.handler.removeCallbacks(it.tick); it.handler.post(it.tick)
+                }
             }
             override fun onActivityStopped(a: Activity) {
+                dialogs.values.filter { it.activity === a }.forEach {
+                    it.visibility.stopped(); it.resumed = false
+                    it.handler.removeCallbacks(it.tick); it.restore()
+                }
                 activities[a]?.let {
                     it.visibility.stopped()
                     it.handler.removeCallbacks(it.tick)
@@ -177,6 +223,28 @@ class NavigationBarHook {
             }
         })
         HookRuntime.log("[EasyBiliTool] NAVIGATION_EDGE_READY bottom insets preserved")
+    }
+
+    private fun ownerActivity(context: Context): Activity? {
+        var current = context
+        val visited = Collections.newSetFromMap(IdentityHashMap<Context, Boolean>())
+        while (visited.add(current)) {
+            if (current is Activity) return current
+            current = (current as? ContextWrapper)?.baseContext ?: return null
+        }
+        return null
+    }
+
+    private fun removeDialog(dialog: Dialog) {
+        val state = dialogs.remove(dialog) ?: return
+        state.visibility.stopped()
+        state.resumed = false
+        state.handler.removeCallbacks(state.tick)
+        state.restore()
+        if (state.decor.viewTreeObserver.isAlive) state.decor.viewTreeObserver.removeOnPreDrawListener(state.preDraw)
+        decors.remove(state.decor)
+        windows.remove(state.window)
+        controllers.values.removeIf { it === state }
     }
 
     private inner class State {
@@ -210,6 +278,9 @@ class NavigationBarHook {
         @JvmField val pageInsets: PageNavigationInsets = PageNavigationInsets()
 
         val visibility = NavigationVisibility()
+        private var sheetInsets: BottomSheetNavigationInsets? = null
+        private var dialogWindow = false
+        private var requireBottomWindow = false
 
         @JvmField var resumed: Boolean = false
         @JvmField var changing: Boolean = false
@@ -232,10 +303,13 @@ class NavigationBarHook {
 
         @JvmField val contentLocation: IntArray = IntArray(2)
 
-        constructor(a: Activity) {
+        constructor(a: Activity, target: Window = a.window, sheet: ViewGroup? = null, requireBottom: Boolean = false) {
             activity = a
-            window = a.getWindow()
+            window = target
             decor = window.getDecorView()
+            dialogWindow = sheet != null
+            requireBottomWindow = requireBottom
+            sheetInsets = sheet?.let(::BottomSheetNavigationInsets)
             mainInsets = MainNavigationInsets(a)
             settingsInsets = SettingsNavigationInsets(a)
             detailInsets = DetailNavigationInsets(a)
@@ -257,10 +331,23 @@ class NavigationBarHook {
         }
 
         fun eligible(): Boolean {
-            return ((((((((visibility.visible && (settings.get())!!.b("NAVIGATION_EDGE_TO_EDGE"))) && !activity.isDestroyed()) && !imeVisible) && (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)) && !activity.isInPictureInPictureMode()) && !activity.isInMultiWindowMode()) && (((decor.getSystemUiVisibility() and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)) == 0))
+            val config = settings.get() ?: return false
+            // Compose may assign full-width/bottom positioning after Dialog.show().
+            // Observe the live attributes rather than rejecting that window before layout.
+            if (requireBottomWindow && (window.attributes.width != WindowManager.LayoutParams.MATCH_PARENT ||
+                window.attributes.gravity and Gravity.VERTICAL_GRAVITY_MASK != Gravity.BOTTOM)) return false
+            return visibility.visible && config.b("NAVIGATION_EDGE_TO_EDGE") &&
+                !activity.isDestroyed && !imeVisible &&
+                activity.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT &&
+                !activity.isInPictureInPictureMode && !activity.isInMultiWindowMode &&
+                decor.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
         }
 
         fun lightBackground(): Boolean {
+            if (dialogWindow) {
+                val fill = sheetInsets?.surfaceColor()
+                if (fill != null && Color.alpha(fill) == 255) return Color.luminance(fill) > .5
+            }
             if (detailInsets.darkSurface()) {
                 return false
             }
@@ -269,7 +356,7 @@ class NavigationBarHook {
                 return (Color.luminance(fill!!.color) > .5)
             }
             var color: TypedValue = TypedValue()
-            if (((activity.getTheme().resolveAttribute(android.R.attr.colorBackground, color, true) && ((color)!!.type >= TypedValue.TYPE_FIRST_COLOR_INT)) && ((color)!!.type <= TypedValue.TYPE_LAST_COLOR_INT))) {
+            if (((window.context.theme.resolveAttribute(android.R.attr.colorBackground, color, true) && ((color)!!.type >= TypedValue.TYPE_FIRST_COLOR_INT)) && ((color)!!.type <= TypedValue.TYPE_LAST_COLOR_INT))) {
                 return (Color.luminance((color)!!.data) > .5)
             }
             return (((activity.getResources().getConfiguration().uiMode and Configuration.UI_MODE_NIGHT_MASK)) != Configuration.UI_MODE_NIGHT_YES)
@@ -278,6 +365,9 @@ class NavigationBarHook {
         fun navigationUi(ui: Int): Int {
             return (((((ui or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION)) and (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR).inv())) or ((if (lightBackground()) View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR else 0)))
         }
+
+        private fun windowFlagsMask(): Int = FLAGS_MASK or
+            (if (dialogWindow) WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN else 0)
 
         fun preserveVideoStatusInset(): Boolean {
             if ((!detailInsets.videoSurface() || (((decor.getSystemUiVisibility() and View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)) != 0))) {
@@ -353,8 +443,10 @@ class NavigationBarHook {
                 if ((ui != decor.getSystemUiVisibility())) {
                     decor.setSystemUiVisibility(ui)
                 }
-                if ((((window.getAttributes().flags and FLAGS_MASK)) != WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)) {
-                    window.setFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS, FLAGS_MASK)
+                val requiredFlags = WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS or
+                    (if (dialogWindow) WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN else 0)
+                if ((window.attributes.flags and windowFlagsMask()) != requiredFlags) {
+                    window.setFlags(requiredFlags, windowFlagsMask())
                 }
                 if ((window.getNavigationBarColor() != Color.TRANSPARENT)) {
                     window.setNavigationBarColor(Color.TRANSPARENT)
@@ -392,6 +484,9 @@ class NavigationBarHook {
                     restoreTop()
                     content = next
                 }
+                if (dialogWindow) {
+                    return sheetInsets!!.apply(bottomInset)
+                }
                 var main: Boolean = mainInsets.bind(content!!)
                 var preferences: Boolean = (!main && settingsInsets.bind(content!!))
                 var detail: Boolean = ((!main && !preferences) && detailInsets.bind(content!!))
@@ -424,12 +519,13 @@ class NavigationBarHook {
                 settingsInsets.restore()
                 detailInsets.restore()
                 pageInsets.restore()
+                sheetInsets?.restore()
                 restoreTop()
                 window.setNavigationBarColor(originalColor)
                 if ((Build.VERSION.SDK_INT >= 28)) {
                     window.setNavigationBarDividerColor(originalDivider)
                 }
-                window.setFlags(originalFlags, FLAGS_MASK)
+                window.setFlags(originalFlags, windowFlagsMask())
                 decor.setSystemUiVisibility((((decor.getSystemUiVisibility() and (UI_MASK).inv())) or ((originalUi and UI_MASK))))
                 if ((Build.VERSION.SDK_INT >= 29)) {
                     window.setNavigationBarContrastEnforced(contrast)

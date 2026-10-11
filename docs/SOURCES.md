@@ -64,3 +64,9 @@
 3. 每个 APK 发布时同时提供对应源码、版本标签和校验值；关于页链接到该版本的发布页和完整许可证。
 
 1.1.0 将本仓库的模块源码与测试完整迁移到 Kotlin，保留原来源和许可证。`NavigationVisibility.kt` 与窗口转场修复只处理导航栏显示时机；`JvmNumbers.kt` 保留 Java 数值提升与文本拼接的既有语义。
+
+## 1.1.3 导航窗口修复
+
+2026-10-11：按维护者要求将自有的共用导航沉浸修复同步到简单版。`NavigationBarHook.kt` 增加底部 Dialog 的窗口生命周期和系统安全区处理；`PageNavigationInsets.kt` 延伸转发编辑页的原生背景。新增 `BottomSheetInsetState.kt`、`BottomSheetNavigationInsets.kt`、`NavigationInsetSurface.kt`，分别处理可恢复的安全区基线、弹层控件避让及宿主背景色填充。这些是自有导航实现，沿用本仓库 Mulan PubL v2 授权，不包含悬浮底栏、材质、独立按钮或其它完整版功能。
+
+背景取色使用宿主 RenderNode 绘制；硬件位图接口属于非 SDK 反射，调用限定在 LSPosed 宿主内，并在不可用时回退到宿主主题背景色。未新增第三方依赖。新增测试仅验证安全区重复布局、系统 inset 变化和宿主覆盖后的恢复规则。

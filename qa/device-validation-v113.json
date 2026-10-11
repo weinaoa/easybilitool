@@ -1,0 +1,668 @@
+{
+  "date": "2026-10-11",
+  "module": "com.weinaoa.easybilitool",
+  "version": "1.1.3",
+  "versionCode": 9,
+  "device": {
+    "model": "Xiaomi 10 / umi",
+    "connection": "USB, explicitly selected",
+    "android": 17,
+    "api": 37,
+    "resolution": [
+      1080,
+      2340
+    ],
+    "host": "8.95.0 (8950600)"
+  },
+  "local": {
+    "assembleDebug": true,
+    "jvmChecks": true,
+    "jvmAssertions": 180,
+    "lintErrors": 0,
+    "lintWarnings": 23,
+    "apkAudit": true,
+    "installedApkMatches": true
+  },
+  "physical": {
+    "onlyTestedModuleScopedToHost": true,
+    "nativeCandidateScope": "complete scroll matrix before background-only refresh; final package surfaces and dynamic end checks rerun",
+    "navigationModes": [
+      false,
+      true
+    ],
+    "nativeScrollCandidateSha256": "9ef7f54bd92b39d70d6e4ee1889b91aefd4f5b74a9a24a463441271d0d045eac",
+    "finalApkSha256": "3d871fc76da56c7ceaf847a6968eeaf75240a3c3b9643306c53481fd34aaba44",
+    "nativeScrollAndKeyboard": [
+      {
+        "module": "easy",
+        "navigation": false,
+        "nativeMainBounds": [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        "mainApplicationResumes": [
+          [
+            0,
+            2164,
+            1080,
+            2285
+          ],
+          [
+            0,
+            2164,
+            1080,
+            2285
+          ],
+          [
+            0,
+            2164,
+            1080,
+            2285
+          ]
+        ],
+        "nativeReplyBounds": [
+          0,
+          2164,
+          1080,
+          2285
+        ],
+        "replyApplicationResumes": [
+          [
+            0,
+            2164,
+            1080,
+            2285
+          ],
+          [
+            0,
+            2164,
+            1080,
+            2285
+          ],
+          [
+            0,
+            2164,
+            1080,
+            2285
+          ]
+        ],
+        "replyCollapsedListBottom": 2285,
+        "replyFling": true,
+        "replyKeyboardReturn": true,
+        "replyReentered": true,
+        "replyEndMarkerBottom": 2123,
+        "replyEndGap": 41
+      },
+      {
+        "module": "easy",
+        "navigation": true,
+        "nativeMainBounds": [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        "mainApplicationResumes": [
+          [
+            0,
+            2164,
+            1080,
+            2340
+          ],
+          [
+            0,
+            2164,
+            1080,
+            2340
+          ],
+          [
+            0,
+            2164,
+            1080,
+            2340
+          ]
+        ],
+        "nativeReplyBounds": [
+          0,
+          2164,
+          1080,
+          2340
+        ],
+        "replyApplicationResumes": [
+          [
+            0,
+            2164,
+            1080,
+            2340
+          ],
+          [
+            0,
+            2164,
+            1080,
+            2340
+          ],
+          [
+            0,
+            2164,
+            1080,
+            2340
+          ]
+        ],
+        "replyCollapsedListBottom": 2340,
+        "replyFling": true,
+        "replyKeyboardReturn": true,
+        "replyReentered": true,
+        "replyEndMarkerBottom": 2123,
+        "replyEndGap": 41
+      }
+    ],
+    "dynamicCommentEnds": [
+      {
+        "module": "easy",
+        "navigation": false,
+        "floating": false,
+        "originalInputTop": 2141,
+        "endMarkerBottom": 2100,
+        "gap": 41
+      },
+      {
+        "module": "easy",
+        "navigation": true,
+        "floating": false,
+        "originalInputTop": 2141,
+        "endMarkerBottom": 2100,
+        "gap": 41
+      }
+    ],
+    "surfaceCandidateSha256": "ae4a146f80e21a30ad3ee3e026bba545e047e59669589a3d47454800788ad249",
+    "dialogAndPageSurfaces": [
+      {
+        "name": "share-recommended-False-0",
+        "navigation": false,
+        "sheetBounds": [
+          0,
+          1705,
+          1080,
+          2285
+        ],
+        "navigationBackground": [
+          9,
+          10,
+          10
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-recommended-False-1",
+        "navigation": false,
+        "sheetBounds": [
+          0,
+          1705,
+          1080,
+          2285
+        ],
+        "navigationBackground": [
+          9,
+          10,
+          10
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-recommended-False-2",
+        "navigation": false,
+        "sheetBounds": [
+          0,
+          1705,
+          1080,
+          2285
+        ],
+        "navigationBackground": [
+          9,
+          10,
+          10
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-hot-False-0",
+        "navigation": false,
+        "sheetBounds": [
+          0,
+          90,
+          1080,
+          2285
+        ],
+        "navigationBackground": [
+          0,
+          0,
+          0
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-hot-False-1",
+        "navigation": false,
+        "sheetBounds": [
+          0,
+          90,
+          1080,
+          2285
+        ],
+        "navigationBackground": [
+          0,
+          0,
+          0
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-hot-False-2",
+        "navigation": false,
+        "sheetBounds": [
+          0,
+          90,
+          1080,
+          2285
+        ],
+        "navigationBackground": [
+          0,
+          0,
+          0
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-following-False-0",
+        "navigation": false,
+        "sheetBounds": [
+          0,
+          1445,
+          1080,
+          2285
+        ],
+        "navigationBackground": [
+          9,
+          10,
+          10
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-following-False-1",
+        "navigation": false,
+        "sheetBounds": [
+          0,
+          1445,
+          1080,
+          2285
+        ],
+        "navigationBackground": [
+          9,
+          10,
+          10
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-following-False-2",
+        "navigation": false,
+        "sheetBounds": [
+          0,
+          1445,
+          1080,
+          2285
+        ],
+        "navigationBackground": [
+          9,
+          10,
+          10
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "repost-sheet-False",
+        "navigation": false,
+        "sheetBounds": [
+          0,
+          1346,
+          1080,
+          2285
+        ],
+        "navigationBackground": [
+          9,
+          10,
+          10
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "repost-page-False",
+        "navigation": false,
+        "navigationBackground": [
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "name": "emoji-opus-False",
+        "navigation": false,
+        "navigationBackground": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "emoji-video-False",
+        "navigation": false,
+        "navigationBackground": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "share-recommended-True-0",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1705,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          32,
+          33,
+          35
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-recommended-True-1",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1705,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          32,
+          33,
+          35
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-recommended-True-2",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1705,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          32,
+          33,
+          35
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-hot-True-0",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          90,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          30,
+          32,
+          34
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-hot-True-1",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          90,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          30,
+          32,
+          34
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-hot-True-2",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          90,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          30,
+          32,
+          34
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-following-True-0",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1445,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          30,
+          32,
+          34
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-following-True-1",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1445,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          30,
+          32,
+          34
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "share-following-True-2",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1445,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          30,
+          32,
+          34
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "repost-sheet-True",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1346,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          23,
+          24,
+          26
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "repost-page-True",
+        "navigation": true,
+        "navigationBackground": [
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "name": "emoji-opus-True",
+        "navigation": true,
+        "navigationBackground": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "emoji-video-True",
+        "navigation": true,
+        "navigationBackground": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "finalLifecycleAndSurfaces": [
+      {
+        "name": "final-share-True-0",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1356,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          16,
+          16,
+          17
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "final-share-True-1",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1356,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          16,
+          16,
+          17
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "final-share-True-2",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1356,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          16,
+          16,
+          17
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "final-repost-sheet-True",
+        "navigation": true,
+        "sheetBounds": [
+          0,
+          1346,
+          1080,
+          2340
+        ],
+        "navigationBackground": [
+          23,
+          24,
+          26
+        ],
+        "buttonSafety": true
+      },
+      {
+        "name": "final-repost-page-True",
+        "navigation": true,
+        "navigationBackground": [
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "name": "final-emoji-opus-True",
+        "navigation": true,
+        "navigationBackground": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "final-emoji-video-True",
+        "navigation": true,
+        "navigationBackground": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "backgroundAndReleasedViewportVisuallyChecked": true
+  },
+  "restoration": {
+    "allModuleStatesMatch": true,
+    "allModuleScopesMatch": true,
+    "preferenceFileCount": 3,
+    "allPreferenceBytesAndValuesMatchAfterRestart": true,
+    "temporaryQaHelperRemoved": true,
+    "screenAwake": true,
+    "installedRepairVersion": "1.1.3"
+  },
+  "notTested": [
+    "other devices",
+    "Android 8-14",
+    "three-button navigation",
+    "light theme",
+    "all video main-comments to the infinite list end"
+  ],
+  "rawEvidence": "ignored local archive; no raw screenshots, account text, configurations or database included"
+}

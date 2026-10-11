@@ -15,7 +15,9 @@ package com.weinaoa.easybilitool
 import android.view.*
 
 /**
+
  * Inset an unrecognized page's controls, keeping its own root background full height.
+
  */
 class PageNavigationInsets {
     private var root: ViewGroup? = null
@@ -25,6 +27,7 @@ class PageNavigationInsets {
 
     private var padding: Int = 0
     private var lastPadding: Int = 0
+    private var surface: NavigationInsetSurface? = null
 
     fun apply(content: View, inset: Int): Boolean {
         var next: ViewGroup? = null
@@ -50,6 +53,7 @@ class PageNavigationInsets {
         if ((root == null)) {
             return false
         }
+        if (surface == null && content is ViewGroup) surface = NavigationInsetSurface(content, root!!)
         if (!applied) {
             padding = (root)!!.getPaddingBottom()
             clip = (root)!!.getClipToPadding()
@@ -68,10 +72,13 @@ class PageNavigationInsets {
             (root)!!.setClipToPadding(false)
             changed = true
         }
+        surface?.apply(inset)
         return changed
     }
 
     fun restore() {
+        surface?.restore()
+        surface = null
         if (!applied) {
             return
         }
