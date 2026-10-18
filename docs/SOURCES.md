@@ -70,3 +70,9 @@
 2026-10-11：按维护者要求将自有的共用导航沉浸修复同步到简单版。`NavigationBarHook.kt` 增加底部 Dialog 的窗口生命周期和系统安全区处理；`PageNavigationInsets.kt` 延伸转发编辑页的原生背景。新增 `BottomSheetInsetState.kt`、`BottomSheetNavigationInsets.kt`、`NavigationInsetSurface.kt`，分别处理可恢复的安全区基线、弹层控件避让及宿主背景色填充。这些是自有导航实现，沿用本仓库 Mulan PubL v2 授权，不包含悬浮底栏、材质、独立按钮或其它完整版功能。
 
 背景取色使用宿主 RenderNode 绘制；硬件位图接口属于非 SDK 反射，调用限定在 LSPosed 宿主内，并在不可用时回退到宿主主题背景色。未新增第三方依赖。新增测试仅验证安全区重复布局、系统 inset 变化和宿主覆盖后的恢复规则。
+
+## 1.1.4 直播导航适配
+
+2026-10-18：修复简单版自有 `DetailNavigationInsets.kt` 对直播输入框背景的错误继承。新增 `LiveWebInsets.kt`，仅处理官方客户端“全部直播”关注列表网址的原生容器、viewport 和网页滚动安全区，使用 Android WindowInsets / WebView 布局机制；适配入口由本地宿主 APK 结构核对。实现与文档沿用本仓库 Mulan PubL v2，不引入媒体通知、播放器手势、勋章、悬浮底栏或其它完整版功能，没有新增第三方依赖。
+
+参考 [Android WebView 窗口边衬说明](https://developer.android.com/develop/ui/views/layout/webapps/understand-window-insets) 与 [Android 边到边布局指导](https://developer.android.com/codelabs/edge-to-edge)。窗口延伸和网页内容避让分别处理，不使用一块原生补色背景代替 WebView 延伸。退出、切换网址或键盘显示时撤回自有调整，并继续传递系统边衬更新。

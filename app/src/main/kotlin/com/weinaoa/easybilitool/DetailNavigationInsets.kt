@@ -119,7 +119,9 @@ class DetailNavigationInsets {
             return false
         }
         present.add(view)
-        var adjustment: Adjustment = adjustments.computeIfAbsent(view, lambda@ { v -> Adjustment((v as ViewGroup), fixed, !fixed, baselines.getOrPut(v) { DetailInsetState() }) })
+        var adjustment: Adjustment = adjustments.computeIfAbsent(view, lambda@ { v ->
+            Adjustment(v as ViewGroup, fixed, !fixed, baselines.getOrPut(v) { DetailInsetState() }, !live)
+        })
         return adjustment.apply(inset)
     }
 
@@ -163,15 +165,18 @@ class DetailNavigationInsets {
         @JvmField var clip: Boolean = false
 
         private lateinit var metrics: DetailInsetState
+        private var fillMissingBackground = true
 
         @JvmField var originalBackground: Drawable? = null
         @JvmField var extendedBackground: Drawable? = null
 
-        constructor(view: ViewGroup, fixed: Boolean, scroll: Boolean, metrics: DetailInsetState) {
+        constructor(view: ViewGroup, fixed: Boolean, scroll: Boolean, metrics: DetailInsetState,
+                    fillMissingBackground: Boolean = true) {
             this.view = view
             this.fixed = fixed
             this.scroll = scroll
             this.metrics = metrics
+            this.fillMissingBackground = fillMissingBackground
             clip = (view)!!.getClipToPadding()
         }
 
@@ -179,7 +184,8 @@ class DetailNavigationInsets {
             var params: ViewGroup.LayoutParams = (view)!!.getLayoutParams()
             if (!metrics.applied) originalBackground = view.background
             metrics.apply(view.paddingBottom, params.height, view.height, inset, fixed)
-            if ((fixed && ((view)!!.getBackground() == null))) {
+            // A live input capsule's drawable must stay on the input, not fill its parent.
+            if (fillMissingBackground && fixed && view.background == null) {
                 var fill: Drawable? = childBackground(view)
                 if ((fill != null)) {
                     var state: Drawable.ConstantState? = (fill)!!.getConstantState()

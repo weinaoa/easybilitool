@@ -276,6 +276,7 @@ class NavigationBarHook {
         lateinit var detailInsets: DetailNavigationInsets
 
         @JvmField val pageInsets: PageNavigationInsets = PageNavigationInsets()
+        private lateinit var liveWebInsets: LiveWebInsets
 
         val visibility = NavigationVisibility()
         private var sheetInsets: BottomSheetNavigationInsets? = null
@@ -313,6 +314,7 @@ class NavigationBarHook {
             mainInsets = MainNavigationInsets(a)
             settingsInsets = SettingsNavigationInsets(a)
             detailInsets = DetailNavigationInsets(a)
+            liveWebInsets = LiveWebInsets(a)
         }
 
         fun captureInsets(insets: WindowInsets) {
@@ -344,6 +346,7 @@ class NavigationBarHook {
         }
 
         fun lightBackground(): Boolean {
+            if (!dialogWindow) liveWebInsets.background?.let { return Color.luminance(it) > .5 }
             if (dialogWindow) {
                 val fill = sheetInsets?.surfaceColor()
                 if (fill != null && Color.alpha(fill) == 255) return Color.luminance(fill) > .5
@@ -481,6 +484,7 @@ class NavigationBarHook {
                     settingsInsets.restore()
                     detailInsets.restore()
                     pageInsets.restore()
+                    liveWebInsets.restore()
                     restoreTop()
                     content = next
                 }
@@ -490,10 +494,16 @@ class NavigationBarHook {
                 var main: Boolean = mainInsets.bind(content!!)
                 var preferences: Boolean = (!main && settingsInsets.bind(content!!))
                 var detail: Boolean = ((!main && !preferences) && detailInsets.bind(content!!))
-                if (((main || preferences) || detail)) {
+                val liveWeb = liveWebInsets.find()
+                if (liveWeb != null) {
+                    pageInsets.restore()
+                    layoutChanged = liveWebInsets.apply(liveWeb, content!!, bottomInset) || layoutChanged
+                } else if (((main || preferences) || detail)) {
+                    liveWebInsets.restore()
                     pageInsets.restore()
                     layoutChanged = (((if (main) mainInsets.apply(bottomInset) else (if (preferences) settingsInsets.apply(bottomInset) else detailInsets.apply(content!!, bottomInset)))) || layoutChanged)
                 } else {
+                    liveWebInsets.restore()
                     layoutChanged = (pageInsets.apply(content!!, bottomInset) || layoutChanged)
                 }
                 layoutChanged = (preserveVideoStatusInset() || layoutChanged)
@@ -519,6 +529,7 @@ class NavigationBarHook {
                 settingsInsets.restore()
                 detailInsets.restore()
                 pageInsets.restore()
+                liveWebInsets.restore()
                 sheetInsets?.restore()
                 restoreTop()
                 window.setNavigationBarColor(originalColor)
