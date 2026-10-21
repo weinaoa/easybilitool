@@ -76,3 +76,9 @@
 2026-10-18：修复简单版自有 `DetailNavigationInsets.kt` 对直播输入框背景的错误继承。新增 `LiveWebInsets.kt`，仅处理官方客户端“全部直播”关注列表网址的原生容器、viewport 和网页滚动安全区，使用 Android WindowInsets / WebView 布局机制；适配入口由本地宿主 APK 结构核对。实现与文档沿用本仓库 Mulan PubL v2，不引入媒体通知、播放器手势、勋章、悬浮底栏或其它完整版功能，没有新增第三方依赖。
 
 参考 [Android WebView 窗口边衬说明](https://developer.android.com/develop/ui/views/layout/webapps/understand-window-insets) 与 [Android 边到边布局指导](https://developer.android.com/codelabs/edge-to-edge)。窗口延伸和网页内容避让分别处理，不使用一块原生补色背景代替 WebView 延伸。退出、切换网址或键盘显示时撤回自有调整，并继续传递系统边衬更新。
+
+## 1.1.5 竖屏与最常访问
+
+2026-10-22：按维护者要求补齐简单版三个功能范围内的共用沉浸修复。`ImmersiveStatusBarHook.kt` 增加 Story Activity，保留宿主状态栏图标明暗，移除额外渐变。新增自有 `StoryStatusInsets.kt`，针对本地核对的 8.95 原生播放器 viewport 参数，只撤去一份状态栏顶部留白，并在配置或窗口晚于播放器就绪时重放待处理请求。新增自有 `QuickConsumeInsets.kt`，在最常访问各页原生列表内计算底部安全距离，撤回通用根容器填色；退出和关闭时恢复。上述简单版自有实现沿用 Mulan PubL v2，不新增第三方依赖，不包含完整版勋章、手势、悬浮材质或其它功能。
+
+参考 [Android 边到边布局指导](https://developer.android.com/codelabs/edge-to-edge) 与[系统栏图标说明](https://developer.android.com/develop/ui/views/layout/edge-to-edge#system-bar-icons)。播放器字段与方法仅针对已核对的宿主版本；找不到时记录并跳过该适配。

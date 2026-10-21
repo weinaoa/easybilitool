@@ -17,7 +17,6 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Insets
 import android.graphics.Rect
-import android.graphics.drawable.GradientDrawable
 import android.os.*
 import android.view.*
 import java.util.*
@@ -37,12 +36,15 @@ class ImmersiveStatusBarHook {
 
     private val controllers: MutableMap<WindowInsetsController, State> = WeakHashMap()
 
+    private val storyInsets by lazy { StoryStatusInsets(settings) }
+
     constructor(settings: Supplier<Config>) {
         this.settings = settings
     }
 
     @Throws(Exception::class)
     fun install(application: Application) {
+        storyInsets.install(application)
         Reflector.findAndHookMethod(View::class.java, "dispatchApplyWindowInsets", WindowInsets::class.java, object : MethodHook() {
             override fun beforeHookedMethod(p: MethodHookParam) {
                 var state: State? = decors.get(p.thisObject)
@@ -69,7 +71,7 @@ class ImmersiveStatusBarHook {
                 }
                 (state)!!.originalUi = ((((state)!!.originalUi and (View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR).inv())) or (((p.args[0] as Int) and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)))
                 if ((state)!!.eligible()) {
-                    p.args[0] = (((((p.args[0] as Int) or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN) or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)) and (View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR).inv())
+                    p.args[0] = (p.args[0] as Int) or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 }
             }
         })
@@ -95,16 +97,16 @@ class ImmersiveStatusBarHook {
                     var value: Int = (p.args[0] as Int)
                     var mask: Int = (p.args[1] as Int)
                     (state)!!.appearance = ((((state)!!.appearance and (mask).inv())) or ((value and mask)))
-                    if ((state)!!.eligible()) {
-                        p.args[0] = (value and (WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS).inv())
-                    }
                 }
             })
         }
         application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(a: Activity, b: Bundle?) {
                 var name: String = a.javaClass.getName()
-                if (((!name.equals("com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity") && !name.equals("com.bilibili.ship.theseus.playlist.UnitedPlaylistActivity")) && !name.equals("com.bilibili.bililive.room.ui.roomv3.LiveRoomActivityV3"))) {
+                if (name !in setOf("com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity",
+                    "com.bilibili.ship.theseus.playlist.UnitedPlaylistActivity",
+                    "com.bilibili.video.story.StoryVideoActivity",
+                    "com.bilibili.bililive.room.ui.roomv3.LiveRoomActivityV3")) {
                     return
                 }
                 var state: State = State(a)
@@ -177,8 +179,6 @@ class ImmersiveStatusBarHook {
         @JvmField var cutout: Int = 0
         @JvmField var appearance: Int = 0
 
-        @JvmField val scrim: GradientDrawable = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(0x88000000.toInt(), 0x00000000))
-
         @JvmField var statusHeight: Int = 0
 
         @JvmField var live: Boolean = false
@@ -250,14 +250,14 @@ class ImmersiveStatusBarHook {
                         appearance = (if ((c == null)) 0 else (c)!!.getSystemBarsAppearance())
                     }
                     applied = true
-                    decor.getOverlay().add(scrim)
                     if ((statusHeight <= 0)) {
                         var id: Int = activity.getResources().getIdentifier("status_bar_height", "dimen", "android")
                         statusHeight = (if ((id == 0)) Math.round((24 * activity.getResources().getDisplayMetrics().density)) else activity.getResources().getDimensionPixelSize(id))
                     }
                     decor.requestApplyInsets()
                 }
-                var ui: Int = ((((decor.getSystemUiVisibility() or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN) or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)) and (View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR).inv())
+                // Preserve the host's requested icon contrast on both system-bar APIs.
+                var ui: Int = decor.systemUiVisibility or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 if ((decor.getSystemUiVisibility() != ui)) {
                     decor.setSystemUiVisibility(ui)
                 }
@@ -282,12 +282,9 @@ class ImmersiveStatusBarHook {
                     var c: WindowInsetsController? = window.getInsetsController()
                     if ((c != null)) {
                         controllers.put(c, this)
-                        if (((((c)!!.getSystemBarsAppearance() and WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)) != 0)) {
-                            (c)!!.setSystemBarsAppearance(0, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
-                        }
                     }
                 }
-                scrim.setBounds(0, 0, decor.getWidth(), (statusHeight + Math.round((12 * activity.getResources().getDisplayMetrics().density))))
+                storyInsets.applyPending(activity)
                 if (!decor.isLaidOut()) {
                     decor.requestApplyInsets()
                 }
@@ -391,7 +388,6 @@ class ImmersiveStatusBarHook {
             applied = false
             try {
                 restoreMenus()
-                decor.getOverlay().remove(scrim)
                 window.setStatusBarColor(originalColor)
                 window.setFlags(originalFlags, FLAGS_MASK)
                 decor.setSystemUiVisibility((((decor.getSystemUiVisibility() and (UI_MASK).inv())) or ((originalUi and UI_MASK))))

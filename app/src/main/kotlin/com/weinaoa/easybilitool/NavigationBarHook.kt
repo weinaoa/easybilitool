@@ -276,6 +276,7 @@ class NavigationBarHook {
         lateinit var detailInsets: DetailNavigationInsets
 
         @JvmField val pageInsets: PageNavigationInsets = PageNavigationInsets()
+        private val quickConsumeInsets = QuickConsumeInsets()
         private lateinit var liveWebInsets: LiveWebInsets
 
         val visibility = NavigationVisibility()
@@ -485,6 +486,7 @@ class NavigationBarHook {
                     detailInsets.restore()
                     pageInsets.restore()
                     liveWebInsets.restore()
+                    quickConsumeInsets.restore()
                     restoreTop()
                     content = next
                 }
@@ -495,7 +497,10 @@ class NavigationBarHook {
                 var preferences: Boolean = (!main && settingsInsets.bind(content!!))
                 var detail: Boolean = ((!main && !preferences) && detailInsets.bind(content!!))
                 val liveWeb = liveWebInsets.find()
-                if (liveWeb != null) {
+                if (activity.javaClass.name == "com.bilibili.bplus.followinglist.quick.consume.QuickConsumeActivity") {
+                    pageInsets.restore()
+                    layoutChanged = quickConsumeInsets.apply(content!!, bottomInset) || layoutChanged
+                } else if (liveWeb != null) {
                     pageInsets.restore()
                     layoutChanged = liveWebInsets.apply(liveWeb, content!!, bottomInset) || layoutChanged
                 } else if (((main || preferences) || detail)) {
@@ -531,6 +536,7 @@ class NavigationBarHook {
                 pageInsets.restore()
                 liveWebInsets.restore()
                 sheetInsets?.restore()
+                quickConsumeInsets.restore()
                 restoreTop()
                 window.setNavigationBarColor(originalColor)
                 if ((Build.VERSION.SDK_INT >= 28)) {

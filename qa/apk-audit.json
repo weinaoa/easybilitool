@@ -1,11 +1,11 @@
 {
-  "apk": "easy-bili-tool-1.1.4.apk",
-  "sha256": "8631cdf22b322356ce43d01d74a3f562e4dd2c09b7d863e80f4ffe8048340ba4",
-  "bytes": 1267814,
+  "apk": "easy-bili-tool-1.1.5.apk",
+  "sha256": "a6ac42700bc9b2a7b1b250c2a9a0e4b9818555925b1fad75d3df96443cceeaf9",
+  "bytes": 1271910,
   "package": "com.weinaoa.easybilitool",
   "label": "简单bili小工具",
-  "version": "1.1.4",
-  "versionCode": 10,
+  "version": "1.1.5",
+  "versionCode": 11,
   "sourceClasses": [
     "About",
     "BiliSettingsHook",
@@ -37,11 +37,13 @@
     "NavigationInsetSurface",
     "NavigationVisibility",
     "PageNavigationInsets",
+    "QuickConsumeInsets",
     "Reflector",
     "SettingsActivity",
     "SettingsDraft",
     "SettingsNavigationInsets",
-    "SettingsRoute"
+    "SettingsRoute",
+    "StoryStatusInsets"
   ],
   "dexTopLevelClasses": [
     "About",
@@ -76,12 +78,14 @@
     "NavigationInsetSurface",
     "NavigationVisibility",
     "PageNavigationInsets",
+    "QuickConsumeInsets",
     "R",
     "Reflector",
     "SettingsActivity",
     "SettingsDraft",
     "SettingsNavigationInsets",
-    "SettingsRoute"
+    "SettingsRoute",
+    "StoryStatusInsets"
   ],
   "permissions": [],
   "providers": [],
@@ -92,7 +96,7 @@
     "tv.danmaku.bili"
   ],
   "lintErrors": 0,
-  "lintWarnings": 23,
+  "lintWarnings": 26,
   "mainLicense": "Mulan PubL v2",
   "licenseBundled": true,
   "generatedOrRuntimeNamespaces": [
