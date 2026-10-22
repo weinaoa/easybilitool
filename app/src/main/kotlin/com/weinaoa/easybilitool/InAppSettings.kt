@@ -23,7 +23,7 @@ import android.view.*
 import android.widget.*
 
 /**
- * One screen, three switches, explicit save and restart.
+ * Three features with status protection, explicit save and restart.
  */
 class InAppSettings {
     private lateinit var activity: Activity
@@ -118,6 +118,7 @@ class InAppSettings {
         cardBackground.setColor(surface)
         cardBackground.setCornerRadius(dp(16).toFloat())
         card.setBackground(cardBackground)
+        val dependents = mutableListOf<() -> Unit>()
         for (field in Config.FIELDS) {
 
             if ((card.getChildCount() > 0)) {
@@ -130,7 +131,7 @@ class InAppSettings {
             var row: LinearLayout = LinearLayout(context)
             row.setGravity(Gravity.CENTER_VERTICAL)
             row.setMinimumHeight(dp(76))
-            row.setPadding(dp(16), dp(12), dp(16), dp(12))
+            row.setPadding(dp(if (field.key == "STATUS_BAR_PROTECTION") 28 else 16), dp(12), dp(16), dp(12))
             var labels: LinearLayout = LinearLayout(context)
             labels.setOrientation(LinearLayout.VERTICAL)
             var name: TextView = label(field.label(), 16, ink)
@@ -145,11 +146,24 @@ class InAppSettings {
             toggle.setContentDescription(field.label())
             toggle.setChecked((draft)!!.current().b(field.key()))
             toggle.setThumbTintList(android.content.res.ColorStateList.valueOf(accent))
-            toggle.setOnCheckedChangeListener(lambda@ { button, checked -> (draft)!!.edit(field.key(), checked) })
+            toggle.setOnCheckedChangeListener { _, checked ->
+                draft!!.edit(field.key(), checked)
+                dependents.forEach { it() }
+            }
+            if (field.key == "STATUS_BAR_PROTECTION") {
+                val refresh = {
+                    val enabled = draft!!.current().b("IMMERSIVE_STATUS_BAR")
+                    row.isEnabled = enabled
+                    toggle.isEnabled = enabled
+                    row.alpha = if (enabled) 1F else .4F
+                }
+                dependents.add(refresh)
+                refresh()
+            }
             var switchParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(-2, -2)
             switchParams.leftMargin = dp(12)
             row.addView(toggle, switchParams)
-            row.setOnClickListener(lambda@ { v -> toggle.setChecked(!toggle.isChecked()) })
+            row.setOnClickListener { if (toggle.isEnabled) toggle.isChecked = !toggle.isChecked }
             card.addView(row)
         }
         body.addView(card)

@@ -8,8 +8,10 @@
 | --- | --- | --- |
 | libxposed API 102.0.0 | `app/libs/libxposed-api-102.0.0.jar`，仅编译，不打入 APK | Apache-2.0；[官方发布目录](https://repo.maven.apache.org/maven2/io/github/libxposed/api/102.0.0/)、[上游项目](https://github.com/libxposed/api) |
 | Gradle wrapper / Gradle 9.5.0 | `gradle/wrapper` 与启动脚本，构建工具 | Apache-2.0；[Gradle LICENSE](https://github.com/gradle/gradle/blob/master/LICENSE) |
-| Kotlin 标准库及 JetBrains 注解 | Android Gradle Plugin 自动引入的运行库；当前 APK 含相关类 | Apache-2.0；[Kotlin LICENSE](https://github.com/JetBrains/kotlin/blob/master/license/LICENSE.txt)、[JetBrains annotations](https://github.com/JetBrains/java-annotations) |
+| Kotlin 标准库、kotlinx.coroutines 及 JetBrains 注解 | 构建与 AndroidX 引入的运行库；当前 APK 含相关类 | Apache-2.0；[Kotlin LICENSE](https://github.com/JetBrains/kotlin/blob/master/license/LICENSE.txt)、[Coroutines LICENSE](https://github.com/Kotlin/kotlinx.coroutines/blob/master/LICENSE.txt)、[JetBrains annotations](https://github.com/JetBrains/java-annotations) |
 | R8 / D8 | Android 构建工具及其生成的兼容代码 | Apache-2.0；[R8 LICENSE](https://r8.googlesource.com/r8/+/refs/heads/main/LICENSE) |
+| AndroidX Core 1.17.0 及其运行依赖 | APK 内的官方 `ProtectionLayout`、`GradientProtection` 与窗口边衬兼容接口；排除 ProfileInstaller 启动优化组件 | Apache-2.0；Copyright The Android Open Source Project；[AndroidX 源码](https://android.googlesource.com/platform/frameworks/support/)、[Core 发布说明](https://developer.android.com/jetpack/androidx/releases/core) |
+| JSpecify 注解、Guava ListenableFuture | AndroidX 的注解及 Future 接口依赖 | Apache-2.0；[JSpecify](https://github.com/jspecify/jspecify)、[Guava](https://github.com/google/guava) |
 
 完整 Apache-2.0 文本见 [licenses/Apache-2.0.txt](licenses/Apache-2.0.txt)。上述材料保留各自许可；本项目的主许可证不替代这些许可。
 

@@ -36,7 +36,7 @@ class HostSettings {
             var values: MutableMap<String, Boolean> = LinkedHashMap()
             for (field in Config.FIELDS) {
 
-                values.put(field.key(), preferences.getBoolean(field.key(), false))
+                values.put(field.key(), preferences.getBoolean(field.key(), field.default))
             }
             return Config(values)
         }

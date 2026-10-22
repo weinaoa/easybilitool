@@ -82,3 +82,7 @@
 2026-10-22：按维护者要求补齐简单版三个功能范围内的共用沉浸修复。`ImmersiveStatusBarHook.kt` 增加 Story Activity，保留宿主状态栏图标明暗，移除额外渐变。新增自有 `StoryStatusInsets.kt`，针对本地核对的 8.95 原生播放器 viewport 参数，只撤去一份状态栏顶部留白，并在配置或窗口晚于播放器就绪时重放待处理请求。新增自有 `QuickConsumeInsets.kt`，在最常访问各页原生列表内计算底部安全距离，撤回通用根容器填色；退出和关闭时恢复。上述简单版自有实现沿用 Mulan PubL v2，不新增第三方依赖，不包含完整版勋章、手势、悬浮材质或其它功能。
 
 参考 [Android 边到边布局指导](https://developer.android.com/codelabs/edge-to-edge) 与[系统栏图标说明](https://developer.android.com/develop/ui/views/layout/edge-to-edge#system-bar-icons)。播放器字段与方法仅针对已核对的宿主版本；找不到时记录并跳过该适配。
+
+## 1.1.6 官方状态栏保护
+
+2026-10-22：`StatusBarProtection.kt` 只负责官方 AndroidX Core 1.17.0 `ProtectionLayout` / `GradientProtection` 的挂载、颜色参数和撤回，不自行计算视频亮度或重写渐变算法。保留宿主图标明暗选择，按该选择提供相应的保护背景。状态栏边衬在宿主内容层消费，DecorView 保留真实边衬供官方系统栏监视器处理；不覆盖系统手势导航区。官方组件及运行依赖保留 Apache-2.0，详见 [第三方声明](../THIRD_PARTY_NOTICES.md)。原有三项功能不变，增加默认开启的状态栏渐变保护子选项，可独立保存关闭。

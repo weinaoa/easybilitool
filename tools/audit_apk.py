@@ -28,7 +28,10 @@ badging = subprocess.check_output([str(aapt), "dump", "badging", str(apk)]).deco
 assert f"package: name='com.weinaoa.easybilitool' versionCode='{code}' versionName='{name}'" in badging
 assert "application-label:'简单bili小工具'" in badging
 manifest = subprocess.check_output([str(aapt), "dump", "xmltree", str(apk), "AndroidManifest.xml"]).decode("utf-8")
-assert "E: uses-permission" not in manifest and "E: provider" not in manifest
+permissions = re.findall(r'E: uses-permission[^\n]*\n\s+A: android:name[^=]*="([^"]+)"', manifest)
+assert permissions == ["com.weinaoa.easybilitool.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"]
+assert re.search(r'E: permission.*?android:protectionLevel[^\n]*0x2', manifest, re.S)
+assert "E: provider" not in manifest
 sources = sorted(path.stem for path in (ROOT / "app/src/main/kotlin/com/weinaoa/easybilitool").glob("*.kt"))
 strings, classes = [], []
 with ZipFile(apk) as archive:
@@ -68,8 +71,17 @@ prefix = "Lcom/weinaoa/easybilitool/"
 top = sorted({item.removeprefix(prefix).removesuffix(";").split("$")[0]
               for item in classes if item.startswith(prefix)})
 assert set(sources).issubset(top)
-runtime_prefixes = ("Lkotlin/", "Lorg/intellij/lang/annotations/", "Lorg/jetbrains/annotations/", "Lcom/android/tools/r8/")
-assert not [item for item in classes if not item.startswith((prefix,) + runtime_prefixes)]
+runtime_prefixes = ("Lkotlin/", "Lorg/intellij/lang/annotations/", "Lorg/jetbrains/annotations/", "Lcom/android/tools/r8/",
+                    "Landroidx/core/", "Landroidx/annotation/", "Landroidx/collection/", "Landroidx/lifecycle/",
+                    "Landroidx/arch/core/", "Landroidx/versionedparcelable/", "Landroidx/concurrent/",
+                    "Landroidx/interpolator/", "Landroidx/tracing/", "Lcom/google/common/util/concurrent/",
+                    "Lorg/jspecify/annotations/", "Lkotlinx/coroutines/", "L_COROUTINE/",
+                    "Landroid/support/v4/app/", "Landroid/support/v4/os/", "Landroid/support/v4/graphics/drawable/")
+unexpected = [item for item in classes if not item.startswith((prefix,) + runtime_prefixes)]
+assert not unexpected, unexpected[:20]
+assert "Landroidx/core/view/insets/ProtectionLayout;" in classes
+assert "Landroidx/core/view/insets/GradientProtection;" in classes
+assert not any(item.startswith(("Landroidx/profileinstaller/", "Landroidx/startup/")) for item in classes)
 lint = collections.Counter(issue.get("severity")
                            for issue in ET.parse(ROOT / "app/build/reports/lint-results-debug.xml").getroot())
 assert lint.get("Error", 0) == 0
@@ -78,10 +90,13 @@ audit = {
     "apk": f"easy-bili-tool-{name}.apk", "sha256": hashlib.sha256(apk.read_bytes()).hexdigest(),
     "bytes": apk.stat().st_size, "package": "com.weinaoa.easybilitool", "label": "简单bili小工具",
     "version": name, "versionCode": code, "sourceClasses": sources, "dexTopLevelClasses": top,
-    "permissions": [], "providers": [], "excludedFeatureAudit": "passed", "compileOnlyApiExcluded": True,
+    "permissions": permissions, "providers": [], "excludedFeatureAudit": "passed", "compileOnlyApiExcluded": True,
     "xposedEntry": entry, "scope": scope, "lintErrors": 0, "lintWarnings": lint.get("Warning", 0),
     "mainLicense": "Mulan PubL v2", "licenseBundled": True,
-    "generatedOrRuntimeNamespaces": ["kotlin", "org.intellij.lang.annotations", "org.jetbrains.annotations", "com.android.tools.r8"],
+    "generatedOrRuntimeNamespaces": ["kotlin", "kotlinx.coroutines", "_COROUTINE", "androidx", "android.support.v4",
+                                      "com.google.common.util.concurrent", "org.jspecify.annotations",
+                                      "org.intellij.lang.annotations", "org.jetbrains.annotations", "com.android.tools.r8"],
+    "statusBarProtection": "AndroidX Core 1.17.0 ProtectionLayout / GradientProtection",
 }
 (ROOT / "qa/apk-audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print(json.dumps({"version": name, "sha256": audit["sha256"], "sourceClasses": len(sources), "lint": dict(lint)}, indent=2))

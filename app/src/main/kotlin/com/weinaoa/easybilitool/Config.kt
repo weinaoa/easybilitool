@@ -15,10 +15,10 @@ package com.weinaoa.easybilitool
 import java.util.*
 
 /**
- * The complete configuration of the simple module: three independent switches.
+ * Three independent features and the status-bar protection option.
  */
 class Config {
-    data class Field(val key: String, val label: String, val help: String) {
+    data class Field(val key: String, val label: String, val help: String, val default: Boolean = false) {
         fun key(): String = key
 
         fun label(): String = label
@@ -44,7 +44,7 @@ class Config {
         var result: MutableMap<String, Boolean> = LinkedHashMap()
         for (field in FIELDS) {
 
-            val value: Boolean? = overrides.getOrDefault(field.key(), false)
+            val value: Boolean? = overrides.getOrDefault(field.key(), field.default)
             if ((value == null)) {
                 throw IllegalArgumentException("设置值不能为空")
             }
@@ -68,6 +68,10 @@ class Config {
     }
 
     companion object {
-        @JvmField val FIELDS: MutableList<Field> = mutableListOf(Field("IMMERSIVE_STATUS_BAR", "沉浸状态栏", "视频与直播延伸到顶部，控件避让"), Field("HOME_HIDE_BOTTOM_BAR", "滑动时收起底栏", "主界面、动态详情与视频评论；上滑收起，下滑恢复"), Field("NAVIGATION_EDGE_TO_EDGE", "沉浸导航栏", "背景延伸到小白条后方，按钮保留安全距离"))
+        @JvmField val FIELDS: MutableList<Field> = mutableListOf(
+            Field("IMMERSIVE_STATUS_BAR", "沉浸状态栏", "视频与直播延伸到顶部，控件避让"),
+            Field("STATUS_BAR_PROTECTION", "状态栏渐变保护", "沉浸状态栏开启时生效；提高图标对比度，关闭后保持完全透明", true),
+            Field("HOME_HIDE_BOTTOM_BAR", "滑动时收起底栏", "主界面、动态详情与视频评论；上滑收起，下滑恢复"),
+            Field("NAVIGATION_EDGE_TO_EDGE", "沉浸导航栏", "背景延伸到小白条后方，按钮保留安全距离"))
     }
 }

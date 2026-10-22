@@ -47,8 +47,9 @@ class ImmersiveStatusBarHook {
         storyInsets.install(application)
         Reflector.findAndHookMethod(View::class.java, "dispatchApplyWindowInsets", WindowInsets::class.java, object : MethodHook() {
             override fun beforeHookedMethod(p: MethodHookParam) {
-                var state: State? = decors.get(p.thisObject)
-                if (((state == null) || !(state)!!.eligible())) {
+                val view = p.thisObject as View
+                val state = decors[view] ?: if (view.id == android.R.id.content) decors[view.rootView] else null
+                if (state == null || !state.eligible()) {
                     return
                 }
                 var insets: WindowInsets = (p.args[0] as WindowInsets)
@@ -56,6 +57,9 @@ class ImmersiveStatusBarHook {
                 if ((top > 0)) {
                     (state)!!.statusHeight = top
                 }
+                // Keep real insets on DecorView for AndroidX's system-bar monitor.
+                // Only the host content consumes the top inset for immersive layout.
+                if (view === state.decor) return
                 if ((Build.VERSION.SDK_INT >= 30)) {
                     p.args[0] = WindowInsets.Builder(insets).setInsets(WindowInsets.Type.statusBars(), Insets.NONE).setInsetsIgnoringVisibility(WindowInsets.Type.statusBars(), Insets.NONE).setDisplayCutout(null).build()
                 } else {
@@ -180,6 +184,7 @@ class ImmersiveStatusBarHook {
         @JvmField var appearance: Int = 0
 
         @JvmField var statusHeight: Int = 0
+        private val protection by lazy { StatusBarProtection(window) }
 
         @JvmField var live: Boolean = false
 
@@ -285,6 +290,7 @@ class ImmersiveStatusBarHook {
                     }
                 }
                 storyInsets.applyPending(activity)
+                if (settings.get().b("STATUS_BAR_PROTECTION")) protection.apply() else protection.restore()
                 if (!decor.isLaidOut()) {
                     decor.requestApplyInsets()
                 }
@@ -387,6 +393,7 @@ class ImmersiveStatusBarHook {
             changing = true
             applied = false
             try {
+                protection.restore()
                 restoreMenus()
                 window.setStatusBarColor(originalColor)
                 window.setFlags(originalFlags, FLAGS_MASK)

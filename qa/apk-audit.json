@@ -1,11 +1,11 @@
 {
-  "apk": "easy-bili-tool-1.1.5.apk",
-  "sha256": "a6ac42700bc9b2a7b1b250c2a9a0e4b9818555925b1fad75d3df96443cceeaf9",
-  "bytes": 1271910,
+  "apk": "easy-bili-tool-1.1.6.apk",
+  "sha256": "a7ec5914d93f483492f76fcbb033c0fc9d7807053d25110a01057c15282912cf",
+  "bytes": 2869777,
   "package": "com.weinaoa.easybilitool",
   "label": "简单bili小工具",
-  "version": "1.1.5",
-  "versionCode": 11,
+  "version": "1.1.6",
+  "versionCode": 12,
   "sourceClasses": [
     "About",
     "BiliSettingsHook",
@@ -43,6 +43,7 @@
     "SettingsDraft",
     "SettingsNavigationInsets",
     "SettingsRoute",
+    "StatusBarProtection",
     "StoryStatusInsets"
   ],
   "dexTopLevelClasses": [
@@ -85,9 +86,12 @@
     "SettingsDraft",
     "SettingsNavigationInsets",
     "SettingsRoute",
+    "StatusBarProtection",
     "StoryStatusInsets"
   ],
-  "permissions": [],
+  "permissions": [
+    "com.weinaoa.easybilitool.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+  ],
   "providers": [],
   "excludedFeatureAudit": "passed",
   "compileOnlyApiExcluded": true,
@@ -101,8 +105,15 @@
   "licenseBundled": true,
   "generatedOrRuntimeNamespaces": [
     "kotlin",
+    "kotlinx.coroutines",
+    "_COROUTINE",
+    "androidx",
+    "android.support.v4",
+    "com.google.common.util.concurrent",
+    "org.jspecify.annotations",
     "org.intellij.lang.annotations",
     "org.jetbrains.annotations",
     "com.android.tools.r8"
-  ]
+  ],
+  "statusBarProtection": "AndroidX Core 1.17.0 ProtectionLayout / GradientProtection"
 }

@@ -27,17 +27,18 @@ class ConfigDraftTest {
 
         @JvmStatic fun main(args: Array<String>) {
             var defaults: Config = Config()
-            check((defaults.values.size == 3), "only three options")
+            val original = defaults.values.toMap()
+            check((defaults.values.size == 4), "three features and status protection")
             for (field in Config.FIELDS) {
-                check(!defaults.b(field.key()), (("fresh install keeps " + field.key()) + " off"))
+                check(defaults.b(field.key()) == field.default, "field default is retained")
             }
             run {
                 var bits: Int = 0
-                while ((bits < 8)) {
+                while ((bits < (1 shl Config.FIELDS.size))) {
                     var config: Config = defaults
                     run {
                         var i: Int = 0
-                        while ((i < 3)) {
+                        while ((i < Config.FIELDS.size)) {
                             config = config.with((Config.FIELDS.get(i))!!.key(), (((bits and ((1 shl i)))) != 0))
                             i++
                         }
@@ -45,7 +46,7 @@ class ConfigDraftTest {
                     var independent: Boolean = true
                     run {
                         var i: Int = 0
-                        while ((i < 3)) {
+                        while ((i < Config.FIELDS.size)) {
                             independent = independent and (config.b((Config.FIELDS.get(i))!!.key()) == ((((bits and ((1 shl i)))) != 0)))
                             i++
                         }
@@ -54,7 +55,12 @@ class ConfigDraftTest {
                     bits++
                 }
             }
-            check(defaults.values.values.stream().noneMatch({ it }), "edits do not mutate defaults")
+            check(defaults.values == original, "edits do not mutate defaults")
+            check(defaults.b("STATUS_BAR_PROTECTION") && !defaults.b("IMMERSIVE_STATUS_BAR"), "protection defaults on without activating immersion")
+            val protectionDraft = SettingsDraft(defaults)
+            protectionDraft.edit("STATUS_BAR_PROTECTION", false)
+            protectionDraft.saved()
+            check(!SettingsDraft(protectionDraft.committed()).current().b("STATUS_BAR_PROTECTION"), "protection off survives save and reopen")
             var draft: SettingsDraft = SettingsDraft(defaults)
             draft.edit("IMMERSIVE_STATUS_BAR", true)
             check((draft.dirty() && !draft.committed().b("IMMERSIVE_STATUS_BAR")), "edit remains a draft")
