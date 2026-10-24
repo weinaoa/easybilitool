@@ -33,4 +33,4 @@ Linux / macOS 首行使用 `bash ./gradlew :app:assembleDebug :app:lintDebug`。
 4. 检查 Git 远端、公开可见性、提交文件和源码 ZIP，排除个人资料、无关代码及未明确授权的材料。
 5. 稳定版本发布时提供版本标签、APK、对应源码包和 SHA-256 校验值，关于页引用同一版本的源码及完整许可证。
 
-推送 `compat/bili-9161` 适配分支不等于合入 `main` 或发布 Release。当前候选保留为 1.1.12；其最新键盘补丁尚待 8.95.0 实机复测。
+推送 `compat/bili-9161` 适配分支不等于合入 `main` 或发布 Release。当前候选及新旧客户端的实际验证范围以 [TESTING.md](TESTING.md) 为准。

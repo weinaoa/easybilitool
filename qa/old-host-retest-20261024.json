@@ -1,0 +1,306 @@
+{
+  "date": "2026-10-24",
+  "moduleVersion": "1.1.12",
+  "apkSha256": "17d3e3cc9344a11d04825c7e64d0c16cb52e5a4c76e815e680b5c26eb41b8916",
+  "hostVersion": "8.95.0",
+  "hostVersionCode": 8950600,
+  "androidApi": 37,
+  "screenPixels": [
+    1080,
+    2340
+  ],
+  "gestureStartY": 2285,
+  "theme": "dark",
+  "oneModuleEnabledForHostPerRun": true,
+  "scope": "Shared system bar, scroll-collapse, keyboard, page-return and safe-area regression; not all module features",
+  "localChecks": "Documentation links, preview images, JSON and Git diff checked; runtime sources unchanged, existing build/JVM/Lint/APK checks retained",
+  "cases": {
+    "navigationImmersionOn": {
+      "home": {
+        "initialVisible": true,
+        "hiddenOnUp": true,
+        "downRestored": true,
+        "hiddenAfterFling": true,
+        "reentryRestored": true
+      },
+      "video": {
+        "initialBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "hiddenOnUp": true,
+        "downRestored": true,
+        "hiddenAfterFling": true,
+        "hiddenScrollBounds": [
+          [
+            0,
+            713,
+            1080,
+            2340
+          ],
+          [
+            0,
+            713,
+            1080,
+            2340
+          ]
+        ],
+        "imeShown": true,
+        "afterImeBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "imeReturnsToOriginalBounds": true,
+        "tabRestores": true,
+        "reentryBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "reentryRestores": true
+      },
+      "opus": {
+        "initialBounds": [
+          65,
+          2185,
+          240,
+          2232
+        ],
+        "bodyUpHides": true,
+        "bodyDownRestores": true,
+        "hiddenOnUp": true,
+        "downRestored": true,
+        "hiddenAfterFling": true,
+        "hiddenScrollBounds": [
+          [
+            0,
+            594,
+            1080,
+            2340
+          ],
+          [
+            0,
+            594,
+            1080,
+            2340
+          ]
+        ],
+        "imeShown": true,
+        "afterImeBounds": [
+          65,
+          2185,
+          240,
+          2232
+        ],
+        "imeReturnsToOriginalBounds": true,
+        "reentryBounds": [
+          65,
+          2185,
+          240,
+          2232
+        ],
+        "reentryRestores": true
+      },
+      "reply": {
+        "initialBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "toolbarTopBefore": 90,
+        "hiddenOnUp": true,
+        "downRestored": true,
+        "hiddenAfterFling": true,
+        "hiddenScrollBounds": [
+          [
+            0,
+            244,
+            1080,
+            2340
+          ]
+        ],
+        "imeShown": true,
+        "afterImeBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "imeReturnsToOriginalBounds": true,
+        "toolbarTopAfterIme": 90,
+        "reentryBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "reentryRestores": true,
+        "toolbarTopReentry": 90,
+        "finiteFooterBounds": [
+          301,
+          2067,
+          779,
+          2123
+        ],
+        "finiteFooterSafe": true
+      }
+    },
+    "navigationImmersionOff": {
+      "home": {
+        "initialVisible": true,
+        "hiddenOnUp": true,
+        "downRestored": true,
+        "hiddenAfterFling": true,
+        "reentryRestored": true
+      },
+      "video": {
+        "initialBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "hiddenOnUp": true,
+        "downRestored": true,
+        "hiddenAfterFling": true,
+        "hiddenScrollBounds": [
+          [
+            0,
+            713,
+            1080,
+            2285
+          ],
+          [
+            0,
+            713,
+            1080,
+            2285
+          ]
+        ],
+        "imeShown": true,
+        "afterImeBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "imeReturnsToOriginalBounds": true,
+        "tabRestores": true,
+        "reentryBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "reentryRestores": true
+      },
+      "opus": {
+        "initialBounds": [
+          65,
+          2185,
+          240,
+          2232
+        ],
+        "bodyUpHides": true,
+        "bodyDownRestores": true,
+        "hiddenOnUp": true,
+        "downRestored": true,
+        "hiddenAfterFling": true,
+        "hiddenScrollBounds": [
+          [
+            0,
+            601,
+            1080,
+            2285
+          ],
+          [
+            0,
+            601,
+            1080,
+            2285
+          ]
+        ],
+        "imeShown": true,
+        "afterImeBounds": [
+          65,
+          2185,
+          240,
+          2232
+        ],
+        "imeReturnsToOriginalBounds": true,
+        "reentryBounds": [
+          65,
+          2185,
+          240,
+          2232
+        ],
+        "reentryRestores": true
+      },
+      "reply": {
+        "initialBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "toolbarTopBefore": 90,
+        "hiddenOnUp": true,
+        "downRestored": true,
+        "hiddenAfterFling": true,
+        "hiddenScrollBounds": [
+          [
+            0,
+            244,
+            1080,
+            2285
+          ]
+        ],
+        "imeShown": true,
+        "afterImeBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "imeReturnsToOriginalBounds": true,
+        "toolbarTopAfterIme": 90,
+        "reentryBounds": [
+          33,
+          2183,
+          948,
+          2266
+        ],
+        "reentryRestores": true,
+        "toolbarTopReentry": 90,
+        "finiteFooterBounds": [
+          301,
+          2067,
+          779,
+          2123
+        ],
+        "finiteFooterSafe": true
+      }
+    }
+  },
+  "backgroundAndListBoundsVisuallyReviewed": true,
+  "restoration": {
+    "preferencesRestoredByteForByte": true,
+    "allModuleStatesAndScopesRestored": true,
+    "installedCandidateApksUnchanged": true,
+    "qaProbeRemoved": true,
+    "temporaryFilesRemoved": true,
+    "phoneAwake": true,
+    "hostRetained8950": true
+  },
+  "limitations": [
+    "One device, dark skin and gesture navigation",
+    "Video comments were not exhausted to the server final page",
+    "No claim that all perceptible animation issues or all distinct features were tested"
+  ]
+}
