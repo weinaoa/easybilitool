@@ -1,6 +1,6 @@
 # 验证范围
 
-1.1.12 的适配与文档已于 2026-10-24 从 `compat/bili-9161` 合入 `main`，尚未发布 Release。同一 APK 已完成 2026-10-24 的 9.16.1 键盘动画检查及后续 8.95.0 共用流程回归，APK SHA-256：
+1.1.12 的适配与文档已于 2026-10-24 从 `compat/bili-9161` 合入 `main`，发布包、完整源码和校验文件见 [v1.1.12](https://github.com/weinaoa/easybilitool/releases/tag/v1.1.12)。同一 APK 已完成 2026-10-24 的 9.16.1 键盘动画检查及后续 8.95.0 共用流程回归，APK SHA-256：
 
 ```text
 17d3e3cc9344a11d04825c7e64d0c16cb52e5a4c76e815e680b5c26eb41b8916
