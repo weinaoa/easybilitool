@@ -40,7 +40,7 @@ class About {
 
         private val DOCUMENTS: Array<Reference> = arrayOf(Reference("Android · WindowInsets", "状态栏、导航栏、刘海与键盘安全区", "https://developer.android.com/reference/android/view/WindowInsets"), Reference("Material Components · AppBarLayout", "首页底栏随原生顶栏收起比例联动", "https://developer.android.com/reference/com/google/android/material/appbar/AppBarLayout"), Reference("AndroidX · RecyclerView", "主界面与详情列表的纵向滚动接口", "https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.OnScrollListener"))
 
-        private val OPEN_SOURCE: Array<Reference> = arrayOf(Reference("源码与下载", "当前版本对应源码、APK 与校验值", ("https://github.com/weinaoa/easybilitool/releases/tag/v" + BuildConfig.VERSION_NAME)), Reference("Mulan PubL v2 · 木兰公共许可证", "Copyright (c) 2026 weinaoa · 完整许可证", (("https://github.com/weinaoa/easybilitool/blob/v" + BuildConfig.VERSION_NAME) + "/LICENSE")))
+        private val OPEN_SOURCE: Array<Reference> = arrayOf(Reference("项目仓库", "上游源码与发布记录；本地适配源码见随附 ZIP", "https://github.com/weinaoa/easybilitool"), Reference("Mulan PubL v2 · 木兰公共许可证", "Copyright (c) 2026 weinaoa · 完整许可证", "https://github.com/weinaoa/easybilitool/blob/main/LICENSE"))
 
         @JvmStatic fun show(context: Context) {
             var dark: Boolean = (((context.getResources().getConfiguration().uiMode and Configuration.UI_MODE_NIGHT_MASK)) == Configuration.UI_MODE_NIGHT_YES)
@@ -51,7 +51,7 @@ class About {
             body.setOrientation(LinearLayout.VERTICAL)
             body.setPadding(dp(context, 20), dp(context, 8), dp(context, 20), dp(context, 12))
             body.addView(text(context, "简单bili小工具", 18, ink, true))
-            body.addView(text(context, (("版本 " + BuildConfig.VERSION_NAME) + " · 适配哔哩哔哩 8.95.0"), 13, muted, false))
+            body.addView(text(context, (("版本 " + BuildConfig.VERSION_NAME) + " · 适配哔哩哔哩 8.95.0 / 9.16.1"), 13, muted, false))
             body.addView(text(context, "沉浸状态栏 · 滑动时收起底栏 · 沉浸导航栏", 13, muted, false))
             group(context, body, "参考项目", PROJECTS, ink, muted, accent)
             group(context, body, "参考文档", DOCUMENTS, ink, muted, accent)

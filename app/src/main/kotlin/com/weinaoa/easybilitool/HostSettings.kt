@@ -50,6 +50,8 @@ class HostSettings {
             if (!edit.commit()) {
                 throw IllegalStateException("设置保存失败，请重试")
             }
+            // Keep the running hooks current even if the host delays/reuses restart.
+            RuntimeStatus.configuration(config)
         }
     }
 }

@@ -13,7 +13,6 @@ See the Mulan PubL v2 for more details.
 package com.weinaoa.easybilitool
 
 import android.app.Application
-import android.content.Context
 import io.github.libxposed.api.XposedModule
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -21,38 +20,55 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Installs only the settings entry and the three requested UI features.
  */
 class EasyBiliToolModule : XposedModule() {
-    private val installed: AtomicBoolean = AtomicBoolean()
-
-    private var config: Config = Config()
+    private val startupHooked = AtomicBoolean()
+    private val installed = AtomicBoolean()
+    private var config = Config()
 
     override fun onPackageReady(param: io.github.libxposed.api.XposedModuleInterface.PackageReadyParam) {
-        if (!SettingsRoute.HOST.equals(param.getPackageName())) {
-            return
-        }
+        if (param.packageName != SettingsRoute.HOST || !startupHooked.compareAndSet(false, true)) return
         HookRuntime.initialize(this)
-        try {
-            Reflector.findAndHookMethod(Application::class.java, "attach", Context::class.java, object : MethodHook() {
-                override fun afterHookedMethod(param: MethodHookParam) {
-                    if ((param.hasThrowable() || !installed.compareAndSet(false, true))) {
-                        return
-                    }
-                    var context: Context = (param.args[0] as Context)
-                    var application: Application = (param.thisObject as Application)
-                    try {
-                        config = HostSettings.read(context)
-                    } catch (error: Throwable) {
-                        HookRuntime.log(("[EasyBiliTool] SETTINGS_READ_ERROR " + error))
-                    }
-                    install("SETTINGS_ENTRY", lambda@ { BiliSettingsHook.install(application, context.getClassLoader()) })
-                    install("IMMERSIVE_STATUS", lambda@ { ImmersiveStatusBarHook(lambda@ { config }).install(application) })
-                    install("HOME_BOTTOM_BAR", lambda@ { HomeBottomBarHook(lambda@ { config }).install(application) })
-                    install("DETAIL_BOTTOM_BAR", lambda@ { DetailBottomBarHook(lambda@ { config }).install(application) })
-                    install("NAVIGATION_EDGE", lambda@ { NavigationBarHook(lambda@ { config }).install(application) })
-                }
+        // Bootstrap from the fully attached application that actually receives
+        // onCreate; an attach-only hook can be missed or observe a wrapper app.
+        install("APPLICATION_STARTUP") {
+            Reflector.findAndHookMethod(android.app.Instrumentation::class.java, "callApplicationOnCreate", Application::class.java, object : MethodHook() {
+                override fun beforeHookedMethod(p: MethodHookParam) { start(p.args[0] as Application) }
             })
-        } catch (error: ReflectiveOperationException) {
-            HookRuntime.log(("[EasyBiliTool] APPLICATION_ATTACH_UNSUPPORTED " + error))
+            var type: Class<*>? = Class.forName(param.applicationInfo.className ?: Application::class.java.name, false, param.classLoader)
+            while (type != null && Application::class.java.isAssignableFrom(type)) {
+                val method = runCatching { type!!.getDeclaredMethod("onCreate") }.getOrNull()
+                if (method != null) {
+                    HookRuntime.hookMethod(method, object : MethodHook() {
+                        override fun beforeHookedMethod(p: MethodHookParam) { start(p.thisObject as Application) }
+                    })
+                    break
+                }
+                type = type.superclass
+            }
         }
+    }
+
+    private fun start(application: Application) {
+        val context = application.baseContext ?: return
+        if (context.packageName != SettingsRoute.HOST || !installed.compareAndSet(false, true)) return
+        try {
+            config = HostSettings.read(context)
+        } catch (error: Throwable) {
+            HookRuntime.log("[EasyBiliTool] SETTINGS_READ_ERROR $error")
+        }
+        RuntimeStatus.attach(application, config)
+        val settings = java.util.function.Supplier { RuntimeStatus.active ?: config }
+        install("SETTINGS_ENTRY") { BiliSettingsHook.install(application, context.classLoader) }
+        installOptional("VIDEO_NATIVE_INSETS") { TheseusWindowInsetsHook(settings).install(application) }
+        install("IMMERSIVE_STATUS") { ImmersiveStatusBarHook(settings).install(application) }
+        install("HOME_BOTTOM_BAR") { HomeBottomBarHook(settings).install(application) }
+        installOptional("COMPOSE_COMMENTS") { ComposeCommentHook(settings).install(application) }
+        installOptional("COMPOSE_OPUS") { ComposeOpusHook(settings).install(application) }
+        install("DETAIL_BOTTOM_BAR") { DetailBottomBarHook(settings).install(application) }
+        installOptional("COMPOSE_HOME") {
+            if (!ComposeHomeHook.install(application)) false
+            else ComposeHomeScroll(settings).install(application)
+        }
+        install("NAVIGATION_EDGE") { NavigationBarHook(settings).install(application) }
     }
 
     private fun interface Installer {
@@ -66,6 +82,14 @@ class EasyBiliToolModule : XposedModule() {
             HookRuntime.log((("[EasyBiliTool] " + name) + "_READY"))
         } catch (error: Throwable) {
             HookRuntime.log(((("[EasyBiliTool] " + name) + "_UNSUPPORTED ") + error))
+        }
+    }
+
+    private fun installOptional(name: String, installer: () -> Boolean) {
+        try {
+            HookRuntime.log("[EasyBiliTool] ${name}_${if (installer()) "READY" else "NOT_APPLICABLE"}")
+        } catch (error: Throwable) {
+            HookRuntime.log("[EasyBiliTool] ${name}_UNSUPPORTED $error")
         }
     }
 }

@@ -1,28 +1,16 @@
-# 发布与项目边界
+# 构建与发布
 
-仓库：[weinaoa/easybilitool](https://github.com/weinaoa/easybilitool)。公开发布采用 Mulan PubL v2，自有代码和图标的授权范围及来源见 [SOURCES.md](SOURCES.md)。
+仓库：[weinaoa/easybilitool](https://github.com/weinaoa/easybilitool)。自有实现、文档与图标采用 Mulan PubL v2，来源范围见 [SOURCES.md](SOURCES.md)，第三方依赖见[第三方声明](../THIRD_PARTY_NOTICES.md)。
 
 ## 项目边界
 
-`easybilitool` 本身是完整 Android 工程根目录：构建配置、wrapper、源码、图标、API 编译 JAR、测试、检查/打包工具和文档都在这里。它不引用父目录的 BiliTool 工程，也不需要把自用工程公开。
+本仓库是独立 Android 工程，构建、测试和源码打包不需要仓库以外的项目源码。功能范围仅为状态栏沉浸、导航栏沉浸、滑动收起底栏及必要设置。
 
-两个工程分别维护，采用并列目录：
+公开文件只包含本项目所需且来源、授权明确的源码、资源、构建输入、工具和经过审查的验证资料。宿主 APK、反编译材料、设备原始截图／XML／录像、账号资料、框架备份、本机配置和签名私钥不进入仓库或源码包。`qa/` 保留可公开的测试结论、数值摘要及经审查的图片。
 
-```text
-projects/
-  bilitool/       # 自用工程与它自己的仓库
-  easybilitool/   # 开源工程与它自己的仓库
-```
+## 构建与检查
 
-各自有独立 Git 仓库，父目录仅为项目容器。BiliTool 只作私有备份；公开仓库以简单版目录为根，不包含自用工程。
-
-临时实机检查应用、LSPosed 配置备份、设备原始截图/XML、旧 APK 和历史分析材料在外部本地归档，不进入公开源码包。项目内 `qa/` 保留测试结论和筛选后的界面截图，原始构建日志仅本地保留。
-
-## 独立构建与检查
-
-需要 JDK 17+、Android SDK Platform 36、Build Tools 36.0.0、Python 3.10+。SDK 用环境变量 `ANDROID_SDK_ROOT` / `ANDROID_HOME` 或本地 `local.properties` 配置。模块与测试均使用 Kotlin；Python 测试入口调用 Gradle wrapper，由 AGP 管理 Kotlin 编译器与运行库。APK 审查工具通过 PATH 调用 `java`。
-
-Windows：
+需要 JDK 17+、Android SDK Platform 36、Build Tools 36.0.0 和 Python 3.10+。通过 `ANDROID_SDK_ROOT` / `ANDROID_HOME` 或本地 `local.properties` 配置 SDK，Java 需位于 PATH。首次构建需要联网下载依赖。
 
 ```powershell
 .\gradlew.bat :app:assembleDebug :app:lintDebug
@@ -31,14 +19,18 @@ python tools/audit_apk.py
 python package_source.py
 ```
 
-Linux / macOS 使用 `bash ./gradlew :app:assembleDebug :app:lintDebug`，其余命令相同。首次 Gradle 构建需要联网取得构建依赖。源码 ZIP 包含 wrapper 和 API JAR，不包含 SDK、Gradle 缓存或本机路径配置。
+Linux / macOS 首行使用 `bash ./gradlew :app:assembleDebug :app:lintDebug`。测试通过 Gradle wrapper 执行，Kotlin 编译与运行库由 AGP 管理。
 
-源码打包采取明确文件清单：包含代码、资源、测试、工具、文档、第三方许可和筛选后的 QA 文件；排除私有工程、归档、构建缓存、原始日志、`local.properties`、密钥与生成的 APK。
+`package_source.py` 按当前构建版本生成 `dist/easy-bili-tool-<版本>.apk`、对应源码 ZIP 和 `SHA256SUMS.txt`。打包采用明确文件范围，排除 SDK、缓存、原始日志、`local.properties`、密钥及生成的 APK；仍须检查最终 ZIP 文件清单。`dist/` 不由 Git 跟踪。
 
-当前 APK 采用本机 Android 调试签名，APK 验证和实机测试已完成。正式维护更新时应确定长期签名策略；私钥、密码不得提交仓库。`.gitignore` 已排除常见 JKS / keystore 文件，仍需在发布前审查最终文件清单。
+默认 APK 采用本机 Android 调试签名。同包名 APK 的覆盖升级需要相同签名；发布前应确定持续更新使用的签名，并在本地保管私钥，不提交密码或证书私钥。
 
-## 发布要求
+## 验证与发布流程
 
-- 主许可证为根目录的 Mulan PubL v2 完整双语文本。第三方 Apache-2.0 副本与第三方声明单独保留。
-- 发布前核对 Git 文件清单，确认没有完整版代码、设备备份、本机路径或密钥；确认 BiliTool 远端始终为 private。
-- 公开发布时附版本标签、APK、对应源码包和校验值；关于页引用同一版本的源码和许可证。`dist/` 是本地生成产物，通过 GitHub Release 上传，不被 Git 跟踪。
+1. 确认版本、分支、变更和来源声明一致，分别记录构建、JVM 检查、Lint 与 APK 审计结果。
+2. 使用对应 APK 完成改动涉及的实机检查。底栏和安全区改动需覆盖正文、评论、滑动、惯性、切页、重进与键盘往返，导航栏沉浸开、关分别验证。检查背景、列表实际边界和末项距离。
+3. 核对 APK 哈希与验证记录，明确未验证的客户端、设备和配置。测试旧包的结果不能代替新包结果；当前候选边界见 [TESTING.md](TESTING.md)。
+4. 检查 Git 远端、公开可见性、提交文件和源码 ZIP，排除个人资料、无关代码及未明确授权的材料。
+5. 稳定版本发布时提供版本标签、APK、对应源码包和 SHA-256 校验值，关于页引用同一版本的源码及完整许可证。
+
+推送 `compat/bili-9161` 适配分支不等于合入 `main` 或发布 Release。当前候选保留为 1.1.12；其最新键盘补丁尚待 8.95.0 实机复测。

@@ -1,0 +1,32 @@
+[
+  {
+    "versionCode": 8950600,
+    "versionName": "8.95.0",
+    "apkSha256": "7510081258f2d93cf5776f19ee8c0b5ea1ef56f0507e723335708c2066fe76db",
+    "scope": "Static declared DEX contracts and resource names; not runtime/UI validation",
+    "storyBindings": [
+      {
+        "method": "p3(IIIII)V",
+        "contextField": "H:Landroid/content/Context;",
+        "topArgument": 2
+      }
+    ],
+    "passed": true,
+    "checks": 103
+  },
+  {
+    "versionCode": 9161100,
+    "versionName": "9.16.1",
+    "apkSha256": "68a2b56f72501ddd70034aadc5deb080f0d1a8c5784795aa2cc12828c938fa40",
+    "scope": "Static declared DEX contracts and resource names; not runtime/UI validation",
+    "storyBindings": [
+      {
+        "method": "a1(II)V",
+        "contextField": "G:Landroid/content/Context;",
+        "topArgument": 1
+      }
+    ],
+    "passed": true,
+    "checks": 177
+  }
+]

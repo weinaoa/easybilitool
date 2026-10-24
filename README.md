@@ -1,56 +1,70 @@
 # 简单bili小工具
 
-包名：`com.weinaoa.easybilitool`。版本：1.1.6。
+为官方哔哩哔哩 Android 客户端提供状态栏沉浸、导航栏沉浸和滑动收起底栏的 LSPosed 模块。保留原生界面，让背景延伸到系统栏区域，同时为按钮、输入栏和列表末项保留安全距离。
 
-1.1.6 在沉浸状态栏下增加“状态栏渐变保护”（默认开启）：使用 AndroidX 官方 ProtectionLayout / GradientProtection 提高亮暗视频上的图标对比度，关闭后完全透明并保留宿主图标明暗。不开启沉浸状态栏时，该选项不生效。验证见 [qa/VALIDATION-v116.md](qa/VALIDATION-v116.md)。
+[下载稳定版](https://github.com/weinaoa/easybilitool/releases/latest) · [更新记录](docs/CHANGELOG.md) · [验证范围](docs/TESTING.md) · [反馈问题](https://github.com/weinaoa/easybilitool/issues) · [许可证](LICENSE)
 
-1.1.5 补齐竖屏 Story 视频的状态栏沉浸及冷启动适配，状态栏图标保留宿主的明暗选择；修复关注页“最常访问”左右滑动时导航区留下背景条的问题，各页列表内部保留末项安全距离。仍只有三个开关，验证记录见 [qa/VALIDATION-v115.md](qa/VALIDATION-v115.md)。
+## 功能
 
-1.1.4 修复直播间沉浸导航栏误把输入框背景铺到整个底部控制区的问题；“全部直播”关注网页延伸到导航手势区，并在网页滚动容器保留末项安全距离，退出或关闭沉浸时恢复。仍只有原有三个开关，验证范围见 [qa/VALIDATION-v114.md](qa/VALIDATION-v114.md)。
+| 功能 | 使用效果 |
+| --- | --- |
+| 沉浸状态栏 | 视频、Story 竖屏视频和直播背景延伸到顶部，保留系统状态图标，并为操作控件避让 |
+| 沉浸导航栏 | 页面及弹层背景延伸到系统导航区，固定按钮、评论输入栏和列表末项保留安全距离 |
+| 滑动时收起底栏 | 首页、动态详情和视频评论底栏随上滑逐步下移、渐隐，下滑恢复；处理切页、重进和键盘往返时的恢复 |
 
-1.1.3 修复视频卡片分享／更多弹层、视频与动态评论表情面板及动态转发编辑页的导航栏背景：背景延伸到导航区域，操作控件保留系统安全距离；编辑器切到表情面板时，即使窗口尺寸不变也刷新原生背景颜色。检查记录见 [qa/VALIDATION-v113.md](qa/VALIDATION-v113.md)。本地 APK 和对应源码可由下方构建、打包命令生成。
+“状态栏渐变保护”是沉浸状态栏的子选项，默认开启，使用 AndroidX 官方组件改善图标对比度。关闭后保持透明，沿用客户端选择的图标明暗，不逐帧分析视频颜色。
 
-1.1.2 修复“我的页”滑到底时末项进入底栏背景的问题：按系统实际导航安全区补齐有限列表的末尾留白，切页和应用返回时保留原始基线。153 项 JVM 检查、构建及 Lint 通过；实机验证范围见 [qa/VALIDATION-v112.md](qa/VALIDATION-v112.md)。
+本项目仅维护上述三项主功能及必要设置。
 
-1.1.1 修复视频评论底栏切换应用后高度累加，以及评论详情底栏未保留导航安全距离、收起后留下白色遮挡的问题。保留原始尺寸基线，选择当前评论层的底栏，并适配评论详情的 RelativeLayout 列表约束。136 项 JVM 检查、构建、Lint 和 USB umi 的沉浸导航开/关实测通过，详情见 [qa/VALIDATION-v111.md](qa/VALIDATION-v111.md)。
+## 版本与兼容性
 
-源码仓库：[weinaoa/easybilitool](https://github.com/weinaoa/easybilitool)。本项目自有代码、文档和图标以 **Mulan PubL v2（木兰公共许可证，第2版）** 发布，Copyright (c) 2026 weinaoa。完整文本见 [LICENSE](LICENSE)。
+| 项目 | 当前范围 |
+| --- | --- |
+| 稳定版 | **1.1.6**，适配目标为官方客户端 **8.95.0**，从 Releases 获取 |
+| 当前适配分支 | **1.1.12**，`compat/bili-9161`；增加官方客户端 **9.16.1 / 9161100** 适配，尚未合入 `main` 或发布 Release |
+| 系统与框架 | Android **8.0+**、Root、支持 **libxposed API 102** 的 LSPosed 框架 |
+| 作用域 | 官方客户端 `tv.danmaku.bili`；其他包名、共存修改版和客户端灰度版本需另行验证 |
 
-代码来源见 [docs/SOURCES.md](docs/SOURCES.md)，第三方材料见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)，独立仓库与发布事项见 [docs/RELEASE.md](docs/RELEASE.md)。第三方依赖保留各自许可。
+最新候选已在 9.16.1 上独立实测沉浸开关、滑动收起、动态与视频评论安全区及键盘关闭动画。**最新键盘补丁尚未在 8.95.0 重新实测**；此前旧版回归对应较早 APK，不能视为当前包通过。其他设备、浅色皮肤和三键导航尚未完成本轮验证。详见[验证范围](docs/TESTING.md)。
 
-已发布的 1.1.2 APK、对应完整源码与校验值见 [v1.1.2 发布页](https://github.com/weinaoa/easybilitool/releases/tag/v1.1.2)。源码也可从 [v1.1.2 标签](https://github.com/weinaoa/easybilitool/tree/v1.1.2) 获取。模块“关于”引用同一版本的源码和许可证，APK 内附完整许可证副本。
+横屏全屏、画中画、分屏等场景以客户端原有行为为主。新版视频页的键盘动画使用单独适配，具体边界见[键盘动画记录](qa/IME-FLICKER-v1112.md)。
 
-本轮来源整理与独立构建验证见 [qa/PREPARATION.md](qa/PREPARATION.md)。
+## 安装与使用
 
-1.0.3 的许可、APK 与实机检查见 [qa/VALIDATION-v103.md](qa/VALIDATION-v103.md)。
+1. 从 [GitHub Releases](https://github.com/weinaoa/easybilitool/releases) 下载 APK。尝试适配分支时，请自行构建该分支，确认验证范围。
+2. 在框架中启用“简单bili小工具”，作用域只勾选 **哔哩哔哩 / `tv.danmaku.bili`**。
+3. 强行停止并重新打开哔哩哔哩，进入 **我的 → 设置 → 简单bili小工具**；也可从模块桌面入口选择“打开功能设置”。
+4. 按需打开功能，点击 **保存并重启**。首次安装时三项主功能均关闭；渐变保护默认开启，但仅随沉浸状态栏生效。
 
-1.1.0 将模块源码和全部测试迁移至 Kotlin，并修复首页进入视频时沉浸导航栏短暂恢复的问题。构建使用 AGP 自带 Kotlin；检查与实机结果见 [qa/VALIDATION-v110.md](qa/VALIDATION-v110.md)。
+设置在保存前属于编辑草稿，退出未保存时可以继续编辑或放弃。升级时使用相同签名的 APK；签名不一致时无法直接覆盖安装。
 
-1.0.4 修复动态详情和视频评论底栏收起后留下背景条的问题，列表延伸到页面底部，并保留末项安全距离。实机滑动与背景检查见 [qa/VALIDATION-v104.md](qa/VALIDATION-v104.md)。
+测试兼容性时请只启用本模块，避免多个模块同时修改同一窗口或底栏。模块不申请网络或存储权限；功能配置保存在哔哩哔哩私有目录，清除哔哩哔哩数据会清除配置。
 
-独立的 Android LSPosed 模块，只提供三项功能：
+## 常见问题
 
-- **沉浸状态栏**：竖屏视频与直播背景延伸到顶部，保留状态栏并避让控件。视频顶部菜单沿用 80px 附加间距，直播控件使用系统状态栏与刘海安全区。
-- **状态栏渐变保护**：沉浸状态栏的子选项，默认开启，使用官方渐变保证图标对比度；关闭后保持完全透明。它不会根据视频逐帧反转图标颜色。
-- **滑动时收起底栏**：主界面、动态详情和视频评论的原生底栏上滑收起，下滑恢复。切换页面、打开键盘或退出后恢复。
-- **沉浸导航栏**：竖屏页面背景延伸到系统导航栏后方，底部按钮和列表末项保留安全距离。
+**找不到设置入口或开关没有生效**
 
-## 使用
+确认框架支持 API 102、作用域正确，并在启用或更新模块后强停重开客户端。确认使用的是官方包名；仅修改开关而未“保存并重启”不会保存草稿。
 
-1. 安装当前构建的 `easy-bili-tool-1.1.6.apk`，或从发布页下载已发布版本。
-2. 在支持 libxposed API 102 的 LSPosed 框架中启用“简单bili小工具”，作用域选择 **哔哩哔哩 / tv.danmaku.bili**。
-3. 重新启动哔哩哔哩，进入 **我的 → 设置 → 简单bili小工具**，或从模块桌面入口点击“打开功能设置”。
-4. 修改开关后点击 **保存并重启**。三项主功能首次安装均关闭，状态栏渐变保护子选项默认开启；退出未保存时可继续编辑或放弃修改。
+**升级客户端后出现黑边、遮挡或底栏异常**
 
-如果已经启用完整版 Bili 小工具，请先禁用完整版，避免两份模块同时调整同一界面。简单版使用独立的包名、设置入口、启动动作和配置文件，不读取完整版配置。
+客户端内部页面结构可能改变。先检查当前模块版本的[验证范围](docs/TESTING.md)，单独启用本模块复现，再分别检查导航栏沉浸开启、关闭时的结果。关闭有关功能并保存重启，可撤回该功能的调整。
 
-需要 Android 8.0+、Root 与 libxposed API 102 框架；适配目标为官方哔哩哔哩 8.95.0。横屏全屏、画中画、分屏及键盘显示时，相关布局交回客户端处理。
+**关闭键盘后输入栏能看到，是否就表示安全区正常**
 
-配置仅保存在哔哩哔哩的私有目录，清除哔哩哔哩数据会清除三个开关。模块不申请网络或存储权限。
+还需要检查按钮与手势条的距离、关闭动画中是否跳动，以及收起后的列表实际范围。当前候选的相关检查见[键盘动画记录](qa/IME-FLICKER-v1112.md)。
 
-## 构建
+## 问题反馈与贡献
 
-需要 JDK 17+、Android SDK Platform 36、Build Tools 36.0.0 和 Python 3.10+。设置 `ANDROID_SDK_ROOT` / `ANDROID_HOME`，或在本地 `local.properties` 配置 `sdk.dir`。Python 检查工具调用项目 Gradle wrapper，Kotlin 编译和运行库由构建管理。
+请在 [Issues](https://github.com/weinaoa/easybilitool/issues) 提供模块版本、客户端版本与 versionCode、Android 版本、框架版本、导航方式、有关开关及最短复现步骤。适配分支可在设置中使用“复制运行诊断”；提交前请检查内容，遮盖账号、评论正文、通知及其他个人信息。
+
+欢迎提交范围明确的修复。保留旧客户端适配路径，注明代码来源和授权；涉及底栏、系统栏、键盘或安全区的改动，需要记录动态正文、动态评论、视频评论的滑动、惯性、切页、重进和键盘往返结果，并分别检查导航栏沉浸开、关。开发要求见 [AGENTS.md](AGENTS.md)。
+
+## 从源码构建
+
+需要 **JDK 17+、Android SDK Platform 36、Build Tools 36.0.0、Python 3.10+**。通过 `ANDROID_SDK_ROOT` / `ANDROID_HOME` 或未提交的 `local.properties` 设置 SDK 路径。首次构建需下载 Gradle 和 Android 构建依赖，Kotlin 编译由 AGP 管理。
+
+在仓库根目录执行：
 
 ```powershell
 .\gradlew.bat :app:assembleDebug :app:lintDebug
@@ -59,18 +73,22 @@ python tools/audit_apk.py
 python package_source.py
 ```
 
-Linux / macOS 将首行替换为 `bash ./gradlew :app:assembleDebug :app:lintDebug`。Windows 也可用 `test.ps1` 调用同一组测试。
+Linux / macOS 将首行替换为 `bash ./gradlew :app:assembleDebug :app:lintDebug`，其余命令相同。Windows 也可通过 `test.ps1` 执行 JVM 检查。
 
-源码与构建完全独立，不依赖父目录的完整版项目。编译依赖 `app/libs/libxposed-api-102.0.0.jar` 仅参与编译，不打入 APK。APK 使用本机 Android 调试签名。打包工具按当前版本生成 APK、源码 ZIP 与 SHA-256 校验文件，不包含本机配置、密钥、原始日志或完整版工程。
+构建 APK 位于 `app/build/outputs/apk/debug/app-debug.apk`。打包后 `dist/` 生成当前版本 APK、源码 ZIP 与 `SHA256SUMS.txt`；默认使用本机 Android 调试签名。`libxposed-api-102.0.0.jar` 仅参与编译，不打入 APK。
 
-本次实机验证范围见 [qa/VALIDATION-v101.md](qa/VALIDATION-v101.md)。
+| 目录 | 内容 |
+| --- | --- |
+| `app/` | Kotlin 模块源码、资源、入口元数据和编译接口 |
+| `tests/`、`tools/` | JVM 检查、APK 审计与宿主静态接口核对工具 |
+| `docs/`、`qa/` | 使用与发布文档、来源清单及经过审查的验证记录 |
+| `licenses/` | 第三方许可证副本 |
+| `dist/` | 本地生成产物，不由 Git 跟踪 |
 
-1.0.2 在功能设置与桌面介绍页增加“关于”，列出参考项目和文档，并提供可点击链接：
+构建成功、静态检查通过和实机验证是不同结论。发布流程及文件边界见[发布说明](docs/RELEASE.md)。
 
-- [BBZQ](https://github.com/HSSkyBoy/BBZQ)：透明播放器状态栏与设置界面参考。
-- [哔哩漫游](https://github.com/yujincheng08/BiliRoaming)：宿主设置入口与重启流程参考。
-- [Android WindowInsets](https://developer.android.com/reference/android/view/WindowInsets)：状态栏、导航栏、刘海与键盘安全区。
-- [Material Components AppBarLayout](https://developer.android.com/reference/com/google/android/material/appbar/AppBarLayout)：首页底栏随原生顶栏收起比例联动。
-- [AndroidX RecyclerView](https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.OnScrollListener)：主界面与详情列表的纵向滚动接口。
+## 来源与许可
 
-本次“关于”界面验证见 [qa/VALIDATION-v102.md](qa/VALIDATION-v102.md)。
+本项目自有代码、文档和图标以 **Mulan PubL v2（木兰公共许可证，第2版）** 发布，Copyright (c) 2026 weinaoa，完整文本见 [LICENSE](LICENSE)。第三方依赖保留各自许可，APK 内附许可证副本。
+
+感谢 BBZQ、哔哩漫游及 Android 官方文档提供的机制与接口参考。具体使用范围见[源码来源](docs/SOURCES.md)、[第三方声明](THIRD_PARTY_NOTICES.md)及[图标来源](docs/ARTWORK.md)。发布 APK 时同时提供对应源码、版本标签和校验值。

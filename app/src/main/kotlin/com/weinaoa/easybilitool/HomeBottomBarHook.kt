@@ -120,7 +120,7 @@ class HomeBottomBarHook {
 
             }
         })
-        HookRuntime.log("[EasyBiliTool] HOME_BOTTOM_BAR_READY 8.95 native offset sync")
+        HookRuntime.log("[EasyBiliTool] HOME_BOTTOM_BAR_READY native offset sync")
     }
 
     fun scrolled(view: View, dy: Int) {

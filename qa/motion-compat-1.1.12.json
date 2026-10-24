@@ -1,0 +1,175 @@
+{
+  "date": "2026-10-24",
+  "hostVersion": "9.16.1",
+  "hostVersionCode": 9161100,
+  "androidApi": 37,
+  "oneModuleEnabledPerRun": true,
+  "oldHostRuntimeRegression": "see old-host-compat-1.1.12.json",
+  "rawDeviceEvidence": "local ignored archive only",
+  "githubStatus": "not committed, pushed, merged or released",
+  "restoration": {
+    "preferencesRestoredByteForByte": true,
+    "onlyOriginalModuleEnabled": true,
+    "moduleScopesUnchanged": true,
+    "qaHelperRemoved": true,
+    "phoneAwake": true
+  },
+  "moduleVersion": "1.1.12",
+  "finalApkSha256": "67c331867cdd0851acac6ac0fd199d99ab106e9020eeab8aa0d10689896284ca",
+  "implementation": {
+    "continuousTranslation": true,
+    "opacity": "1 - fraction",
+    "childMeasuredAtFullHeight": true,
+    "actualSystemNavigationOverlapRetainedWhenImmersionOff": true,
+    "opusImeResetsScrollProgress": true
+  },
+  "local": {
+    "assembleDebug": "passed",
+    "jvmCheckGroups": 12,
+    "lintErrors": 0,
+    "lintWarnings": 31,
+    "apkAudit": "passed",
+    "staticHostContracts": {
+      "9.16.1": 170,
+      "8.95.0": 100
+    }
+  },
+  "deviceRuns": [
+    {
+      "navigationImmersion": true,
+      "apkSha256": "67c331867cdd0851acac6ac0fd199d99ab106e9020eeab8aa0d10689896284ca",
+      "commentMatrix": [
+        {
+          "page": "video",
+          "initialInputBounds": "[66,2192][538,2258]",
+          "partialInputBounds": "[66,2263][538,2329]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        },
+        {
+          "page": "opus-comments",
+          "initialInputBounds": "[63,2202][238,2249]",
+          "partialInputBounds": "[63,2270][238,2285]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        },
+        {
+          "page": "opus-reply",
+          "initialInputBounds": "[66,2192][538,2258]",
+          "partialInputBounds": "[66,2260][538,2285]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        }
+      ],
+      "bodyAndPageSwitch": {
+        "videoInitialInput": true,
+        "videoHidesOnUp": true,
+        "videoTabReturnRestoresInput": true,
+        "videoReverseRestoresInput": true,
+        "opusBodyHidesOnUp": true,
+        "opusBodyRestoresOnDown": true,
+        "replyInitialInput": true,
+        "replyHidesOnUp": true,
+        "replyRestoresOnDown": true
+      },
+      "imeThenSmallDrag": {
+        "hiddenBeforeEditor": true,
+        "replyEditorImeShown": true,
+        "inputAfterEditor": true,
+        "gradualAfterIme": true,
+        "initialBounds": "[63,2202][238,2249]",
+        "partialBounds": "[63,2270][238,2285]"
+      },
+      "homeSlowDragFramesVisuallyInspected": true,
+      "homeReverseAndFlingInspected": true,
+      "finiteReplyFooterInspected": true
+    },
+    {
+      "navigationImmersion": false,
+      "apkSha256": "67c331867cdd0851acac6ac0fd199d99ab106e9020eeab8aa0d10689896284ca",
+      "commentMatrix": [
+        {
+          "page": "video",
+          "initialInputBounds": "[66,2192][538,2258]",
+          "partialInputBounds": "[66,2260][538,2285]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        },
+        {
+          "page": "opus-comments",
+          "initialInputBounds": "[63,2202][238,2249]",
+          "partialInputBounds": "[63,2270][238,2285]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        },
+        {
+          "page": "opus-reply",
+          "initialInputBounds": "[66,2192][538,2258]",
+          "partialInputBounds": "[66,2263][538,2329]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        }
+      ],
+      "bodyAndPageSwitch": {
+        "videoInitialInput": true,
+        "videoHidesOnUp": true,
+        "videoTabReturnRestoresInput": true,
+        "videoReverseRestoresInput": true,
+        "opusBodyHidesOnUp": true,
+        "opusBodyRestoresOnDown": true,
+        "replyInitialInput": true,
+        "replyHidesOnUp": true,
+        "replyRestoresOnDown": true
+      },
+      "imeThenSmallDrag": {
+        "hiddenBeforeEditor": true,
+        "replyEditorImeShown": true,
+        "inputAfterEditor": true,
+        "gradualAfterIme": true,
+        "initialBounds": "[63,2202][238,2249]",
+        "partialBounds": "[63,2270][238,2285]"
+      },
+      "homeSlowDragFramesVisuallyInspected": true,
+      "homeReverseAndFlingInspected": true,
+      "finiteReplyFooterInspected": true
+    }
+  ],
+  "recordScope": "prior 9.16.1 motion stage; original tested APK hashes retained",
+  "currentCandidateRecord": "final-host-compat-1.1.12.json"
+}

@@ -35,6 +35,9 @@ class MainNavigationInsets {
     private var padding: Int = 0
     private var backgroundHeight: Int = 0
     private var backgroundMargin: Int = 0
+    private var backgroundMeasuredHeight = 0
+    private val bottomAvoidance = MainBottomAvoidance()
+    private var lastGeometry = ""
 
     private var lastHeight: Int = 0
     private var lastPadding: Int = 0
@@ -63,6 +66,7 @@ class MainNavigationInsets {
         var id: Int = activity.getResources().getIdentifier("bottom_navigation", "id", "tv.danmaku.bili")
         var next: View? = (if ((id == 0)) null else content.findViewById(id))
         if (((next == null) || !(next)!!.javaClass.getName().equals("com.bilibili.lib.homepage.widget.TabHost"))) {
+            RuntimeStatus.record("MAIN_NAV_BIND bar=${next?.javaClass?.name} id=$id reason=bar_type")
             return false
         }
         var bgId: Int = activity.getResources().getIdentifier("tab_background", "id", "tv.danmaku.bili")
@@ -76,13 +80,18 @@ class MainNavigationInsets {
             background = nextBackground
             controls = nextControls
         }
-        return ((controls is ViewGroup && (background != null)) && (background)!!.getLayoutParams() is ViewGroup.MarginLayoutParams)
+        val valid = controls is ViewGroup && background?.layoutParams is ViewGroup.MarginLayoutParams
+        RuntimeStatus.record("MAIN_NAV_BIND bar=${next.javaClass.name} controls=${controls?.javaClass?.name} " +
+            "background=${background?.javaClass?.name} bgParams=${background?.layoutParams?.javaClass?.name} valid=$valid")
+        return valid
     }
 
     fun apply(inset: Int): Boolean {
         if ((((controls == null) || !(controls)!!.isLaidOut()) || ((controls)!!.getHeight() <= 0))) {
+            RuntimeStatus.record("MAIN_NAV_LAYOUT waiting controls=${controls?.height} laidOut=${controls?.isLaidOut}")
             return false
         }
+        RuntimeStatus.record("MAIN_NAV_LAYOUT applying inset=$inset")
         var p: ViewGroup.LayoutParams = (bar)!!.getLayoutParams()
         var cp: ViewGroup.LayoutParams = (controls)!!.getLayoutParams()
         var bg: ViewGroup.MarginLayoutParams = ((background)!!.getLayoutParams() as ViewGroup.MarginLayoutParams)
@@ -91,6 +100,7 @@ class MainNavigationInsets {
             padding = InsetBaseline.value(captured, controls!!.paddingBottom, lastPadding, padding)
             controlsHeight = InsetBaseline.value(captured, cp.height, lastControlsHeight, controlsHeight)
             controlsMeasuredHeight = InsetBaseline.value(captured, controls!!.height, lastControlsHeight, controlsMeasuredHeight)
+            backgroundMeasuredHeight = InsetBaseline.value(captured, background!!.height, lastBackgroundHeight, backgroundMeasuredHeight)
             backgroundHeight = InsetBaseline.value(captured, bg.height, lastBackgroundHeight, backgroundHeight)
             backgroundMargin = InsetBaseline.value(captured, bg.bottomMargin, lastBackgroundMargin, backgroundMargin)
             val scale = (background as? ImageView)?.scaleType
@@ -110,6 +120,7 @@ class MainNavigationInsets {
             }
             if ((bg.height != lastBackgroundHeight)) {
                 backgroundHeight = bg.height
+                backgroundMeasuredHeight = background!!.height
             }
             if ((bg.bottomMargin != lastBackgroundMargin)) {
                 backgroundMargin = bg.bottomMargin
@@ -118,8 +129,11 @@ class MainNavigationInsets {
         lastHeight = (if ((height > 0)) (height + inset) else height)
         lastPadding = (padding + inset)
         lastControlsHeight = (((if ((controlsHeight > 0)) controlsHeight else controlsMeasuredHeight)) + inset)
-        lastBackgroundHeight = (if ((backgroundHeight > 0)) (backgroundHeight + inset) else backgroundHeight)
-        lastBackgroundMargin = backgroundMargin
+        // A skin may use WRAP_CONTENT rather than a fixed dimension. Its measured
+        // baseline still has to grow, and an existing nav-sized margin must not
+        // leave the expanded bitmap ending above the gesture area.
+        lastBackgroundHeight = MainBottomGeometry.backgroundHeight(backgroundHeight, backgroundMeasuredHeight, inset)
+        lastBackgroundMargin = backgroundMargin - MainBottomGeometry.consume(backgroundMargin, inset)
         var changed: Boolean = false
         if ((p.height != lastHeight)) {
             p.height = lastHeight
@@ -148,7 +162,23 @@ class MainNavigationInsets {
         if ((image != null && ((image)!!.getScaleType() != ImageView.ScaleType.FIT_XY))) {
             (image)!!.setScaleType(ImageView.ScaleType.FIT_XY)
         }
+        changed = bottomAvoidance.apply(bar!!, content!!, activity.window.decorView.height, inset) || changed
+        val geometry = "inset=$inset window=${activity.window.decorView.height} " +
+            "content=${bottom(content!!)} bar=${bottom(bar!!)} background=${bottom(background!!)} " +
+            "bgHeight=${background!!.height}/${bg.height} bgMargin=${bg.bottomMargin} " +
+            "controls=${controls!!.height} padding=${controls!!.paddingBottom} " +
+            "bg=${background!!.javaClass.simpleName}"
+        if (geometry != lastGeometry) {
+            lastGeometry = geometry
+            RuntimeStatus.record("MAIN_NAV_GEOMETRY $geometry changed=$changed")
+        }
         return applyMine(inset) || changed
+    }
+
+    private fun bottom(view: View): Int {
+        val location = IntArray(2)
+        view.getLocationInWindow(location)
+        return location[1] + view.height
     }
 
     private fun visibleMine(view: View, id: Int): ViewGroup? {
@@ -199,6 +229,7 @@ class MainNavigationInsets {
     }
 
     fun restore() {
+        bottomAvoidance.restore()
         restoreMine()
         if (!applied) {
             return

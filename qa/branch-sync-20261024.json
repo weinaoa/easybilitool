@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-24",
+  "moduleVersion": "1.1.12",
+  "branch": "compat/bili-9161",
+  "assembleDebug": true,
+  "jvmCheckGroups": 12,
+  "lintErrors": 0,
+  "lintWarnings": 34,
+  "rebuiltApkSha256": "ab9959ff48702f5b78390177ca625d6a2fe2fae9c24efcb19456da86a9e3e69e",
+  "previouslyDeviceTestedApkSha256": "17d3e3cc9344a11d04825c7e64d0c16cb52e5a4c76e815e680b5c26eb41b8916",
+  "apkPayloadMatchesDeviceTestedBuild": true,
+  "apkDifference": "Only JAR signature metadata entries and signing container; DEX, resources, manifest, assets and Xposed metadata match",
+  "newDeviceTestThisRun": false,
+  "remoteTarget": "compat/bili-9161",
+  "mergeToMain": false,
+  "releasePublished": false
+}

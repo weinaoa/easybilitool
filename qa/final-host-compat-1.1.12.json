@@ -1,0 +1,235 @@
+{
+  "date": "2026-10-24",
+  "hostVersion": "9.16.1",
+  "hostVersionCode": 9161100,
+  "androidApi": 37,
+  "moduleVersion": "1.1.12",
+  "apkSha256": "993b60f0e3bf7445485c183fdac3f482e2286303d80248c8e59d4b4bdaeaf37f",
+  "implementationChangedThisRound": false,
+  "oneModuleEnabledPerRun": true,
+  "installedApkAndSourceInputsMatchPriorAuditedFinalCandidate": true,
+  "localChecksReusedFromUnchangedFinalApk": {
+    "build": "passed",
+    "jvmCheckGroups": 12,
+    "lintErrors": 0,
+    "lintWarnings": 32,
+    "apkAudit": "passed",
+    "staticHostContracts": {
+      "8.95.0": 102,
+      "9.16.1": 172
+    }
+  },
+  "runs": [
+    {
+      "navigationImmersion": true,
+      "home": {
+        "homeInitialVisible": true,
+        "homeReverseVisible": true,
+        "homeHiddenAfterFling": true,
+        "homeDownRestored": true,
+        "homeReentryRestored": true,
+        "initialBounds": [
+          "[81,2242][135,2279]"
+        ],
+        "partialBounds": [
+          "[81,2242][135,2279]"
+        ]
+      },
+      "focus": {
+        "video": {
+          "initialInput": true,
+          "initialInputBounds": "[66,2192][538,2258]",
+          "partialInputBounds": "[66,2263][538,2329]",
+          "gradualGeometry": true,
+          "smallReverseRestores": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "tabReturnRestores": true,
+          "inputAfterReentry": true
+        },
+        "opus": {
+          "initialInput": true,
+          "initialInputBounds": "[63,2202][238,2249]",
+          "bodyHidesOnUp": true,
+          "bodyRestoresOnDown": true,
+          "partialInputBounds": "[63,2270][238,2285]",
+          "gradualGeometry": true,
+          "smallReverseRestores": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        },
+        "reply": {
+          "initialInput": true,
+          "initialInputBounds": "[66,2192][446,2258]",
+          "titleBefore": [
+            121,
+            123,
+            279,
+            189
+          ],
+          "partialInputBounds": "[66,2260][446,2285]",
+          "gradualGeometry": true,
+          "smallReverseRestores": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true,
+          "titleAfterUp": [
+            121,
+            123,
+            279,
+            156
+          ],
+          "titleAfterIme": [
+            121,
+            123,
+            279,
+            170
+          ],
+          "titleReentry": [
+            121,
+            123,
+            279,
+            189
+          ],
+          "titleSafeThroughout": true
+        },
+        "finiteFooter": {
+          "bounds": [
+            33,
+            2183,
+            1047,
+            2249
+          ],
+          "gestureStartY": 2285,
+          "aboveGestureArea": true
+        }
+      },
+      "slowDragFramesBackgroundAndActualVisibleListInspected": true
+    },
+    {
+      "navigationImmersion": false,
+      "home": {
+        "homeInitialVisible": true,
+        "homeReverseVisible": true,
+        "homeHiddenAfterFling": true,
+        "homeDownRestored": true,
+        "homeReentryRestored": true,
+        "initialBounds": [
+          "[81,2242][135,2279]"
+        ],
+        "partialBounds": [
+          "[81,2242][135,2279]"
+        ]
+      },
+      "focus": {
+        "video": {
+          "initialInput": true,
+          "initialInputBounds": "[66,2192][538,2258]",
+          "partialInputBounds": "[66,2260][538,2285]",
+          "gradualGeometry": true,
+          "smallReverseRestores": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "tabReturnRestores": true,
+          "inputAfterReentry": true
+        },
+        "opus": {
+          "initialInput": true,
+          "initialInputBounds": "[63,2202][238,2249]",
+          "bodyHidesOnUp": true,
+          "bodyRestoresOnDown": true,
+          "partialInputBounds": "[63,2270][238,2285]",
+          "gradualGeometry": true,
+          "smallReverseRestores": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        },
+        "reply": {
+          "initialInput": true,
+          "initialInputBounds": "[66,2192][538,2258]",
+          "titleBefore": [
+            121,
+            123,
+            279,
+            189
+          ],
+          "partialInputBounds": "[66,2263][538,2329]",
+          "gradualGeometry": true,
+          "smallReverseRestores": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true,
+          "titleAfterUp": [
+            121,
+            123,
+            279,
+            156
+          ],
+          "titleAfterIme": [
+            121,
+            123,
+            279,
+            156
+          ],
+          "titleReentry": [
+            121,
+            123,
+            279,
+            189
+          ],
+          "titleSafeThroughout": true
+        },
+        "finiteFooter": {
+          "bounds": [
+            33,
+            2183,
+            1047,
+            2249
+          ],
+          "gestureStartY": 2285,
+          "aboveGestureArea": true
+        }
+      },
+      "slowDragFramesBackgroundAndActualVisibleListInspected": true
+    }
+  ],
+  "restoration": {
+    "preferencesRestoredByteForByte": true,
+    "allModuleStatesAndScopesRestored": true,
+    "onlyOriginalModuleEnabledForHost": true,
+    "qaProbeRemoved": true,
+    "temporaryFilesRemoved": true,
+    "phoneAwake": true,
+    "hostRetained9161": true,
+    "installedApksMatchTestedCandidates": true
+  },
+  "rawEvidence": "private ignored local archive only",
+  "github": "not committed, pushed, merged or released",
+  "acceptanceCorrection": {
+    "keyboardCheckWasExistenceOnly": true,
+    "homepageComposeShareNotCovered": true,
+    "opusComposeHeightNotChecked": true,
+    "notProofOfNavigationOrImeSafety": true,
+    "supersededBy": "NAV-IME-v1112.md"
+  }
+}

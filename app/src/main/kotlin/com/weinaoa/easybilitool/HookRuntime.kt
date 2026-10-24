@@ -24,6 +24,7 @@ class HookRuntime {
                 throw IllegalStateException("Hook runtime already attached")
             }
             framework = api
+            RuntimeStatus.framework = "${api.frameworkName} ${api.frameworkVersion} (${api.frameworkVersionCode}), API ${api.apiVersion}"
         }
 
         @JvmStatic fun hookMethod(method: Executable, callback: MethodHook): MethodHook.Unhook {
@@ -35,6 +36,7 @@ class HookRuntime {
         }
 
         @JvmStatic fun log(message: String) {
+            RuntimeStatus.record(message)
             (framework)!!.log(4, "EasyBiliTool", message)
         }
     }

@@ -31,6 +31,15 @@ internal class StatusBarProtection(private val window: Window) {
         root.addView(protection, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
     }
 
+    fun diagnostic(): String {
+        val view = layout ?: return "absent"
+        val children = (0 until view.childCount).joinToString(";") {
+            val child = view.getChildAt(it)
+            "${child.width}x${child.height}@${child.x},${child.y} visible=${child.visibility}"
+        }
+        return "attached=${view.isAttachedToWindow} color=${top.color} children=$children"
+    }
+
     fun restore() {
         layout?.let { (it.parent as? ViewGroup)?.removeView(it) }
         layout = null

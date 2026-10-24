@@ -178,7 +178,15 @@ class InAppSettings {
         about.setText("关于")
         about.setOnClickListener(lambda@ { v -> About.show(context!!) })
         body.addView(about, LinearLayout.LayoutParams(-1, -2))
-        var version: TextView = label((("版本 " + BuildConfig.VERSION_NAME) + " · 适配哔哩哔哩 8.95.0"), 12, muted)
+        val diagnostics = Button(context)
+        diagnostics.text = "复制运行诊断"
+        diagnostics.setOnClickListener {
+            val clipboard = context!!.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+            clipboard.setPrimaryClip(android.content.ClipData.newPlainText("EasyBiliTool", RuntimeStatus.report(HostSettings.read(context!!))))
+            android.widget.Toast.makeText(context, "已复制功能配置和运行状态，不含账号或页面内容", android.widget.Toast.LENGTH_LONG).show()
+        }
+        body.addView(diagnostics, LinearLayout.LayoutParams(-1, -2))
+        var version: TextView = label((("版本 " + BuildConfig.VERSION_NAME) + " · 适配哔哩哔哩 8.95.0 / 9.16.1"), 12, muted)
         version.setPadding(dp(4), dp(16), dp(4), 0)
         body.addView(version)
         scroll.addView(body)

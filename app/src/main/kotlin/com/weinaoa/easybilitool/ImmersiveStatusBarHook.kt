@@ -23,7 +23,7 @@ import java.util.*
 import java.util.function.Supplier
 
 /**
- * Transparent status bar in the verified 8.95 video and live-room windows.
+ * Transparent status bar in the verified video and live-room windows.
  */
 class ImmersiveStatusBarHook {
     private lateinit var settings: Supplier<Config>
@@ -159,7 +159,7 @@ class ImmersiveStatusBarHook {
 
             }
         })
-        HookRuntime.log("[EasyBiliTool] IMMERSIVE_STATUS_READY 8.95 video and live")
+        HookRuntime.log("[EasyBiliTool] IMMERSIVE_STATUS_READY video and live")
     }
 
     private inner class State {
@@ -236,6 +236,9 @@ class ImmersiveStatusBarHook {
                 return
             }
             try {
+                if (activity.javaClass.name == "com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity")
+                    RuntimeStatus.record("VIDEO_STATUS eligible=${eligible()} applied=$applied resumed=$resumed " +
+                        "status=${settings.get().b("IMMERSIVE_STATUS_BAR")} protection=${settings.get().b("STATUS_BAR_PROTECTION")}")
                 if (!eligible()) {
                     restore()
                     return
@@ -291,6 +294,8 @@ class ImmersiveStatusBarHook {
                 }
                 storyInsets.applyPending(activity)
                 if (settings.get().b("STATUS_BAR_PROTECTION")) protection.apply() else protection.restore()
+                if (activity.javaClass.name == "com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity")
+                    RuntimeStatus.record("VIDEO_PROTECTION ${protection.diagnostic()}")
                 if (!decor.isLaidOut()) {
                     decor.requestApplyInsets()
                 }

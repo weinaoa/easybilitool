@@ -1,0 +1,225 @@
+{
+  "date": "2026-10-24",
+  "hostVersion": "8.95.0",
+  "hostVersionCode": 8950600,
+  "androidApi": 37,
+  "oneModuleEnabledPerRun": true,
+  "moduleVersion": "1.1.12",
+  "finalApkSha256": "993b60f0e3bf7445485c183fdac3f482e2286303d80248c8e59d4b4bdaeaf37f",
+  "githubStatus": "not committed, pushed, merged or released",
+  "scope": "bottom bar motion, safe bottom area, keyboard/page restoration and native reply top inset; not exhaustive host feature validation",
+  "change": "preserve status inset only for a GeneralActivity containing the legacy fake_input_layout with a real EditText; Compose motion implementation unchanged",
+  "local": {
+    "assembleDebug": "passed",
+    "jvmCheckGroups": 12,
+    "lintErrors": 0,
+    "lintWarnings": 32,
+    "apkAudit": "passed",
+    "staticHostContracts": {
+      "8.95.0": 102,
+      "9.16.1": 172
+    }
+  },
+  "restoration": {
+    "preferencesRestoredByteForByte": true,
+    "moduleStatesAndScopesRestored": true,
+    "onlyOriginalModuleEnabledForHost": true,
+    "qaProbeRemoved": true,
+    "temporaryFilesRemoved": true,
+    "phoneAwake": true,
+    "hostRetained8950": true,
+    "installedApksMatchFinalCandidates": true
+  },
+  "latestHostFinalApkRuntime": "completed focused 9.16.1 regression; see final-host-compat-1.1.12.json",
+  "rawDeviceEvidence": "private ignored local archive only",
+  "runs": [
+    {
+      "navigationImmersion": true,
+      "apkSha256": "993b60f0e3bf7445485c183fdac3f482e2286303d80248c8e59d4b4bdaeaf37f",
+      "home": {
+        "homeInitialVisible": true,
+        "homeReverseVisible": true,
+        "homeHiddenAfterFling": true,
+        "homeDownRestored": true,
+        "homeReentryRestored": true,
+        "initialBounds": [
+          "[0,2102][216,2285]",
+          "[80,2234][136,2272]"
+        ],
+        "partialBounds": [
+          "[0,2102][216,2285]",
+          "[80,2234][136,2272]"
+        ]
+      },
+      "commentMatrix": [
+        {
+          "page": "video",
+          "initialInputBounds": "[33,2183][948,2266]",
+          "partialInputBounds": "[33,2237][948,2320]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        },
+        {
+          "page": "opus-comments",
+          "initialInputBounds": "[65,2185][240,2232]",
+          "partialInputBounds": "[65,2239][240,2286]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        },
+        {
+          "page": "opus-reply",
+          "initialInputBounds": "[33,2183][948,2266]",
+          "partialInputBounds": "[33,2237][948,2320]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        }
+      ],
+      "bodyAndPageSwitch": {
+        "videoInitialInput": true,
+        "videoHidesOnUp": true,
+        "videoTabReturnRestoresInput": true,
+        "videoReverseRestoresInput": true,
+        "opusBodyHidesOnUp": true,
+        "opusBodyRestoresOnDown": true,
+        "replyInitialInput": true,
+        "replyHidesOnUp": true,
+        "replyRestoresOnDown": true
+      },
+      "replyTop": {
+        "toolbarTopBefore": 90,
+        "toolbarTopUp": 90,
+        "toolbarTopDown": 90,
+        "toolbarTopAfterIme": 90,
+        "toolbarTopReentry": 90,
+        "expectedStatusInset": 90,
+        "imeShown": true,
+        "inputAfterIme": true,
+        "inputAfterReentry": true,
+        "topSafeThroughout": true
+      },
+      "finiteReplyFooter": {
+        "footerBounds": [
+          301,
+          2067,
+          779,
+          2123
+        ],
+        "gestureStartY": 2285,
+        "footerAboveGestureArea": true,
+        "backgroundAndVisibleListCheckedSeparately": true
+      },
+      "slowDragFramesAndBackgroundVisuallyInspected": true
+    },
+    {
+      "navigationImmersion": false,
+      "apkSha256": "993b60f0e3bf7445485c183fdac3f482e2286303d80248c8e59d4b4bdaeaf37f",
+      "home": {
+        "homeInitialVisible": true,
+        "homeReverseVisible": true,
+        "homeHiddenAfterFling": true,
+        "homeDownRestored": true,
+        "homeReentryRestored": true,
+        "initialBounds": [
+          "[0,2102][216,2285]",
+          "[80,2234][136,2272]"
+        ],
+        "partialBounds": [
+          "[0,2102][216,2285]",
+          "[80,2234][136,2272]"
+        ]
+      },
+      "commentMatrix": [
+        {
+          "page": "video",
+          "initialInputBounds": "[33,2183][948,2266]",
+          "partialInputBounds": "[33,2237][948,2285]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        },
+        {
+          "page": "opus-comments",
+          "initialInputBounds": "[65,2185][240,2232]",
+          "partialInputBounds": "[65,2239][240,2286]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        },
+        {
+          "page": "opus-reply",
+          "initialInputBounds": "[33,2183][948,2266]",
+          "partialInputBounds": "[33,2237][948,2285]",
+          "partialGeometryChanged": true,
+          "smallReverseRestoresInput": true,
+          "hiddenOnUp": true,
+          "restoredOnDown": true,
+          "hiddenAfterFling": true,
+          "imeShown": true,
+          "inputAfterIme": true,
+          "inputAfterReentry": true
+        }
+      ],
+      "bodyAndPageSwitch": {
+        "videoInitialInput": true,
+        "videoHidesOnUp": true,
+        "videoTabReturnRestoresInput": true,
+        "videoReverseRestoresInput": true,
+        "opusBodyHidesOnUp": true,
+        "opusBodyRestoresOnDown": true,
+        "replyInitialInput": true,
+        "replyHidesOnUp": true,
+        "replyRestoresOnDown": true
+      },
+      "replyTop": {
+        "toolbarTopBefore": 90,
+        "toolbarTopUp": 90,
+        "toolbarTopDown": 90,
+        "toolbarTopAfterIme": 90,
+        "toolbarTopReentry": 90,
+        "expectedStatusInset": 90,
+        "topSafeThroughout": true,
+        "evidence": "existing full matrix captures; actual nav_top_bar"
+      },
+      "finiteReplyFooter": {
+        "footerBounds": [
+          301,
+          2067,
+          779,
+          2123
+        ],
+        "gestureStartY": 2285,
+        "footerAboveGestureArea": true
+      },
+      "slowDragFramesAndBackgroundVisuallyInspected": true
+    }
+  ],
+  "currentCandidateRecord": "final-host-compat-1.1.12.json"
+}

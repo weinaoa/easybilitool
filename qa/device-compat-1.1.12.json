@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-23",
+  "moduleVersion": "1.1.12",
+  "device": "umi",
+  "androidApi": 37,
+  "hostVersion": "9.16.1",
+  "hostVersionCode": 9161100,
+  "onlyTestedModuleEnabled": true,
+  "navigationImmersion": {
+    "on": [
+      {
+        "page": "video",
+        "initialInputBounds": "[66,2192][446,2258]",
+        "hiddenOnUp": true,
+        "restoredOnDown": true,
+        "hiddenAfterFling": true,
+        "imeShown": true,
+        "inputAfterIme": true,
+        "inputAfterReentry": true
+      },
+      {
+        "page": "opus-comments",
+        "initialInputBounds": "[63,2202][238,2249]",
+        "hiddenOnUp": true,
+        "restoredOnDown": true,
+        "hiddenAfterFling": true,
+        "imeShown": true,
+        "inputAfterIme": true,
+        "inputAfterReentry": true
+      },
+      {
+        "page": "opus-reply",
+        "initialInputBounds": "[66,2192][829,2258]",
+        "hiddenOnUp": true,
+        "restoredOnDown": true,
+        "hiddenAfterFling": true,
+        "imeShown": true,
+        "inputAfterIme": true,
+        "inputAfterReentry": true
+      }
+    ],
+    "off": [
+      {
+        "page": "video",
+        "initialInputBounds": "[66,2192][829,2258]",
+        "hiddenOnUp": true,
+        "restoredOnDown": true,
+        "hiddenAfterFling": true,
+        "imeShown": true,
+        "inputAfterIme": true,
+        "inputAfterReentry": true
+      },
+      {
+        "page": "opus-comments",
+        "initialInputBounds": "[63,2202][238,2249]",
+        "hiddenOnUp": true,
+        "restoredOnDown": true,
+        "hiddenAfterFling": true,
+        "imeShown": true,
+        "inputAfterIme": true,
+        "inputAfterReentry": true
+      },
+      {
+        "page": "opus-reply",
+        "initialInputBounds": "[66,2192][446,2258]",
+        "hiddenOnUp": true,
+        "restoredOnDown": true,
+        "hiddenAfterFling": true,
+        "imeShown": true,
+        "inputAfterIme": true,
+        "inputAfterReentry": true
+      }
+    ]
+  },
+  "evidence": "Local screenshots and hierarchy inspected; raw device evidence excluded from repository",
+  "old8950RuntimeRegression": "not completed: Android rejected retaining-data downgrade with INSTALL_FAILED_VERSION_DOWNGRADE",
+  "completeMatrixApkSha256": "eca62953f94b027649d89617db2409b7e09d115d051ba2d7c44beb2fba026043",
+  "finalApkSha256": "f53ba82786564decf97f4bf5fe0559ddad0398e10f0fa735070b36c21d02e8c9",
+  "finalRegression": {
+    "on": {
+      "videoInitialInput": true,
+      "videoHidesOnUp": true,
+      "videoTabReturnRestoresInput": true,
+      "videoReverseRestoresInput": true,
+      "opusBodyHidesOnUp": true,
+      "opusBodyRestoresOnDown": true,
+      "replyInitialInput": true,
+      "replyHidesOnUp": true,
+      "replyRestoresOnDown": true
+    },
+    "off": {
+      "videoInitialInput": true,
+      "videoHidesOnUp": true,
+      "videoTabReturnRestoresInput": true,
+      "videoReverseRestoresInput": true,
+      "opusBodyHidesOnUp": true,
+      "opusBodyRestoresOnDown": true,
+      "replyInitialInput": true,
+      "replyHidesOnUp": true,
+      "replyRestoresOnDown": true
+    }
+  },
+  "restoration": {
+    "originalModuleSettingsRestored": true,
+    "originalFrameworkStatesAndScopesRestored": true,
+    "temporaryHelperRemoved": true,
+    "hostLoginPreserved": true,
+    "hostVersionRemains": "9.16.1"
+  }
+}

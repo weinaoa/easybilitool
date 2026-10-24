@@ -56,6 +56,12 @@ class NavigationBarHook {
                     activities.entries.filter { it.value.resumed }.singleOrNull()?.key ?: return
                 val id = owner.resources.getIdentifier("design_bottom_sheet", "id", owner.packageName)
                 var sheet = if (id == 0) null else window.decorView.findViewById<View>(id) as? ViewGroup
+                // 9.16 shares use a fullscreen ComponentDialog (CENTER), with
+                // their actual bottom sheet in j, rather than design_bottom_sheet.
+                if (sheet == null && dialog.javaClass.name == "kntr.common.share.api.O") {
+                    sheet = runCatching { Reflector.findField(dialog.javaClass, "j").get(dialog) as? ViewGroup }.getOrNull()
+                        ?.takeIf { it.javaClass.name == "kntr.common.share.api.V" && it.rootView === window.decorView }
+                }
                 val nativeSheet = sheet != null
                 if (sheet == null) {
                     val content = window.decorView.findViewById<ViewGroup>(android.R.id.content)
@@ -88,6 +94,9 @@ class NavigationBarHook {
                 }
                 var insets: WindowInsets = (p.args[0] as WindowInsets)
                 (s)!!.captureInsets(insets)
+                // IME keeps its own complete inset stream. Its visibility must
+                // not tear down the modern video's edge-to-edge window mode.
+                if (s.imeVisible || s.keyboardTransition()) return
                 if ((!(s)!!.applied || !(s)!!.eligible())) {
                     return
                 }
@@ -149,6 +158,7 @@ class NavigationBarHook {
                         return
                     }
                     (s)!!.originalAppearance = ((((s)!!.originalAppearance and (mask).inv())) or ((requested and mask)))
+                    if (s.keyboardTransition()) return
                     if ((s)!!.eligible()) {
                         p.args[0] = (((requested and (WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS).inv())) or ((if ((s)!!.lightBackground()) WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS else 0)))
                     }
@@ -192,6 +202,7 @@ class NavigationBarHook {
                     (s)!!.resumed = false
                     (s)!!.handler.removeCallbacks((s)!!.tick)
                     (s)!!.restore()
+                    s.dispose()
                     if ((s)!!.decor.getViewTreeObserver().isAlive()) {
                         (s)!!.decor.getViewTreeObserver().removeOnPreDrawListener((s)!!.preDraw)
                     }
@@ -241,6 +252,7 @@ class NavigationBarHook {
         state.resumed = false
         state.handler.removeCallbacks(state.tick)
         state.restore()
+        state.dispose()
         if (state.decor.viewTreeObserver.isAlive) state.decor.viewTreeObserver.removeOnPreDrawListener(state.preDraw)
         decors.remove(state.decor)
         windows.remove(state.window)
@@ -269,6 +281,8 @@ class NavigationBarHook {
 
         @JvmField var content: View? = null
 
+        lateinit var composeHomeInsets: ComposeHomeNavigation
+
         lateinit var mainInsets: MainNavigationInsets
 
         lateinit var settingsInsets: SettingsNavigationInsets
@@ -283,6 +297,11 @@ class NavigationBarHook {
         private var sheetInsets: BottomSheetNavigationInsets? = null
         private var dialogWindow = false
         private var requireBottomWindow = false
+        private var stableVideoIme = false
+        private var imeObserver: View? = null
+        private var animatedImeBottom: Int? = null
+        private val imeAnimations = Collections.newSetFromMap(IdentityHashMap<WindowInsetsAnimation, Boolean>())
+        private var nativeReplyInputId = 0
 
         @JvmField var resumed: Boolean = false
         @JvmField var changing: Boolean = false
@@ -311,11 +330,62 @@ class NavigationBarHook {
             decor = window.getDecorView()
             dialogWindow = sheet != null
             requireBottomWindow = requireBottom
+            stableVideoIme = Build.VERSION.SDK_INT >= 30 && a.javaClass.name in setOf(
+                "com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity",
+                "com.bilibili.ship.theseus.playlist.UnitedPlaylistActivity") && runCatching {
+                Class.forName("kntr.common.comment.page.ui.b0", false, a.classLoader)
+            }.isSuccess
+            if (!dialogWindow && a.javaClass.name == "com.bilibili.lib.ui.GeneralActivity")
+                nativeReplyInputId = a.resources.getIdentifier("fake_input_layout", "id", a.packageName)
             sheetInsets = sheet?.let(::BottomSheetNavigationInsets)
             mainInsets = MainNavigationInsets(a)
+            composeHomeInsets = ComposeHomeNavigation(a)
             settingsInsets = SettingsNavigationInsets(a)
             detailInsets = DetailNavigationInsets(a)
             liveWebInsets = LiveWebInsets(a)
+            if (stableVideoIme) observeImeAnimation()
+        }
+
+        fun keyboardTransition(): Boolean = stableVideoIme && (imeVisible || imeAnimations.isNotEmpty())
+
+        @android.annotation.TargetApi(30)
+        private fun observeImeAnimation() {
+            if (Build.VERSION.SDK_INT < 30) return
+            val parent = decor as? ViewGroup ?: return
+            // A zero-size sibling observes platform animation completion without
+            // replacing any host callback or consuming its inset dispatch.
+            val observer = View(window.context).apply {
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                setWindowInsetsAnimationCallback(object : WindowInsetsAnimation.Callback(DISPATCH_MODE_CONTINUE_ON_SUBTREE) {
+                    override fun onPrepare(animation: WindowInsetsAnimation) {
+                        if (animation.typeMask and WindowInsets.Type.ime() != 0) {
+                            if (imeAnimations.isEmpty()) animatedImeBottom = decor.rootWindowInsets?.getInsets(WindowInsets.Type.ime())?.bottom
+                            imeAnimations.add(animation)
+                        }
+                    }
+                    override fun onProgress(insets: WindowInsets, animations: MutableList<WindowInsetsAnimation>): WindowInsets {
+                        if (imeAnimations.isNotEmpty()) animatedImeBottom = insets.getInsets(WindowInsets.Type.ime()).bottom
+                        return insets
+                    }
+                    override fun onEnd(animation: WindowInsetsAnimation) {
+                        if (imeAnimations.remove(animation)) {
+                            if (imeAnimations.isEmpty()) animatedImeBottom = null
+                            this@State.handler.post {
+                                if (this@State.visibility.visible) { decor.requestApplyInsets(); this@State.update() }
+                            }
+                        }
+                    }
+                })
+            }
+            parent.addView(observer, ViewGroup.LayoutParams(0, 0))
+            imeObserver = observer
+        }
+
+        fun dispose() {
+            imeObserver?.let { (it.parent as? ViewGroup)?.removeView(it) }
+            imeObserver = null
+            animatedImeBottom = null
+            imeAnimations.clear()
         }
 
         fun captureInsets(insets: WindowInsets) {
@@ -340,7 +410,7 @@ class NavigationBarHook {
             if (requireBottomWindow && (window.attributes.width != WindowManager.LayoutParams.MATCH_PARENT ||
                 window.attributes.gravity and Gravity.VERTICAL_GRAVITY_MASK != Gravity.BOTTOM)) return false
             return visibility.visible && config.b("NAVIGATION_EDGE_TO_EDGE") &&
-                !activity.isDestroyed && !imeVisible &&
+                !activity.isDestroyed && (!imeVisible || stableVideoIme) &&
                 activity.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT &&
                 !activity.isInPictureInPictureMode && !activity.isInMultiWindowMode &&
                 decor.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
@@ -367,14 +437,24 @@ class NavigationBarHook {
         }
 
         fun navigationUi(ui: Int): Int {
+            if (keyboardTransition()) return ui or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             return (((((ui or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION)) and (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR).inv())) or ((if (lightBackground()) View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR else 0)))
         }
 
         private fun windowFlagsMask(): Int = FLAGS_MASK or
             (if (dialogWindow) WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN else 0)
 
-        fun preserveVideoStatusInset(): Boolean {
-            if ((!detailInsets.videoSurface() || (((decor.getSystemUiVisibility() and View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)) != 0))) {
+        fun preserveNativeStatusInset(): Boolean {
+            // A legacy reply fragment has a real EditText inside fake_input_layout.
+            // Its AppCompat root loses the top fit when LAYOUT_HIDE_NAVIGATION is
+            // enabled. Compose reply pages own their insets and do not match this.
+            val nativeReply = nativeReplyInputId != 0 && content?.findViewById<View>(nativeReplyInputId)?.let { input ->
+                    fun hasEditor(view: View): Boolean = view is android.widget.EditText ||
+                        (view is ViewGroup && (0 until view.childCount).any { hasEditor(view.getChildAt(it)) })
+                    hasEditor(input)
+                } == true
+            if ((!detailInsets.videoSurface() && !nativeReply) ||
+                decor.systemUiVisibility and View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN != 0) {
                 return restoreTop()
             }
             (content)!!.getLocationInWindow(contentLocation)
@@ -421,6 +501,7 @@ class NavigationBarHook {
                 if ((insets != null)) {
                     captureInsets(insets)
                 }
+                VideoWindowGeometry.record(activity)
                 if (!eligible()) {
                     restore()
                     return false
@@ -472,16 +553,35 @@ class NavigationBarHook {
                     if ((c != null)) {
                         controllers.put(c, this)
                         var appearance: Int = (if (lightBackground()) WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS else 0)
-                        if (((((c)!!.getSystemBarsAppearance() and WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS)) != appearance)) {
+                        if (!keyboardTransition() && (((c)!!.getSystemBarsAppearance() and WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS) != appearance)) {
                             (c)!!.setSystemBarsAppearance(appearance, WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS)
                         }
                     }
                 }
+                // Record the raw main-window state even if no tab bar can be bound.
+                if (activity.javaClass.name == "tv.danmaku.bili.MainActivityV2") {
+                    RuntimeStatus.record("MAIN_NAV_WINDOW inset=$bottomInset ime=$imeVisible " +
+                        "decor=${decor.width}x${decor.height} ui=${decor.systemUiVisibility} " +
+                        "fit=${if (Build.VERSION.SDK_INT >= 30) window.attributes.fitInsetsTypes else -1}")
+                }
+                if (keyboardTransition()) {
+                    // The host moves the editor with the real animated IME.
+                    // Fill only the navigation distance not covered by that IME,
+                    // avoiding a separate safe-padding jump after onEnd().
+                    if (dialogWindow) {
+                        val keyboardBottom = animatedImeBottom ?: (if (Build.VERSION.SDK_INT >= 30) insets?.getInsets(WindowInsets.Type.ime())?.bottom else null) ?: 0
+                        return sheetInsets!!.apply((bottomInset - keyboardBottom).coerceAtLeast(0))
+                    }
+                    return false
+                }
                 // Prepare the window before its first layout; defer measured safe distances.
                 val next: View? = decor.findViewById(android.R.id.content)
+                if (activity.javaClass.name == "tv.danmaku.bili.MainActivityV2")
+                    RuntimeStatus.record("MAIN_NAV_CONTENT type=${next?.javaClass?.name} height=${next?.height} laidOut=${next?.isLaidOut}")
                 if (next == null || !next.isLaidOut || bottomInset <= 0) return false
                 if (content !== next) {
                     mainInsets.restore()
+                    composeHomeInsets.restore()
                     settingsInsets.restore()
                     detailInsets.restore()
                     pageInsets.restore()
@@ -494,8 +594,9 @@ class NavigationBarHook {
                     return sheetInsets!!.apply(bottomInset)
                 }
                 var main: Boolean = mainInsets.bind(content!!)
-                var preferences: Boolean = (!main && settingsInsets.bind(content!!))
-                var detail: Boolean = ((!main && !preferences) && detailInsets.bind(content!!))
+                val composeMain = !main && composeHomeInsets.bind(content!!)
+                var preferences: Boolean = (!main && !composeMain && settingsInsets.bind(content!!))
+                var detail: Boolean = ((!main && !composeMain && !preferences) && detailInsets.bind(content!!))
                 val liveWeb = liveWebInsets.find()
                 if (activity.javaClass.name == "com.bilibili.bplus.followinglist.quick.consume.QuickConsumeActivity") {
                     pageInsets.restore()
@@ -503,6 +604,15 @@ class NavigationBarHook {
                 } else if (liveWeb != null) {
                     pageInsets.restore()
                     layoutChanged = liveWebInsets.apply(liveWeb, content!!, bottomInset) || layoutChanged
+                } else if (composeMain) {
+                    liveWebInsets.restore()
+                    pageInsets.restore()
+                    layoutChanged = composeHomeInsets.apply(bottomInset) || layoutChanged
+                } else if (ComposeOpusHook.owns(decor)) {
+                    // Opus protects its controls inside Compose. Padding its
+                    // Android parent instead shrinks the entire painted surface.
+                    liveWebInsets.restore()
+                    pageInsets.restore()
                 } else if (((main || preferences) || detail)) {
                     liveWebInsets.restore()
                     pageInsets.restore()
@@ -511,7 +621,7 @@ class NavigationBarHook {
                     liveWebInsets.restore()
                     layoutChanged = (pageInsets.apply(content!!, bottomInset) || layoutChanged)
                 }
-                layoutChanged = (preserveVideoStatusInset() || layoutChanged)
+                layoutChanged = (preserveNativeStatusInset() || layoutChanged)
             } catch (e: Throwable) {
                 restore()
                 failed = true
@@ -523,6 +633,8 @@ class NavigationBarHook {
         }
 
         fun restore() {
+            animatedImeBottom = null
+            imeAnimations.clear()
             if (!applied) {
                 return
             }
@@ -531,6 +643,7 @@ class NavigationBarHook {
             applied = false
             try {
                 mainInsets.restore()
+                composeHomeInsets.restore()
                 settingsInsets.restore()
                 detailInsets.restore()
                 pageInsets.restore()

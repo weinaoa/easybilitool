@@ -63,6 +63,7 @@ with ZipFile(apk) as archive:
         classes.extend(types[u32(u32(100) + 32 * i)] for i in range(u32(96)))
         strings.extend(dex_strings)
 assert not any(item.startswith("Lio/github/libxposed/") for item in classes)
+assert not any("VideoPaddingTrace" in item or "DebugViewProbe" in item for item in classes)
 assert not any("com/weinaoa/bilitool" in item or "com.weinaoa.bilitool" in item for item in strings)
 for excluded in ("HOME_GLASS", "DANMAKU_AIRBORNE", "LIVE_MEDAL", "FULLSCREEN_GESTURE",
                  "REPORT_STATS", "APP_THEME", "pakku-pinyin", "ProtoAdapter", "LiquidGlass", "开源许可"):

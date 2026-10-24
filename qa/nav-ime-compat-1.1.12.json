@@ -1,0 +1,424 @@
+{
+  "date": "2026-10-24",
+  "moduleVersion": "1.1.12",
+  "apkSha256": "19c36a6e1a7a77962b4661b399ea895790105fd9fe9f04e1aa9d1b0ed390f8cf",
+  "hostVersion": "9.16.1",
+  "hostVersionCode": 9161100,
+  "androidApi": 37,
+  "screenPixels": [
+    1080,
+    2340
+  ],
+  "gestureInsetPixels": 55,
+  "gestureStartY": 2285,
+  "changes": [
+    "Bind the verified fullscreen Compose share sheet",
+    "Keep Opus painting full height; inset its controls inside Compose",
+    "Refresh safe insets independently on IME and viewport changes",
+    "Retain gesture safety when the comment bar collapses"
+  ],
+  "baselineKeyboardFailureReproduced": false,
+  "keyboardClaim": "Recovery was strengthened; tested exit paths retain identical input Y coordinates. This does not establish every original failure trigger.",
+  "localChecks": {
+    "assembleDebug": true,
+    "jvmCheckGroups": 12,
+    "lintErrors": 0,
+    "lintWarnings": 32,
+    "apkAudit": true,
+    "hostContracts": [
+      {
+        "versionCode": 8950600,
+        "versionName": "8.95.0",
+        "apkSha256": "7510081258f2d93cf5776f19ee8c0b5ea1ef56f0507e723335708c2066fe76db",
+        "scope": "Static declared DEX contracts and resource names; not runtime/UI validation",
+        "storyBindings": [
+          {
+            "method": "p3(IIIII)V",
+            "contextField": "H:Landroid/content/Context;",
+            "topArgument": 2
+          }
+        ],
+        "passed": true,
+        "checks": 103
+      },
+      {
+        "versionCode": 9161100,
+        "versionName": "9.16.1",
+        "apkSha256": "68a2b56f72501ddd70034aadc5deb080f0d1a8c5784795aa2cc12828c938fa40",
+        "scope": "Static declared DEX contracts and resource names; not runtime/UI validation",
+        "storyBindings": [
+          {
+            "method": "a1(II)V",
+            "contextField": "G:Landroid/content/Context;",
+            "topArgument": 1
+          }
+        ],
+        "passed": true,
+        "checks": 177
+      }
+    ]
+  },
+  "physicalTests": {
+    "on": {
+      "video": {
+        "inputInitialY": [
+          2192,
+          2258
+        ],
+        "imeReturns": [
+          [
+            2192,
+            2258
+          ],
+          [
+            2192,
+            2258
+          ]
+        ],
+        "hiddenOnUp": true,
+        "restoredY": [
+          2192,
+          2258
+        ],
+        "hiddenAfterFling": true,
+        "tabReturnY": [
+          2192,
+          2258
+        ],
+        "reentryY": [
+          2192,
+          2258
+        ]
+      },
+      "opus": {
+        "inputInitialY": [
+          2202,
+          2249
+        ],
+        "imeReturns": [
+          [
+            2202,
+            2249
+          ],
+          [
+            2202,
+            2249
+          ]
+        ],
+        "composeHeight": 2340,
+        "contentFillsNavigation": true,
+        "bodyHides": true,
+        "bodyRestores": true,
+        "hiddenOnUp": true,
+        "restoredY": [
+          2202,
+          2249
+        ],
+        "hiddenAfterFling": true,
+        "reentryY": [
+          2202,
+          2249
+        ]
+      },
+      "reply": {
+        "inputInitialY": [
+          2192,
+          2258
+        ],
+        "imeReturns": [
+          [
+            2192,
+            2258
+          ],
+          [
+            2192,
+            2258
+          ]
+        ],
+        "hiddenOnUp": true,
+        "restoredY": [
+          2192,
+          2258
+        ],
+        "hiddenAfterFling": true,
+        "reentryY": [
+          2192,
+          2258
+        ],
+        "finiteFooterBounds": [
+          33,
+          2183,
+          1047,
+          2249
+        ]
+      },
+      "share": {
+        "panelColor": [
+          23,
+          24,
+          26
+        ],
+        "navigationColor": [
+          23,
+          24,
+          26
+        ],
+        "backgroundContinuous": true,
+        "lastControlBounds": [
+          55,
+          2202,
+          193,
+          2245
+        ]
+      }
+    },
+    "off": {
+      "video": {
+        "inputInitialY": [
+          2192,
+          2258
+        ],
+        "imeReturns": [
+          [
+            2192,
+            2258
+          ],
+          [
+            2192,
+            2258
+          ]
+        ],
+        "hiddenOnUp": true,
+        "restoredY": [
+          2192,
+          2258
+        ],
+        "hiddenAfterFling": true,
+        "tabReturnY": [
+          2192,
+          2258
+        ],
+        "reentryY": [
+          2192,
+          2258
+        ]
+      },
+      "opus": {
+        "inputInitialY": [
+          2202,
+          2249
+        ],
+        "imeReturns": [
+          [
+            2202,
+            2249
+          ],
+          [
+            2202,
+            2249
+          ]
+        ],
+        "composeHeight": 2340,
+        "contentFillsNavigation": true,
+        "bodyHides": true,
+        "bodyRestores": true,
+        "hiddenOnUp": true,
+        "restoredY": [
+          2202,
+          2249
+        ],
+        "hiddenAfterFling": true,
+        "reentryY": [
+          2202,
+          2249
+        ]
+      },
+      "reply": {
+        "inputInitialY": [
+          2192,
+          2258
+        ],
+        "imeReturns": [
+          [
+            2192,
+            2258
+          ],
+          [
+            2192,
+            2258
+          ]
+        ],
+        "hiddenOnUp": true,
+        "restoredY": [
+          2192,
+          2258
+        ],
+        "hiddenAfterFling": true,
+        "reentryY": [
+          2192,
+          2258
+        ],
+        "finiteFooterBounds": [
+          33,
+          2183,
+          1047,
+          2249
+        ]
+      },
+      "share": {
+        "panelColor": [
+          23,
+          24,
+          26
+        ],
+        "navigationColor": [
+          0,
+          0,
+          0
+        ],
+        "backgroundContinuous": false,
+        "lastControlBounds": [
+          55,
+          2147,
+          193,
+          2190
+        ]
+      }
+    },
+    "hide-off": {
+      "hideEnabled": false,
+      "inputY": [
+        2192,
+        2258
+      ],
+      "imeReturns": [
+        [
+          2192,
+          2258
+        ],
+        [
+          2192,
+          2258
+        ],
+        [
+          2192,
+          2258
+        ]
+      ],
+      "afterScrollY": [
+        2192,
+        2258
+      ],
+      "opusComposeHeight": 2340
+    }
+  },
+  "homeMotion": {
+    "on": {
+      "homeInitialVisible": true,
+      "homeReverseVisible": true,
+      "homeHiddenAfterFling": true,
+      "homeDownRestored": true,
+      "homeReentryRestored": true,
+      "initialBounds": [
+        "[81,2242][135,2279]"
+      ],
+      "partialBounds": [
+        "[81,2242][135,2279]"
+      ]
+    },
+    "off": {
+      "homeInitialVisible": true,
+      "homeReverseVisible": true,
+      "homeHiddenAfterFling": true,
+      "homeDownRestored": true,
+      "homeReentryRestored": true,
+      "initialBounds": [
+        "[81,2242][135,2279]"
+      ],
+      "partialBounds": []
+    }
+  },
+  "hiddenListViewports": {
+    "on-video": [
+      [
+        0,
+        713,
+        1080,
+        2285
+      ]
+    ],
+    "on-opus": [
+      [
+        0,
+        332,
+        1080,
+        2284
+      ],
+      [
+        0,
+        332,
+        1080,
+        2284
+      ]
+    ],
+    "on-reply": [
+      [
+        0,
+        222,
+        1080,
+        2285
+      ]
+    ],
+    "off-video": [
+      [
+        0,
+        713,
+        1080,
+        2285
+      ]
+    ],
+    "off-opus": [
+      [
+        0,
+        346,
+        1080,
+        2229
+      ],
+      [
+        0,
+        346,
+        1080,
+        2229
+      ]
+    ],
+    "off-reply": [
+      [
+        0,
+        222,
+        1080,
+        2285
+      ]
+    ]
+  },
+  "replyTitleStatusSafe": true,
+  "replyTitleSamples": 24,
+  "oneModuleEnabledPerRun": true,
+  "restoration": {
+    "preferencesRestoredByteForByte": true,
+    "allModuleStatesAndScopesRestored": true,
+    "onlyOriginalModuleEnabledForHost": true,
+    "qaProbeRemoved": true,
+    "temporaryFilesRemoved": true,
+    "phoneAwake": true,
+    "hostRetained9161": true,
+    "installedApksMatchTestedCandidates": true
+  },
+  "currentPatchPhysicallyTestedOn8950": false,
+  "gitCommitted": false,
+  "gitPushed": false,
+  "limits": [
+    "One Android 17 device and current dark skin",
+    "The video with many comments was not scrolled to its final server page",
+    "8.95.0 current patch: static contracts only; earlier physical results belong to earlier APKs"
+  ]
+}
