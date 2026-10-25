@@ -1,0 +1,711 @@
+{
+  "version": "1.1.13",
+  "versionCode": 19,
+  "apkSha256": "3c465274761010081c4262a31ace6f30d447ccd31d1e0d4ddb6f46401d14af32",
+  "hostVersion": "8.95.0",
+  "hostVersionCode": 8950600,
+  "deviceModel": "Mi 10",
+  "androidApi": 37,
+  "navigationMode": "gesture",
+  "localChecks": {
+    "jvmSuites": 13,
+    "lintErrors": 0,
+    "lintWarnings": 34,
+    "apkAuditPassed": true,
+    "signingMatchesPrevious": true
+  },
+  "navigationOn": {
+    "home": {
+      "initialVisible": true,
+      "hiddenOnUp": true,
+      "downRestored": true,
+      "hiddenAfterFling": true,
+      "reentryRestored": true
+    },
+    "video": {
+      "initialBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "hiddenOnUp": true,
+      "downRestored": true,
+      "hiddenAfterFling": true,
+      "hiddenScrollBounds": [
+        [
+          0,
+          0,
+          1080,
+          2340
+        ],
+        [
+          0,
+          339,
+          1080,
+          2340
+        ],
+        [
+          0,
+          339,
+          1080,
+          2340
+        ]
+      ],
+      "imeShown": true,
+      "afterImeBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "imeReturnsToOriginalBounds": true,
+      "tabRestores": true,
+      "reentryBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "reentryRestores": true
+    },
+    "opus": {
+      "initialBounds": [
+        65,
+        2185,
+        240,
+        2232
+      ],
+      "bodyUpHides": true,
+      "bodyDownRestores": true,
+      "hiddenOnUp": true,
+      "downRestored": true,
+      "hiddenAfterFling": true,
+      "hiddenScrollBounds": [
+        [
+          0,
+          321,
+          1080,
+          2340
+        ],
+        [
+          0,
+          321,
+          1080,
+          2340
+        ]
+      ],
+      "imeShown": true,
+      "afterImeBounds": [
+        65,
+        2185,
+        240,
+        2232
+      ],
+      "imeReturnsToOriginalBounds": true,
+      "reentryBounds": [
+        65,
+        2185,
+        240,
+        2232
+      ],
+      "reentryRestores": true
+    },
+    "reply": {
+      "initialBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "toolbarTopBefore": 90,
+      "hiddenOnUp": true,
+      "downRestored": true,
+      "hiddenAfterFling": true,
+      "hiddenScrollBounds": [
+        [
+          0,
+          244,
+          1080,
+          2340
+        ]
+      ],
+      "imeShown": true,
+      "afterImeBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "imeReturnsToOriginalBounds": true,
+      "toolbarTopAfterIme": 90,
+      "reentryBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "reentryRestores": true,
+      "toolbarTopReentry": 90,
+      "finiteFooterBounds": [
+        301,
+        2067,
+        779,
+        2123
+      ],
+      "finiteFooterSafe": true
+    }
+  },
+  "navigationOff": {
+    "home": {
+      "initialVisible": true,
+      "hiddenOnUp": true,
+      "downRestored": true,
+      "hiddenAfterFling": true,
+      "reentryRestored": true
+    },
+    "video": {
+      "initialBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "hiddenOnUp": true,
+      "downRestored": true,
+      "hiddenAfterFling": true,
+      "hiddenScrollBounds": [
+        [
+          0,
+          713,
+          1080,
+          2285
+        ],
+        [
+          0,
+          713,
+          1080,
+          2285
+        ]
+      ],
+      "imeShown": true,
+      "afterImeBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "imeReturnsToOriginalBounds": true,
+      "tabRestores": true,
+      "reentryBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "reentryRestores": true
+    },
+    "opus": {
+      "initialBounds": [
+        65,
+        2185,
+        240,
+        2232
+      ],
+      "bodyUpHides": true,
+      "bodyDownRestores": true,
+      "hiddenOnUp": true,
+      "downRestored": true,
+      "hiddenAfterFling": true,
+      "hiddenScrollBounds": [
+        [
+          0,
+          321,
+          1080,
+          2285
+        ],
+        [
+          0,
+          321,
+          1080,
+          2285
+        ]
+      ],
+      "imeShown": true,
+      "afterImeBounds": [
+        65,
+        2185,
+        240,
+        2232
+      ],
+      "imeReturnsToOriginalBounds": true,
+      "reentryBounds": [
+        65,
+        2185,
+        240,
+        2232
+      ],
+      "reentryRestores": true
+    },
+    "reply": {
+      "initialBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "toolbarTopBefore": 90,
+      "hiddenOnUp": true,
+      "downRestored": true,
+      "hiddenAfterFling": true,
+      "hiddenScrollBounds": [
+        [
+          0,
+          244,
+          1080,
+          2285
+        ]
+      ],
+      "imeShown": true,
+      "afterImeBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "imeReturnsToOriginalBounds": true,
+      "toolbarTopAfterIme": 90,
+      "reentryBounds": [
+        33,
+        2183,
+        948,
+        2266
+      ],
+      "reentryRestores": true,
+      "toolbarTopReentry": 90,
+      "finiteFooterBounds": [
+        301,
+        2067,
+        779,
+        2123
+      ],
+      "finiteFooterSafe": true
+    }
+  },
+  "touchChecks": {
+    "replySafeAreaTapRetainsWindow": true,
+    "hiddenAreaRemainsInteractive": true,
+    "nativeHomeSafeAreaTaps": [
+      {
+        "point": [
+          108,
+          2310
+        ],
+        "underlyingContentOpened": false
+      },
+      {
+        "point": [
+          540,
+          2310
+        ],
+        "underlyingContentOpened": false
+      },
+      {
+        "point": [
+          972,
+          2310
+        ],
+        "underlyingContentOpened": false
+      }
+    ],
+    "nativeBarVisibleDuringTaps": true,
+    "oneModuleEnabledForHost": true,
+    "installedVersion": "1.1.13",
+    "navigationImmersion": true
+  },
+  "configurationRestoration": {
+    "preferencesRestoredByteForByte": true,
+    "allModuleStatesAndScopesRestored": true,
+    "qaProbeRemoved": true,
+    "temporaryFilesRemoved": true,
+    "phoneAwake": true,
+    "hostRetained8950": true
+  },
+  "github": "local commit; not pushed or released",
+  "remaining": [
+    "9.16.1 runtime regression",
+    "stock light theme without custom skin and three-button navigation",
+    "share and emoji panel specific regression"
+  ],
+  "installedCandidateSha256": "3c465274761010081c4262a31ace6f30d447ccd31d1e0d4ddb6f46401d14af32",
+  "popsicleValidation": {
+    "date": "2026-10-25",
+    "device": "popsicle",
+    "model": "2509FPN0BC",
+    "androidApi": 37,
+    "hostVersion": "8.95.0",
+    "hostVersionCode": 8950600,
+    "screen": [
+      1200,
+      2608
+    ],
+    "navigationMode": "gesture",
+    "appearance": "custom light skin",
+    "inputMethod": "ADB touch injection",
+    "oneModuleEnabledForHostDuringRegression": true,
+    "sourceChangedForThisDeviceRun": false,
+    "localChecksReuseSamePreviouslyAuditedApk": true,
+    "groups": {
+      "easy-on": {
+        "home": {
+          "initialVisible": true,
+          "hiddenOnUp": true,
+          "downRestored": true,
+          "hiddenAfterFling": true,
+          "reentryRestored": true
+        },
+        "video": {
+          "initialBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "hiddenOnUp": true,
+          "downRestored": true,
+          "hiddenAfterFling": true,
+          "hiddenScrollBounds": [
+            [
+              0,
+              789,
+              1200,
+              2608
+            ],
+            [
+              0,
+              789,
+              1200,
+              2608
+            ]
+          ],
+          "imeShown": true,
+          "afterImeBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "imeReturnsToOriginalBounds": true,
+          "tabRestores": true,
+          "reentryBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "reentryRestores": true
+        },
+        "opus": {
+          "initialBounds": [
+            71,
+            2438,
+            266,
+            2490
+          ],
+          "bodyUpHides": true,
+          "bodyDownRestores": true,
+          "hiddenOnUp": true,
+          "downRestored": true,
+          "hiddenAfterFling": true,
+          "hiddenScrollBounds": [
+            [
+              0,
+              396,
+              1200,
+              2608
+            ],
+            [
+              0,
+              396,
+              1200,
+              2608
+            ]
+          ],
+          "imeShown": true,
+          "afterImeBounds": [
+            71,
+            2438,
+            266,
+            2490
+          ],
+          "imeReturnsToOriginalBounds": true,
+          "reentryBounds": [
+            71,
+            2438,
+            266,
+            2490
+          ],
+          "reentryRestores": true
+        },
+        "reply": {
+          "initialBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "toolbarTopBefore": 144,
+          "hiddenOnUp": true,
+          "downRestored": true,
+          "hiddenAfterFling": true,
+          "hiddenScrollBounds": [
+            [
+              0,
+              312,
+              1200,
+              2608
+            ]
+          ],
+          "imeShown": true,
+          "afterImeBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "imeReturnsToOriginalBounds": true,
+          "toolbarTopAfterIme": 144,
+          "reentryBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "reentryRestores": true,
+          "toolbarTopReentry": 144,
+          "finiteFooterBounds": [
+            341,
+            2311,
+            859,
+            2371
+          ],
+          "finiteFooterSafe": true
+        }
+      },
+      "easy-off": {
+        "home": {
+          "initialVisible": true,
+          "hiddenOnUp": true,
+          "downRestored": true,
+          "hiddenAfterFling": true,
+          "reentryRestored": true
+        },
+        "video": {
+          "initialBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "hiddenOnUp": true,
+          "downRestored": true,
+          "hiddenAfterFling": true,
+          "hiddenScrollBounds": [
+            [
+              0,
+              789,
+              1200,
+              2548
+            ],
+            [
+              0,
+              789,
+              1200,
+              2548
+            ]
+          ],
+          "imeShown": true,
+          "afterImeBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "imeReturnsToOriginalBounds": true,
+          "tabRestores": true,
+          "reentryBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "reentryRestores": true
+        },
+        "opus": {
+          "initialBounds": [
+            71,
+            2438,
+            266,
+            2490
+          ],
+          "bodyUpHides": true,
+          "bodyDownRestores": true,
+          "hiddenOnUp": true,
+          "downRestored": true,
+          "hiddenAfterFling": true,
+          "hiddenScrollBounds": [
+            [
+              0,
+              396,
+              1200,
+              2548
+            ],
+            [
+              0,
+              396,
+              1200,
+              2548
+            ]
+          ],
+          "imeShown": true,
+          "afterImeBounds": [
+            71,
+            2438,
+            266,
+            2490
+          ],
+          "imeReturnsToOriginalBounds": true,
+          "reentryBounds": [
+            71,
+            2438,
+            266,
+            2490
+          ],
+          "reentryRestores": true
+        },
+        "reply": {
+          "initialBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "toolbarTopBefore": 144,
+          "hiddenOnUp": true,
+          "downRestored": true,
+          "hiddenAfterFling": true,
+          "hiddenScrollBounds": [
+            [
+              0,
+              312,
+              1200,
+              2548
+            ]
+          ],
+          "imeShown": true,
+          "afterImeBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "imeReturnsToOriginalBounds": true,
+          "toolbarTopAfterIme": 144,
+          "reentryBounds": [
+            36,
+            2437,
+            1056,
+            2527
+          ],
+          "reentryRestores": true,
+          "toolbarTopReentry": 144,
+          "finiteFooterBounds": [
+            341,
+            2311,
+            859,
+            2371
+          ],
+          "finiteFooterSafe": true
+        }
+      }
+    },
+    "nativeSafeAreaTouch": {
+      "oneModuleEnabledForHost": true,
+      "navigationImmersion": true,
+      "nativeBarVisible": true,
+      "safeAreaYRange": [
+        2548,
+        2608
+      ],
+      "taps": [
+        {
+          "point": [
+            120,
+            2575
+          ],
+          "underlyingContentOpened": false
+        },
+        {
+          "point": [
+            600,
+            2575
+          ],
+          "underlyingContentOpened": false
+        },
+        {
+          "point": [
+            1080,
+            2575
+          ],
+          "underlyingContentOpened": false
+        }
+      ]
+    },
+    "nativeCollapsedAreaTouch": {
+      "point": [
+        304,
+        2575
+      ],
+      "underlyingContentOpened": true,
+      "nativeBarCollapsed": true,
+      "floatingBarVisible": false,
+      "before": "tv.danmaku.bili/tv.danmaku.bili.MainActivityV2",
+      "after": "tv.danmaku.bili/com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity"
+    },
+    "restoredOriginalCombinationTouch": {
+      "originalModuleCombinationRestored": true,
+      "safeAreaTaps": [
+        {
+          "point": [
+            120,
+            2575
+          ],
+          "underlyingContentOpened": false
+        },
+        {
+          "point": [
+            600,
+            2575
+          ],
+          "underlyingContentOpened": false
+        },
+        {
+          "point": [
+            1080,
+            2575
+          ],
+          "underlyingContentOpened": false
+        }
+      ]
+    },
+    "restoration": {
+      "preferencesRestoredByteForByte": true,
+      "allModuleStatesAndScopesRestored": true,
+      "qaProbeRemoved": true,
+      "temporaryFilesRemoved": true,
+      "phoneAwake": true,
+      "hostRetained8950": true
+    },
+    "installedApkSha256": "3c465274761010081c4262a31ace6f30d447ccd31d1e0d4ddb6f46401d14af32"
+  }
+}

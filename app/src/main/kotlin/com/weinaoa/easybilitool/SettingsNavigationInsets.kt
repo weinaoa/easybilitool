@@ -68,10 +68,12 @@ class SettingsNavigationInsets {
         if ((list)!!.getClipToPadding()) {
             (list)!!.setClipToPadding(false)
         }
+        NavigationTouchSafety.protect(list, inset)
         return changed
     }
 
     fun restore() {
+        NavigationTouchSafety.restore(list)
         if (!applied) {
             return
         }

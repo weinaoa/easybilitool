@@ -109,6 +109,7 @@ internal class ComposeHomeNavigation(private val activity: Activity) {
     fun apply(inset: Int): Boolean {
         val target = view ?: return false
         ComposeHomeHook.setInset(inset / activity.resources.displayMetrics.density)
+        NavigationTouchSafety.protect(target, inset)
         val changed = avoidance.apply(target, content!!, activity.window.decorView.height, inset)
         val parts = ArrayList<String>()
         var current: View? = target
@@ -124,6 +125,7 @@ internal class ComposeHomeNavigation(private val activity: Activity) {
         return changed
     }
     fun restore() {
+        NavigationTouchSafety.restore(view)
         if (view != null) ComposeHomeHook.setInset(0f)
         avoidance.restore()
         view = null

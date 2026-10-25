@@ -48,6 +48,7 @@ class NavigationBarHook {
 
     @Throws(Exception::class)
     fun install(application: Application) {
+        NavigationTouchSafety.install()
         Reflector.findAndHookMethod(Dialog::class.java, "show", object : MethodHook() {
             override fun afterHookedMethod(p: MethodHookParam) {
                 val dialog = p.thisObject as Dialog

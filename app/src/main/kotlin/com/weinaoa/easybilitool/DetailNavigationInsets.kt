@@ -207,6 +207,7 @@ class DetailNavigationInsets {
                 (view)!!.setClipToPadding(false)
                 changed = true
             }
+            if (fixed) NavigationTouchSafety.protect(view, inset)
             return changed
         }
 
@@ -232,6 +233,7 @@ class DetailNavigationInsets {
         }
 
         fun restore(): Boolean {
+            NavigationTouchSafety.restore(view)
             if (!metrics.applied) {
                 return false
             }

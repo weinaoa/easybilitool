@@ -37,6 +37,7 @@ internal class NavigationInsetSurface(private val target: ViewGroup, private val
     }
 
     fun apply(inset: Int) {
+        NavigationTouchSafety.protect(target, inset)
         sampleSurface()
         footer.setBounds(0, (target.height - inset).coerceAtLeast(0), target.width, target.height)
         if (!attached) {
@@ -101,6 +102,7 @@ internal class NavigationInsetSurface(private val target: ViewGroup, private val
     }
 
     fun restore() {
+        NavigationTouchSafety.restore(target)
         if (attached) {
             target.overlay.remove(footer)
             // A replaced/detached source may now expose a different observer.

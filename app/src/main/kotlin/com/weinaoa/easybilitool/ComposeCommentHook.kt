@@ -53,13 +53,22 @@ internal class ComposeCommentHook(private val settings: Supplier<Config>) {
                     insetKey = key
                     setValue.invoke(insetSnapshot, ++insetEpoch)
                 }
+                protectTouch()
                 handler.postDelayed(this, 100)
             }
+        }
+        fun protectTouch() {
+            val view = compositionView ?: return
+            val visible = current.get() === activity && eligible(activity) && !ime(activity) &&
+                settings.get().b("NAVIGATION_EDGE_TO_EDGE") &&
+                (!settings.get().b("HOME_HIDE_BOTTOM_BAR") || progress < .999f)
+            NavigationTouchSafety.protect(view, if (visible) ComposeBarMotion.navigationOverlap(activity, view) else 0)
         }
         fun show(value: Float) {
             val next = value.coerceIn(0f, 1f)
             if (kotlin.math.abs(next - progress) < .0001f) return
             progress = next
+            protectTouch()
             setValue.invoke(snapshot, next)
         }
         fun reset() { scroll.bind(null); surface = null; touchedUntil = 0; vertical = false; show(0f) }
@@ -121,7 +130,9 @@ internal class ComposeCommentHook(private val settings: Supplier<Config>) {
                 val s = states[a] ?: return
                 val view = consume.invoke(p.args[8], localView) as? View ?: return
                 if (view.rootView !== a.window.decorView) return
+                if (s.compositionView !== view) NavigationTouchSafety.restore(s.compositionView)
                 s.compositionView = view
+                s.protectTouch()
                 getValue.invoke(s.insetSnapshot)
                 if (a.javaClass.name == "kntr.common.compose.launcher.VertexActivity") s.surface = view
                 // Reading the host snapshot during composition subscribes its parent
@@ -200,8 +211,8 @@ internal class ComposeCommentHook(private val settings: Supplier<Config>) {
             override fun onActivityResumed(a: Activity) {
                 states[a]?.let { current = WeakReference(a); it.handler.removeCallbacks(it.tick); it.handler.post(it.tick) }
             }
-            override fun onActivityPaused(a: Activity) { states[a]?.let { it.handler.removeCallbacks(it.tick); it.reset(); it.viewport?.requestLayout() }; if (current.get() === a) current.clear() }
-            override fun onActivityDestroyed(a: Activity) { states.remove(a)?.let { it.handler.removeCallbacks(it.tick) } }
+            override fun onActivityPaused(a: Activity) { states[a]?.let { NavigationTouchSafety.restore(it.compositionView); it.handler.removeCallbacks(it.tick); it.reset(); it.viewport?.requestLayout() }; if (current.get() === a) current.clear() }
+            override fun onActivityDestroyed(a: Activity) { states.remove(a)?.let { NavigationTouchSafety.restore(it.compositionView); it.handler.removeCallbacks(it.tick) } }
             override fun onActivityStarted(a: Activity) {}
             override fun onActivityStopped(a: Activity) {}
             override fun onActivitySaveInstanceState(a: Activity, b: Bundle) {}

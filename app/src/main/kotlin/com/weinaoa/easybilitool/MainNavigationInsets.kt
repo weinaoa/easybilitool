@@ -172,6 +172,7 @@ class MainNavigationInsets {
             lastGeometry = geometry
             RuntimeStatus.record("MAIN_NAV_GEOMETRY $geometry changed=$changed")
         }
+        NavigationTouchSafety.protect(bar, inset)
         return applyMine(inset) || changed
     }
 
@@ -229,6 +230,7 @@ class MainNavigationInsets {
     }
 
     fun restore() {
+        NavigationTouchSafety.restore(bar)
         bottomAvoidance.restore()
         restoreMine()
         if (!applied) {

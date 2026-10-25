@@ -43,13 +43,21 @@ internal class ComposeOpusHook(private val settings: Supplier<Config>) {
                     insetKey = key
                     writeState(insetSnapshot, ++insetEpoch)
                 }
+                protectTouch()
                 handler.postDelayed(this, 100)
             }
+        }
+        fun protectTouch() {
+            val view = surface ?: return
+            val visible = current.get() === activity && eligible(activity) && !ime(activity) &&
+                settings.get().b("NAVIGATION_EDGE_TO_EDGE") &&
+                (!settings.get().b("HOME_HIDE_BOTTOM_BAR") || progress < .999f)
+            NavigationTouchSafety.protect(view, if (visible) ComposeBarMotion.navigationOverlap(activity, view) else 0)
         }
         fun show(value: Float) {
             val next = value.coerceIn(0f, 1f)
             if (kotlin.math.abs(progress - next) < .0001f) return
-            progress = next; writeState(snapshot, next)
+            progress = next; writeState(snapshot, next); protectTouch()
         }
         fun reset() { until = 0; vertical = false; scroll.bind(null); show(0f) }
     }
@@ -102,7 +110,9 @@ internal class ComposeOpusHook(private val settings: Supplier<Config>) {
                 val s = states[a] ?: return
                 val view = consume.invoke(p.args[6], localView) as? View ?: return
                 if (view.rootView !== a.window.decorView) return
+                if (s.surface !== view) NavigationTouchSafety.restore(s.surface)
                 s.surface = view
+                s.protectTouch()
                 roots[a.window.decorView] = true
                 read.invoke(s.insetSnapshot)
                 val fraction = (read.invoke(s.snapshot) as Number).toFloat()
@@ -179,8 +189,8 @@ internal class ComposeOpusHook(private val settings: Supplier<Config>) {
                 }
             }
             override fun onActivityResumed(a: Activity) { states[a]?.let { current = WeakReference(a); it.handler.removeCallbacks(it.tick); it.handler.post(it.tick) } }
-            override fun onActivityPaused(a: Activity) { states[a]?.let { it.handler.removeCallbacks(it.tick); it.reset() }; if (current.get() === a) current.clear() }
-            override fun onActivityDestroyed(a: Activity) { roots.remove(a.window.decorView); states.remove(a)?.let { it.handler.removeCallbacks(it.tick) } }
+            override fun onActivityPaused(a: Activity) { states[a]?.let { NavigationTouchSafety.restore(it.surface); it.handler.removeCallbacks(it.tick); it.reset() }; if (current.get() === a) current.clear() }
+            override fun onActivityDestroyed(a: Activity) { roots.remove(a.window.decorView); states.remove(a)?.let { NavigationTouchSafety.restore(it.surface); it.handler.removeCallbacks(it.tick) } }
             override fun onActivityStarted(a: Activity) {}
             override fun onActivityStopped(a: Activity) {}
             override fun onActivitySaveInstanceState(a: Activity, b: Bundle) {}
