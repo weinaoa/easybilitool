@@ -19,8 +19,8 @@ android {
         applicationId 'com.weinaoa.easybilitool'
         minSdk 26
         targetSdk 35
-        versionCode 19
-        versionName '1.1.13'
+        versionCode 21
+        versionName '1.1.15'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -40,6 +40,7 @@ android.sourceSets.test.kotlin.directories.add(file("../tests").absolutePath)
 
 def checkClasses = ['com.weinaoa.easybilitool.VideoInsetEdgesTest', 'com.weinaoa.easybilitool.ComposeHomeMeasureScopeTest', 'com.weinaoa.easybilitool.MainBottomGeometryTest', 'com.weinaoa.easybilitool.StoryPlayerCompatTest', 'com.weinaoa.easybilitool.BottomSheetInsetStateTest', 'com.weinaoa.easybilitool.MainContentSafeAreaTest', 'com.weinaoa.easybilitool.DetailInsetStateTest', 'com.weinaoa.easybilitool.NavigationTransitionTest', 'com.weinaoa.easybilitool.ConfigDraftTest', 'com.weinaoa.easybilitool.MainTabBarScrollTest', 'com.weinaoa.easybilitool.DetailBarScrollTest', 'com.weinaoa.easybilitool.ModernHookTest']
 checkClasses.add('com.weinaoa.easybilitool.NavigationTouchSequenceTest')
+checkClasses.add('com.weinaoa.easybilitool.DiagnosticJournalTest')
 
 def checks = checkClasses.collect { entry ->
     tasks.register("check${entry.tokenize('.').last()}", JavaExec) {

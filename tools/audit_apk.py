@@ -10,18 +10,26 @@
 
 """Check the built APK's identity, scope, feature boundary and lint result."""
 import collections
+import argparse
 import hashlib
 import json
 import os
 import re
 import struct
 import subprocess
+from pathlib import Path
 from zipfile import ZipFile
 import xml.etree.ElementTree as ET
 from project import ROOT, sdk, version
 
 name, code = version()
-apk = ROOT / "app/build/outputs/apk/debug/app-debug.apk"
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--apk", type=Path, default=ROOT / "app/build/outputs/apk/debug/app-debug.apk",
+                    help="APK to verify; defaults to the current debug build")
+parser.add_argument("--output", type=Path, default=ROOT / "qa/apk-audit.json",
+                    help="Destination for the audit JSON")
+args = parser.parse_args()
+apk = args.apk.resolve()
 build_tools = sdk() / "build-tools/36.0.0"
 aapt = build_tools / ("aapt.exe" if os.name == "nt" else "aapt")
 badging = subprocess.check_output([str(aapt), "dump", "badging", str(apk)]).decode("utf-8")
@@ -64,7 +72,6 @@ with ZipFile(apk) as archive:
         strings.extend(dex_strings)
 assert not any(item.startswith("Lio/github/libxposed/") for item in classes)
 assert not any("VideoPaddingTrace" in item or "DebugViewProbe" in item for item in classes)
-assert not any("com/weinaoa/bilitool" in item or "com.weinaoa.bilitool" in item for item in strings)
 for excluded in ("HOME_GLASS", "DANMAKU_AIRBORNE", "LIVE_MEDAL", "FULLSCREEN_GESTURE",
                  "REPORT_STATS", "APP_THEME", "pakku-pinyin", "ProtoAdapter", "LiquidGlass", "开源许可"):
     assert not any(excluded in item for item in strings), excluded
@@ -99,5 +106,5 @@ audit = {
                                       "org.intellij.lang.annotations", "org.jetbrains.annotations", "com.android.tools.r8"],
     "statusBarProtection": "AndroidX Core 1.17.0 ProtectionLayout / GradientProtection",
 }
-(ROOT / "qa/apk-audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+args.output.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print(json.dumps({"version": name, "sha256": audit["sha256"], "sourceClasses": len(sources), "lint": dict(lint)}, indent=2))

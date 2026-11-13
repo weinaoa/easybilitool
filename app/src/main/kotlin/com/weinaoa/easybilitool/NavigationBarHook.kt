@@ -269,7 +269,10 @@ class NavigationBarHook {
 
         @JvmField val handler: Handler = Handler(Looper.getMainLooper())
 
-        @JvmField val preDraw: ViewTreeObserver.OnPreDrawListener = ViewTreeObserver.OnPreDrawListener(lambda@ { !update() })
+        @JvmField val preDraw: ViewTreeObserver.OnPreDrawListener = ViewTreeObserver.OnPreDrawListener {
+            val changed = update()
+            if(dialogWindow) !changed else PlaybackDiagnostics.allowFrame(activity, changed)
+        }
 
         @JvmField val tick: Runnable = object : Runnable {
             override fun run() {

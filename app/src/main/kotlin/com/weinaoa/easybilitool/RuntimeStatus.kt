@@ -37,6 +37,7 @@ internal object RuntimeStatus {
         val entry = message.removePrefix("[EasyBiliTool] ")
         val key = entry.substringBefore(' ').substringBefore(':')
         val previous = events.put(key, entry.take(700))
+        if (previous != entry.take(700)) DiagnosticLogs.hook(entry)
         if ((key.startsWith("MAIN_NAV_") || key.startsWith("VIDEO_")) && previous != entry.take(700)) {
             android.util.Log.i("EasyBiliNav", entry.take(700))
         }

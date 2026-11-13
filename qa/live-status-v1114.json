@@ -1,0 +1,221 @@
+{
+  "date": "2026-10-27",
+  "version": "1.1.14",
+  "apkSha256": "eaf41639c44c454e6259aa6cb517c827abb7d37af78e7ad067e80cfc07075a43",
+  "device": {
+    "model": "Xiaomi Mi 10",
+    "android": 17,
+    "api": 37,
+    "hostVersion": "8.95.0",
+    "hostVersionCode": 8950600,
+    "navigation": "gesture",
+    "theme": "dark with installed skin",
+    "screen": [
+      1080,
+      2340
+    ],
+    "statusInset": 90,
+    "navigationInset": 55
+  },
+  "implementation": {
+    "standardEdgeToEdge": "AndroidX WindowCompat",
+    "contentSafety": "system WindowInsets and View padding",
+    "protection": "AndroidX ProtectionLayout, GradientProtection, ColorProtection",
+    "nativeLegacyScrimRetiredWhileApplied": true,
+    "customBackdropLayoutOrRenderer": false
+  },
+  "local": {
+    "build": true,
+    "jvmCheckGroups": 13,
+    "lintErrors": 0,
+    "lintWarnings": 34,
+    "apkAudit": true
+  },
+  "deviceResults": {
+    "liveCases": [
+      {
+        "statusImmersive": true,
+        "navigationImmersive": true,
+        "gradientProtection": false,
+        "floating": false,
+        "underlayBounds": [
+          0,
+          0,
+          1080,
+          2340
+        ]
+      },
+      {
+        "statusImmersive": false,
+        "navigationImmersive": true,
+        "gradientProtection": false,
+        "floating": false,
+        "underlayBounds": [
+          0,
+          90,
+          1080,
+          2340
+        ]
+      },
+      {
+        "statusImmersive": true,
+        "navigationImmersive": false,
+        "gradientProtection": false,
+        "floating": false,
+        "underlayBounds": [
+          0,
+          0,
+          1080,
+          2285
+        ]
+      },
+      {
+        "statusImmersive": true,
+        "navigationImmersive": true,
+        "gradientProtection": true,
+        "floating": false,
+        "underlayBounds": [
+          0,
+          0,
+          1080,
+          2340
+        ]
+      }
+    ],
+    "liveLifecycle": [
+      {
+        "room": 284560,
+        "navigationImmersive": true,
+        "underlay": [
+          0,
+          368,
+          1080,
+          975
+        ],
+        "headerTop": 101,
+        "stableRepeatedFrames": true,
+        "imeReturn": true,
+        "exitReentry": true,
+        "reentryUnderlay": [
+          0,
+          368,
+          1080,
+          975
+        ],
+        "serverModeChanged": false
+      },
+      {
+        "room": 284560,
+        "navigationImmersive": false,
+        "underlay": [
+          0,
+          368,
+          1080,
+          975
+        ],
+        "headerTop": 101,
+        "stableRepeatedFrames": true,
+        "imeReturn": true,
+        "exitReentry": true,
+        "reentryUnderlay": [
+          0,
+          368,
+          1080,
+          975
+        ],
+        "serverModeChanged": false
+      },
+      {
+        "room": 6,
+        "navigationImmersive": true,
+        "underlay": [
+          0,
+          368,
+          1080,
+          975
+        ],
+        "headerTop": 101,
+        "stableRepeatedFrames": true,
+        "imeReturn": true,
+        "exitReentry": true,
+        "reentryUnderlay": [
+          0,
+          368,
+          1080,
+          975
+        ],
+        "serverModeChanged": false
+      }
+    ],
+    "bottomMatrix": [
+      {
+        "navigation": true,
+        "floating": false,
+        "pages": [
+          {
+            "page": "opus",
+            "hideRestoreFlingImeTabsReentry": true,
+            "hiddenListBottom": 2340,
+            "endMarkerBottom": 2100,
+            "lastItemSafety": true,
+            "serverEndReached": true
+          },
+          {
+            "page": "video",
+            "hideRestoreFlingImeTabsReentry": true,
+            "hiddenListBottom": 2340,
+            "endMarkerBottom": null,
+            "lastItemSafety": null,
+            "serverEndReached": false
+          }
+        ],
+        "passed": true
+      },
+      {
+        "navigation": false,
+        "floating": false,
+        "pages": [
+          {
+            "page": "opus",
+            "hideRestoreFlingImeTabsReentry": true,
+            "hiddenListBottom": 2285,
+            "endMarkerBottom": 2100,
+            "lastItemSafety": true,
+            "serverEndReached": true
+          },
+          {
+            "page": "video",
+            "hideRestoreFlingImeTabsReentry": true,
+            "hiddenListBottom": 2285,
+            "endMarkerBottom": null,
+            "lastItemSafety": null,
+            "serverEndReached": false
+          }
+        ],
+        "passed": true
+      }
+    ],
+    "visualReview": "status boundary, hidden backgrounds and real list area checked",
+    "ordinaryVideoAndHome": true,
+    "onlyTestedModuleApplied": true
+  },
+  "restoration": {
+    "configurationAndStatistics": true,
+    "moduleEnableStatesAndScopes": true,
+    "hostApkUnchanged": true,
+    "testedApkRetained": true,
+    "qaProbeRemoved": true,
+    "temporaryFilesRemoved": true,
+    "phoneAwake": true
+  },
+  "limitations": [
+    "Only the recorded device, Android/API and host version were tested.",
+    "Ordinary video comments did not reach the server last page; last-item safety there is not verified.",
+    "Other Android versions, three-button navigation, light theme and Bilibili 9.13/9.16.1 were not tested in this round.",
+    "The linked room had ended streaming: the four switch cases used its full-screen portrait loop; repeat lifecycle checks used the server-selected horizontal fallback. Full-screen live reentry is not claimed for this APK."
+  ],
+  "github": {
+    "committed": false,
+    "pushed": false
+  }
+}

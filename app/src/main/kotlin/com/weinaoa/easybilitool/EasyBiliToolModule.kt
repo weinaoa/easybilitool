@@ -56,6 +56,11 @@ class EasyBiliToolModule : XposedModule() {
             HookRuntime.log("[EasyBiliTool] SETTINGS_READ_ERROR $error")
         }
         RuntimeStatus.attach(application, config)
+        DiagnosticLogs.attach(application) {
+            val c = RuntimeStatus.active ?: config
+            Config.FIELDS.joinToString(" ") { "${it.key}=${c.b(it.key)}" }
+        }
+        installOptional("PLAYBACK_DIAGNOSTICS") { PlaybackDiagnostics.install(application); true }
         val settings = java.util.function.Supplier { RuntimeStatus.active ?: config }
         install("SETTINGS_ENTRY") { BiliSettingsHook.install(application, context.classLoader) }
         installOptional("VIDEO_NATIVE_INSETS") { TheseusWindowInsetsHook(settings).install(application) }

@@ -186,6 +186,10 @@ class InAppSettings {
             android.widget.Toast.makeText(context, "已复制功能配置和运行状态，不含账号或页面内容", android.widget.Toast.LENGTH_LONG).show()
         }
         body.addView(diagnostics, LinearLayout.LayoutParams(-1, -2))
+        body.addView(Button(context).apply {
+            text = "运行日志"
+            setOnClickListener { DiagnosticLogs.show(activity) }
+        }, LinearLayout.LayoutParams(-1, -2))
         var version: TextView = label((("版本 " + BuildConfig.VERSION_NAME) + " · 适配哔哩哔哩 8.95.0 / 9.16.1"), 12, muted)
         version.setPadding(dp(4), dp(16), dp(4), 0)
         body.addView(version)

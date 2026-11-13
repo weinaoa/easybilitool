@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-28",
+  "version": "1.1.15",
+  "sha256": "8f28f1580dbef062d9245d00632177acc4c85aba6554d3b529cc197d87064bf1",
+  "device": {
+    "model": "Xiaomi Mi 10",
+    "android": 17,
+    "api": 37,
+    "host": "Bilibili 8.95.0 / 8950600",
+    "navigation": "gesture",
+    "theme": "dark with installed skin",
+    "screen": [
+      1080,
+      2340
+    ]
+  },
+  "implementation": {
+    "persistentLocalLogs": true,
+    "maxJournalBytes": 524288,
+    "asyncIo": true,
+    "noPageOrAccountCapture": true,
+    "playbackDrawCompatibility": "Keep current video frame when a module layout adjustment occurs"
+  },
+  "localChecks": {
+    "assembleDebug": true,
+    "jvmGroups": 14,
+    "lintErrors": 0,
+    "lintWarnings": 34,
+    "apkAudit": true
+  },
+  "deviceChecks": {
+    "logUi": {
+      "entryAndActions": true,
+      "markRetainedAcrossRestart": true,
+      "pauseResume": true,
+      "safExport": true,
+      "exportBytes": 4340,
+      "safCancelReturn": true,
+      "copyActionPresentNotClipboardTested": true,
+      "clear": {
+        "beforeBytes": 39991,
+        "afterBytes": 0,
+        "clearConfirmedThroughUi": true
+      }
+    },
+    "playbackRecording": {
+      "recordingSeconds": 45,
+      "frames": 2697,
+      "minimumMeanRgb": 91.264,
+      "nearBlackFrameIndices": [],
+      "method": "600x260 player region, each encoded frame, sampled to 64x32 RGB; mean<12 and >98% values<24",
+      "scope": "Sampled recording only; not proof that the intermittent issue is eliminated."
+    },
+    "bottomMatrix": [
+      {
+        "navigation": true,
+        "floating": false,
+        "pages": [
+          {
+            "page": "opus",
+            "hideRestoreFlingImeTabsReentry": true,
+            "hiddenListBottom": 2340,
+            "endMarkerBottom": 2100,
+            "lastItemSafety": true
+          },
+          {
+            "page": "video",
+            "hideRestoreFlingImeTabsReentry": true,
+            "hiddenListBottom": 2340,
+            "endMarkerBottom": null,
+            "lastItemSafety": null
+          }
+        ],
+        "passed": true
+      },
+      {
+        "navigation": false,
+        "floating": false,
+        "pages": [
+          {
+            "page": "opus",
+            "hideRestoreFlingImeTabsReentry": true,
+            "hiddenListBottom": 2285,
+            "endMarkerBottom": 2100,
+            "lastItemSafety": true
+          },
+          {
+            "page": "video",
+            "hideRestoreFlingImeTabsReentry": true,
+            "hiddenListBottom": 2285,
+            "endMarkerBottom": null,
+            "lastItemSafety": null
+          }
+        ],
+        "passed": true
+      }
+    ],
+    "onlyTestedModuleApplied": true,
+    "backgroundAndViewportReviewed": true
+  },
+  "limits": [
+    "Intermittent black flashing was not reliably reproduced; this is a compatibility mitigation, not proof of elimination.",
+    "Video comment server last page was not reached.",
+    "Other Android versions, host versions, devices, light theme, three-button navigation and Story were not separately retested.",
+    "Clipboard copy action was present but its clipboard contents were not read during the test."
+  ],
+  "restoration": {
+    "configAndStatisticsByteForByte": true,
+    "moduleStatesAndScopes": true,
+    "hostUnchanged": true,
+    "qaRemoved": true,
+    "testLogExportsRemoved": true,
+    "testJournalsArchivedAndCleared": true,
+    "phoneAwake": true
+  },
+  "github": {
+    "committedThisRound": false,
+    "pushedThisRound": false
+  }
+}

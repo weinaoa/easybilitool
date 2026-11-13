@@ -31,7 +31,7 @@ class HookRuntime {
             if ((framework == null)) {
                 throw IllegalStateException("Framework not attached")
             }
-            var handle: XposedInterface.HookHandle = (framework)!!.hook(method).setExceptionMode(XposedInterface.ExceptionMode.PROTECTIVE).intercept(lambda@ { chain -> callback.intercept(chain, lambda@ { error -> (framework)!!.log(6, "EasyBiliTool", "Hook callback failed", error) }) })
+            var handle: XposedInterface.HookHandle = (framework)!!.hook(method).setExceptionMode(XposedInterface.ExceptionMode.PROTECTIVE).intercept(lambda@ { chain -> callback.intercept(chain, lambda@ { error -> DiagnosticLogs.error("HOOK_ERROR", error); (framework)!!.log(6, "EasyBiliTool", "Hook callback failed", error) }) })
             return MethodHook.Unhook { handle.unhook() }
         }
 
