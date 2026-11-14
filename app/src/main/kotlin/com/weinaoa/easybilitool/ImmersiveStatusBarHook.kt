@@ -47,6 +47,7 @@ class ImmersiveStatusBarHook {
 
     @Throws(Exception::class)
     fun install(application: Application) {
+        PlayerSpeedTipLayout.install(application.classLoader, Supplier { settings.get().b("IMMERSIVE_STATUS_BAR") })
         storyInsets.install(application)
         Reflector.findAndHookMethod(View::class.java, "dispatchApplyWindowInsets", WindowInsets::class.java, object : MethodHook() {
             override fun beforeHookedMethod(p: MethodHookParam) {
