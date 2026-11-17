@@ -8,9 +8,11 @@
 
 **简体中文** · [English](README_EN.md)
 
+> **停止更新（2026-11-18）：** 由于功能维护的复杂性，本项目不再安排新功能、缺陷修复或新客户端适配。现有源码、历史发布、验证记录和 Mulan PubL v2 许可保留。下方使用与构建说明供历史版本参考，不代表持续兼容性保证。
+
 为哔哩哔哩 Android 客户端提供系统栏沉浸与滑动收起底栏的 LSPosed 模块。保留原生界面，让背景延伸到系统栏区域，同时为按钮、输入栏和列表末项保留安全距离。
 
-[下载](https://github.com/weinaoa/easybilitool/releases/latest) · [更新记录](docs/CHANGELOG.md) · [问题反馈](https://github.com/weinaoa/easybilitool/issues) · [开发与验证](docs/TESTING.md)
+[历史下载](https://github.com/weinaoa/easybilitool/releases) · [更新记录](docs/CHANGELOG.md) · [问题记录](https://github.com/weinaoa/easybilitool/issues) · [构建与验证记录](docs/TESTING.md)
 
 ## 功能特性
 
@@ -52,7 +54,7 @@
 
 **出现黑边、遮挡或底栏异常？**
 
-先单独启用本模块复现，检查客户端版本和有关开关。关闭对应功能并保存重启可撤回调整。反馈时请说明导航栏沉浸开启、关闭时的区别。
+先单独启用本模块复现，检查客户端版本和有关开关。关闭对应功能并保存重启可撤回调整。历史问题可查阅 Issues，停更后不再安排修复或新版本适配。
 
 ## 从源码构建
 
@@ -71,11 +73,11 @@ Linux / macOS 首行使用 `bash ./gradlew :app:assembleDebug :app:lintDebug`。
 
 APK 输出到 `app/build/outputs/apk/debug/`；打包后的 APK、源码 ZIP 和 SHA-256 校验值位于 `dist/`。详细流程见[构建与发布](docs/RELEASE.md)。
 
-## 反馈与贡献
+## 历史资料与自行维护
 
-欢迎通过 [Issues](https://github.com/weinaoa/easybilitool/issues) 反馈问题，通过 Pull Request 提交修复。请提供模块版本、客户端版本、Android／框架版本、导航方式、有关开关和复现步骤；截图与日志请遮盖个人信息。
+[Issues](https://github.com/weinaoa/easybilitool/issues) 与既有 Pull Request 保留为历史记录，项目不再安排维护或处理时限。需要继续开发时，可在保留来源声明并遵守许可的前提下自行 fork。
 
-贡献前请阅读 [AGENTS.md](AGENTS.md)，保留旧客户端适配路径，注明代码来源与授权。具体测试结果见[验证文档](docs/TESTING.md)，历史变化见[更新记录](docs/CHANGELOG.md)。
+停更范围与收尾要求见 [AGENTS.md](AGENTS.md)。历史测试结果见[验证文档](docs/TESTING.md)，版本变化见[更新记录](docs/CHANGELOG.md)；这些记录不表示新系统或新客户端已经通过验证。
 
 ## 来源与许可
 

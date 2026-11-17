@@ -18,19 +18,29 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.HardwareRenderer
 import android.graphics.RenderNode
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.os.SystemClock
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.Window
+import android.view.PixelCopy
 
 /** Paint native surface color through navigation padding, including Compose-painted backgrounds. */
-internal class NavigationInsetSurface(private val target: ViewGroup, private val source: ViewGroup = target) {
+internal class NavigationInsetSurface(private val target: ViewGroup, private val source: ViewGroup = target,
+                                      private val window: Window? = null) {
     private val footer = ColorDrawable(Color.TRANSPARENT)
     private var attached = false
     private var sampledWidth = 0
     private var sampledHeight = 0
     private var layoutObserver: ViewTreeObserver? = null
+    private var copying = false
+    private var lastCopy = -1000L
+    private var generation = 0
     private val layoutChanges = ViewTreeObserver.OnGlobalLayoutListener {
         // Keyboard/emoji content can change while the Dialog's outer bounds stay fixed.
         sampledWidth = 0; sampledHeight = 0
@@ -53,6 +63,9 @@ internal class NavigationInsetSurface(private val target: ViewGroup, private val
     // Renderer access is optional: unsupported implementations fall back to the native theme color.
     @SuppressLint("BlockedPrivateApi")
     private fun sampleSurface() {
+        // A host WebView cannot safely be drawn into our own RenderNode.
+        // Read the already displayed margin instead, without blocking rendering.
+        window?.let { sampleWindow(it); return }
         val contentHeight = source.height - source.paddingBottom
         if (source.width <= 0 || contentHeight <= 0 || source.isLayoutRequested ||
             (sampledWidth == source.width && sampledHeight == contentHeight)) return
@@ -101,8 +114,44 @@ internal class NavigationInsetSurface(private val target: ViewGroup, private val
         }
     }
 
+    private fun sampleWindow(window: Window) {
+        if (Color.alpha(footer.color) != 255) {
+            val value = TypedValue()
+            val background = source.background as? ColorDrawable
+            if (background != null && Color.alpha(background.color) == 255) footer.color = background.color
+            else if (source.context.theme.resolveAttribute(android.R.attr.colorBackground, value, true) &&
+                value.type in TypedValue.TYPE_FIRST_COLOR_INT..TypedValue.TYPE_LAST_COLOR_INT) footer.color = value.data
+        }
+        if (copying || source.isLayoutRequested || !source.isAttachedToWindow || !source.isShown ||
+            !source.hasWindowFocus() || source.rootView !== window.decorView ||
+            SystemClock.uptimeMillis() - lastCopy < 500L) return
+        val position = IntArray(2)
+        source.getLocationInWindow(position)
+        val x = position[0] + (4 * source.resources.displayMetrics.density).toInt()
+        val y = position[1] + source.height - source.paddingBottom - 4
+        if (x < 0 || y < 0 || x + 2 > window.decorView.width || y + 2 > window.decorView.height) return
+        val bitmap = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888)
+        val token = generation
+        copying = true
+        lastCopy = SystemClock.uptimeMillis()
+        try {
+            PixelCopy.request(window, Rect(x, y, x + 2, y + 2), bitmap, { result ->
+                try {
+                    if (generation == token && result == PixelCopy.SUCCESS && source.isAttachedToWindow &&
+                        source.rootView === window.decorView) {
+                        val color = bitmap.getPixel(0, 0)
+                        if (Color.alpha(color) == 255) footer.color = color
+                    }
+                } finally { bitmap.recycle(); copying = false }
+            }, Handler(Looper.getMainLooper()))
+        } catch (_: IllegalArgumentException) {
+            bitmap.recycle(); copying = false
+        }
+    }
+
     fun restore() {
         NavigationTouchSafety.restore(target)
+        generation++
         if (attached) {
             target.overlay.remove(footer)
             // A replaced/detached source may now expose a different observer.

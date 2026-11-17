@@ -8,9 +8,11 @@
 
 [简体中文](README.md) · **English**
 
+> **Discontinued on November 18, 2026:** Due to maintenance complexity, this project no longer schedules new features, bug fixes or support for newer app versions. Existing source, releases, validation records and the Mulan PubL v2 license remain available. The usage and build instructions below describe historical versions and do not promise continued compatibility.
+
 An LSPosed module for the official Bilibili Android app. Extend backgrounds behind the system bars and collapse bottom bars while scrolling, keeping controls and the last list item clear of the system navigation area.
 
-[Download](https://github.com/weinaoa/easybilitool/releases/latest) · [Changelog](docs/CHANGELOG.md) · [Issues](https://github.com/weinaoa/easybilitool/issues) · [Development and validation](docs/TESTING.md)
+[Historical releases](https://github.com/weinaoa/easybilitool/releases) · [Changelog](docs/CHANGELOG.md) · [Issue history](https://github.com/weinaoa/easybilitool/issues) · [Build and validation records](docs/TESTING.md)
 
 ## Features
 
@@ -50,6 +52,8 @@ If settings are missing or changes do not apply, check framework API support and
 
 For layout issues, reproduce with only this module enabled and compare navigation immersion on and off. Disabling the relevant feature and saving restores its adjustments.
 
+Existing issues remain available for reference; no further fixes or compatibility updates are scheduled.
+
 ## Build
 
 Built with **Kotlin, Android Views and the modern libxposed API**, with AndroidX system bar protection and insets support.
@@ -67,11 +71,11 @@ On Linux/macOS, replace the first command with `bash ./gradlew :app:assembleDebu
 
 See the [build and release guide](docs/RELEASE.md) for details.
 
-## Feedback and contributions
+## Historical records and independent development
 
-Use [Issues](https://github.com/weinaoa/easybilitool/issues) for bug reports and Pull Requests for fixes. Include module/app versions, Android and framework versions, navigation mode, relevant settings and reproduction steps. Remove personal information from logs and screenshots.
+[Issues](https://github.com/weinaoa/easybilitool/issues) and existing Pull Requests remain as historical records, without a maintenance or response schedule. Further development can continue in independent forks under the existing license and attribution requirements.
 
-Read [AGENTS.md](AGENTS.md) before contributing. Preserve existing compatibility paths and document source attribution and licensing. Detailed test results are kept in [validation documents](docs/TESTING.md).
+See [AGENTS.md](AGENTS.md) for the discontinuation scope and any explicitly requested final changes. [Validation documents](docs/TESTING.md) record historical tests, not verification of newer systems or app versions.
 
 ## Credits and license
 

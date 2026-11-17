@@ -623,7 +623,9 @@ class NavigationBarHook {
                     layoutChanged = (((if (main) mainInsets.apply(bottomInset) else (if (preferences) settingsInsets.apply(bottomInset) else detailInsets.apply(content!!, bottomInset)))) || layoutChanged)
                 } else {
                     liveWebInsets.restore()
-                    layoutChanged = (pageInsets.apply(content!!, bottomInset) || layoutChanged)
+                    // Sample the displayed window, including WebView pages, without
+                    // redrawing a host tree during a back-gesture transition.
+                    layoutChanged = (pageInsets.apply(content!!, bottomInset, window) || layoutChanged)
                 }
                 layoutChanged = (preserveNativeStatusInset() || layoutChanged)
             } catch (e: Throwable) {

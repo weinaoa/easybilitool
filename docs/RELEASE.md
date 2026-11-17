@@ -1,5 +1,7 @@
 # 构建与发布
 
+> **停止更新（2026-11-18）：** 本项目不再安排功能开发、修复、客户端适配或后续版本发布。本文保留为历史构建复现和明确授权的收尾发布参考，不构成持续维护计划。
+
 仓库：[weinaoa/easybilitool](https://github.com/weinaoa/easybilitool)。自有实现、文档与图标采用 Mulan PubL v2，来源范围见 [SOURCES.md](SOURCES.md)，第三方依赖见[第三方声明](../THIRD_PARTY_NOTICES.md)。
 
 ## 项目边界
@@ -23,9 +25,11 @@ Linux / macOS 首行使用 `bash ./gradlew :app:assembleDebug :app:lintDebug`。
 
 `package_source.py` 按当前构建版本生成 `dist/easy-bili-tool-<版本>.apk`、对应源码 ZIP 和 `SHA256SUMS.txt`。打包采用明确文件范围，排除 SDK、缓存、原始日志、`local.properties`、密钥及生成的 APK；仍须检查最终 ZIP 文件清单。`dist/` 不由 Git 跟踪。
 
-默认 APK 采用本机 Android 调试签名。同包名 APK 的覆盖升级需要相同签名；发布前应确定持续更新使用的签名，并在本地保管私钥，不提交密码或证书私钥。
+默认 APK 采用本机 Android 调试签名。同包名 APK 的覆盖升级需要相同签名；复现历史构建或明确授权收尾发布时，保留既有签名，私钥仅在本地保管，不提交密码或证书私钥。
 
 ## 验证与发布流程
+
+仅在维护者明确要求收尾发布或恢复维护时执行以下流程；文档停更说明无需重新构建或操作手机。
 
 1. 确认版本、分支、变更和来源声明一致，分别记录构建、JVM 检查、Lint 与 APK 审计结果。
 2. 使用对应 APK 完成改动涉及的实机检查。底栏和安全区改动需覆盖正文、评论、滑动、惯性、切页、重进与键盘往返，导航栏沉浸开、关分别验证。检查背景、列表实际边界和末项距离。

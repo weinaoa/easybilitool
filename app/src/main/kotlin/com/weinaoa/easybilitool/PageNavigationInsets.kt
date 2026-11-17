@@ -29,7 +29,7 @@ class PageNavigationInsets {
     private var lastPadding: Int = 0
     private var surface: NavigationInsetSurface? = null
 
-    fun apply(content: View, inset: Int): Boolean {
+    fun apply(content: View, inset: Int, window: Window? = null): Boolean {
         var next: ViewGroup? = null
         val group = content as? ViewGroup
         if (group != null) {
@@ -53,7 +53,7 @@ class PageNavigationInsets {
         if ((root == null)) {
             return false
         }
-        if (surface == null && content is ViewGroup) surface = NavigationInsetSurface(content, root!!)
+        if (surface == null && content is ViewGroup) surface = NavigationInsetSurface(content, root!!, window)
         if (!applied) {
             padding = (root)!!.getPaddingBottom()
             clip = (root)!!.getClipToPadding()

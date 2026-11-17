@@ -69,9 +69,9 @@ class Config {
 
     companion object {
         @JvmField val FIELDS: MutableList<Field> = mutableListOf(
-            Field("IMMERSIVE_STATUS_BAR", "沉浸状态栏", "视频与直播延伸到顶部，控件避让"),
-            Field("STATUS_BAR_PROTECTION", "状态栏渐变保护", "沉浸状态栏开启时生效；提高图标对比度，关闭后保持完全透明", true),
-            Field("HOME_HIDE_BOTTOM_BAR", "滑动时收起底栏", "主界面、动态详情与视频评论；上滑收起，下滑恢复"),
-            Field("NAVIGATION_EDGE_TO_EDGE", "沉浸导航栏", "背景延伸到小白条后方，按钮保留安全距离"))
+            Field("IMMERSIVE_STATUS_BAR", "沉浸状态栏", "视频与直播延伸至顶部，控件自动避让"),
+            Field("STATUS_BAR_PROTECTION", "状态栏渐变保护", "提高状态栏图标对比度，关闭后透明", true),
+            Field("HOME_HIDE_BOTTOM_BAR", "滑动时收起底栏", "主界面与详情页上滑收起，下滑恢复"),
+            Field("NAVIGATION_EDGE_TO_EDGE", "沉浸导航栏", "背景延伸至小白条后，按钮保留安全距离"))
     }
 }

@@ -1,0 +1,24 @@
+{
+  "version": "1.1.17",
+  "sha256": "ce4d8d705eb2804b4d484d6e58ed5a1683f15ec83510475fbb331a47d7995979",
+  "bytes": 355347,
+  "package": "com.weinaoa.easybilitool",
+  "entry": "com.weinaoa.easybilitool.EasyBiliToolModule",
+  "scope": [
+    "tv.danmaku.bili"
+  ],
+  "buildType": "release",
+  "r8": true,
+  "shrunkResources": true,
+  "mappingPresent": true,
+  "obfuscatedOwnClassCount": 151,
+  "dexClasses": 292,
+  "legalAssetsVerified": 3,
+  "certificateSha256": "a86572c65e5fac199ebd0ad986980a61c1cb8195716e800337c19971c2d058a5",
+  "lint": {
+    "Warning": 34
+  },
+  "jvmCheckGroups": 15,
+  "noTestAssets": true,
+  "compileOnlyApiExcluded": true
+}
