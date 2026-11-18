@@ -1,10 +1,12 @@
-# 简单bili小工具
+# 简单bili小工具（停更）
 
 [![Release](https://img.shields.io/github/v/release/weinaoa/easybilitool)](https://github.com/weinaoa/easybilitool/releases/latest)
 ![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white)
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
 ![libxposed](https://img.shields.io/badge/libxposed-API%20102-5865F2)
 [![License](https://img.shields.io/badge/License-Mulan%20PubL%20v2-blue)](LICENSE)
+
+## 请移步：[BiliCharm](https://github.com/weinaoa/BiliCharm)
 
 **简体中文** · [English](README_EN.md)
 
